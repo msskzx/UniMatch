@@ -2,7 +2,7 @@
 dataset: acdc
 nclass: 4
 crop_size: 256
-data_root: Your/ACDC/Path
+data_root: ACDC/
 
 # arguments for training
 epochs: 300

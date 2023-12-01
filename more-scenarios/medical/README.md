@@ -47,6 +47,12 @@ Please modify your dataset path in configuration files.
     └── data
 ```
 
+to download
+
+```
+gdown 1LOust-JfKTDsFnvaidFOcAVhkZrgW1Ac
+unzip ACDC.zip
+```
 
 ## Usage
 
@@ -66,6 +72,20 @@ To train on other datasets or splits, please modify
 
 Modify the ``method`` from ``'unimatch'`` to ``'supervised'`` in [train.sh](https://github.com/LiheYoung/UniMatch/blob/main/more-scenarios/medical/scripts/train.sh), and double the ``batch_size`` in configuration file if you use the same number of GPUs as semi-supervised setting (no need to change ``lr``). 
 
+
+## Labels
+
+### 7 Labels
+
+For the case of 10% labeled (7 cases out of 70)
+
+Patient 21: HCM
+Patient 38: HCM
+Patient 49: MINF
+Patient 50: MINF
+Patient 58: MINF
+Patient 99: RV
+Patient 100: RV
 
 ## Citation
 
