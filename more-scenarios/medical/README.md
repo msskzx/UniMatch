@@ -64,6 +64,11 @@ unzip ACDC.zip
 sh scripts/train.sh <num_gpu> <port>
 ```
 
+or
+```bash
+sbatch scripts/slurm_train.sh
+```
+
 To train on other datasets or splits, please modify
 ``dataset`` and ``split`` in [train.sh](https://github.com/LiheYoung/UniMatch/blob/main/more-scenarios/medical/scripts/train.sh).
 
