@@ -1,7 +1,0 @@
-[2024-02-02 10:36:41,528][    INFO] torch.Size([1, 1, 204, 208])
-[2024-02-02 10:36:41,532][    INFO] torch.Size([1, 1, 256, 256])
-[2024-02-02 10:36:43,474][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 0.00
-[2024-02-02 10:36:43,474][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 2.37
-[2024-02-02 10:36:43,474][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 3.98
-[2024-02-02 10:36:43,474][    INFO] ***** Evaluation ***** >>>> MeanDice: 2.12
-

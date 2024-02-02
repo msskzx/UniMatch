@@ -29,7 +29,7 @@ class UKBBDataset(Dataset):
         image = image[:, :, slice_id]
 
         # Load segmentation images for the current patient
-        massk_path = os.path.join(self.root_dir, patient_id, "seg_sa_ED.nii.gz")
+        massk_path = os.path.join(self.root_dir, patient_id, "seg_sa_ES.nii.gz")
         mask = nib.load(massk_path).get_fdata()[:,:, slice_id]
         
         patient = {

@@ -18,12 +18,10 @@ def eval_model(model, dataloader, cfg, logger):
 
     for batch_idx, batch in enumerate(dataloader):
         image, mask = batch['image'].cuda(), batch['mask'].cuda()
-        logger.info(image.shape)
         h, w = image.shape[-2:]
         image = F.interpolate(image, (cfg['crop_size'], cfg['crop_size']), mode='bilinear', align_corners=False)
 
         image = image.permute(1, 0, 2, 3)
-        logger.info(image.shape)
         
         with torch.no_grad():
             pred = model(image)
