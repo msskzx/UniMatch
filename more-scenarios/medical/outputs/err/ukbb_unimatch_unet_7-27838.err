@@ -1,6 +1,0 @@
-Traceback (most recent call last):
-  File "/vol/aimspace/users/khattab/UniMatch/more-scenarios/medical/inference_ukbb.py", line 97, in <module>
-    main()
-  File "/vol/aimspace/users/khattab/UniMatch/more-scenarios/medical/inference_ukbb.py", line 80, in main
-    cfg = yaml.load(open('configs/ukbb.yaml', "r"), Loader=yaml.Loader)
-NameError: name 'yaml' is not defined
