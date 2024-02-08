@@ -3,3 +3,5 @@ more-scenarios/medical/ACDC
 **/__MACOSX
 more-scenarios/medical/visualize_ukbb.ipynb
 more-scenarios/medical/outputs/out
+more-scenarios/medical/outputs/results/pred_mask.png
+more-scenarios/medical/model/fct.model

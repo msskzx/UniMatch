@@ -7,3 +7,6 @@ scipy
 scikit-image
 einops
 h5py
+nibabel
+pandas
+Pyarrow
