@@ -6,6 +6,12 @@ data_root: ACDC/
 
 # arguments for training
 epochs: 300
-batch_size: 12 # per GPU x 1 GPU
+batch_size: 1 # 12 per GPU
 lr: 0.01
 conf_thresh: 0.95
+
+# inference
+mode: val
+results_path: 'outputs/results/unimatch_acdc_scores.csv'
+pred_mask_path: 'outputs/results/unimatch7_acdc_pred_mask.png'
+num_workers: 2

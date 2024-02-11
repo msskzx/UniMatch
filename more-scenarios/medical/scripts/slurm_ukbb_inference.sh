@@ -21,4 +21,4 @@ conda activate unimatch # If this does not work, try 'source activate ptl'
 now=$(date +"%Y%m%d_%H%M%S")
 job='ukbb_unimatch_unet_7'
 
-python -u inference_ukbb.py
+python -u ukbb_inference.py

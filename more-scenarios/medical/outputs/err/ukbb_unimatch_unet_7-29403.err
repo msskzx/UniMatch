@@ -1,5 +1,0 @@
-[2024-02-07 16:59:08,713][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 0.00
-[2024-02-07 16:59:08,714][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 8.26
-[2024-02-07 16:59:08,714][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 2.91
-[2024-02-07 16:59:08,714][    INFO] ***** Evaluation ***** >>>> MeanDice: 2.79
-

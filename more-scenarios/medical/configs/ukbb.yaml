@@ -3,14 +3,15 @@ dataset: ukbb
 nclass: 4
 crop_size: 256
 data_root: /vol/aimspace/projects/ukbb/data/cardiac/cardiac_segmentations/subjects
-model: 'unimatch'
 
 # arguments for training
 epochs: 300
 batch_size: 1 # 12 per GPU
 lr: 0.01
 conf_thresh: 0.95
+
+# inference
 mode: val
 results_path: 'outputs/results/unimatch_ukbb_scores.csv'
-pred_mask_path: 'outputs/results/pred_mask.png'
+pred_mask_path: 'outputs/results/ukbb_pred_mask.png'
 num_workers: 2

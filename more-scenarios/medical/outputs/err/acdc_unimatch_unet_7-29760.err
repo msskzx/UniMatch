@@ -1,0 +1,360 @@
+[2024-02-09 12:25:32,738][    INFO] torch.Size([1, 10, 256, 224])
+[2024-02-09 12:25:32,738][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 91.81
+[2024-02-09 12:25:32,738][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 91.45
+[2024-02-09 12:25:32,738][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 95.62
+[2024-02-09 12:25:32,738][    INFO] ***** Evaluation ***** >>>> MeanDice: 92.96
+
+[2024-02-09 12:25:32,751][    INFO] torch.Size([1, 10, 256, 224])
+[2024-02-09 12:25:32,751][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 70.34
+[2024-02-09 12:25:32,751][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 91.61
+[2024-02-09 12:25:32,751][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 86.43
+[2024-02-09 12:25:32,751][    INFO] ***** Evaluation ***** >>>> MeanDice: 82.79
+
+[2024-02-09 12:25:32,768][    INFO] torch.Size([1, 15, 288, 184])
+[2024-02-09 12:25:32,768][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 93.43
+[2024-02-09 12:25:32,768][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 85.30
+[2024-02-09 12:25:32,768][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 95.64
+[2024-02-09 12:25:32,769][    INFO] ***** Evaluation ***** >>>> MeanDice: 91.45
+
+[2024-02-09 12:25:32,787][    INFO] torch.Size([1, 15, 288, 184])
+[2024-02-09 12:25:32,787][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 93.79
+[2024-02-09 12:25:32,787][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 87.83
+[2024-02-09 12:25:32,787][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 91.90
+[2024-02-09 12:25:32,787][    INFO] ***** Evaluation ***** >>>> MeanDice: 91.17
+
+[2024-02-09 12:25:32,807][    INFO] torch.Size([1, 16, 154, 224])
+[2024-02-09 12:25:32,808][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 94.69
+[2024-02-09 12:25:32,808][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 89.28
+[2024-02-09 12:25:32,808][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 97.20
+[2024-02-09 12:25:32,808][    INFO] ***** Evaluation ***** >>>> MeanDice: 93.73
+
+[2024-02-09 12:25:32,826][    INFO] torch.Size([1, 16, 154, 224])
+[2024-02-09 12:25:32,826][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 89.09
+[2024-02-09 12:25:32,826][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 88.67
+[2024-02-09 12:25:32,826][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 89.76
+[2024-02-09 12:25:32,826][    INFO] ***** Evaluation ***** >>>> MeanDice: 89.17
+
+[2024-02-09 12:25:32,861][    INFO] torch.Size([1, 8, 184, 256])
+[2024-02-09 12:25:32,861][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 86.16
+[2024-02-09 12:25:32,861][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 87.05
+[2024-02-09 12:25:32,861][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 95.60
+[2024-02-09 12:25:32,861][    INFO] ***** Evaluation ***** >>>> MeanDice: 89.60
+
+[2024-02-09 12:25:32,873][    INFO] torch.Size([1, 8, 184, 256])
+[2024-02-09 12:25:32,873][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 79.62
+[2024-02-09 12:25:32,873][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 90.46
+[2024-02-09 12:25:32,873][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 94.17
+[2024-02-09 12:25:32,873][    INFO] ***** Evaluation ***** >>>> MeanDice: 88.08
+
+[2024-02-09 12:25:32,888][    INFO] torch.Size([1, 11, 256, 216])
+[2024-02-09 12:25:32,888][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 95.97
+[2024-02-09 12:25:32,889][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 92.02
+[2024-02-09 12:25:32,889][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 98.58
+[2024-02-09 12:25:32,889][    INFO] ***** Evaluation ***** >>>> MeanDice: 95.53
+
+[2024-02-09 12:25:32,901][    INFO] torch.Size([1, 11, 256, 216])
+[2024-02-09 12:25:32,901][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 91.78
+[2024-02-09 12:25:32,901][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 92.92
+[2024-02-09 12:25:32,901][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 98.17
+[2024-02-09 12:25:32,901][    INFO] ***** Evaluation ***** >>>> MeanDice: 94.29
+
+[2024-02-09 12:25:32,952][    INFO] torch.Size([1, 10, 256, 216])
+[2024-02-09 12:25:32,953][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 78.56
+[2024-02-09 12:25:32,953][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 90.81
+[2024-02-09 12:25:32,953][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 90.77
+[2024-02-09 12:25:32,953][    INFO] ***** Evaluation ***** >>>> MeanDice: 86.71
+
+[2024-02-09 12:25:32,969][    INFO] torch.Size([1, 10, 256, 216])
+[2024-02-09 12:25:32,969][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 39.63
+[2024-02-09 12:25:32,969][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 93.05
+[2024-02-09 12:25:32,969][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 85.13
+[2024-02-09 12:25:32,970][    INFO] ***** Evaluation ***** >>>> MeanDice: 72.61
+
+[2024-02-09 12:25:32,988][    INFO] torch.Size([1, 8, 256, 216])
+[2024-02-09 12:25:32,988][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 97.60
+[2024-02-09 12:25:32,988][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 94.62
+[2024-02-09 12:25:32,988][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 98.48
+[2024-02-09 12:25:32,988][    INFO] ***** Evaluation ***** >>>> MeanDice: 96.90
+
+[2024-02-09 12:25:33,013][    INFO] torch.Size([1, 8, 256, 216])
+[2024-02-09 12:25:33,013][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 78.15
+[2024-02-09 12:25:33,013][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 93.31
+[2024-02-09 12:25:33,013][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 94.76
+[2024-02-09 12:25:33,013][    INFO] ***** Evaluation ***** >>>> MeanDice: 88.74
+
+[2024-02-09 12:25:33,055][    INFO] torch.Size([1, 8, 256, 208])
+[2024-02-09 12:25:33,055][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 85.61
+[2024-02-09 12:25:33,055][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 86.36
+[2024-02-09 12:25:33,055][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.98
+[2024-02-09 12:25:33,055][    INFO] ***** Evaluation ***** >>>> MeanDice: 89.65
+
+[2024-02-09 12:25:33,066][    INFO] torch.Size([1, 8, 256, 208])
+[2024-02-09 12:25:33,066][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 90.84
+[2024-02-09 12:25:33,066][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 88.98
+[2024-02-09 12:25:33,066][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.21
+[2024-02-09 12:25:33,066][    INFO] ***** Evaluation ***** >>>> MeanDice: 92.01
+
+[2024-02-09 12:25:33,123][    INFO] torch.Size([1, 10, 256, 232])
+[2024-02-09 12:25:33,123][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 94.06
+[2024-02-09 12:25:33,123][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 88.57
+[2024-02-09 12:25:33,123][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 95.98
+[2024-02-09 12:25:33,123][    INFO] ***** Evaluation ***** >>>> MeanDice: 92.87
+
+[2024-02-09 12:25:33,134][    INFO] torch.Size([1, 10, 256, 232])
+[2024-02-09 12:25:33,135][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 60.20
+[2024-02-09 12:25:33,135][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 89.12
+[2024-02-09 12:25:33,135][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.13
+[2024-02-09 12:25:33,135][    INFO] ***** Evaluation ***** >>>> MeanDice: 81.82
+
+[2024-02-09 12:25:33,186][    INFO] torch.Size([1, 9, 256, 208])
+[2024-02-09 12:25:33,186][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 95.07
+[2024-02-09 12:25:33,186][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 91.06
+[2024-02-09 12:25:33,186][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 94.91
+[2024-02-09 12:25:33,186][    INFO] ***** Evaluation ***** >>>> MeanDice: 93.68
+
+[2024-02-09 12:25:33,197][    INFO] torch.Size([1, 9, 256, 208])
+[2024-02-09 12:25:33,197][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 78.89
+[2024-02-09 12:25:33,197][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 90.84
+[2024-02-09 12:25:33,197][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 87.82
+[2024-02-09 12:25:33,197][    INFO] ***** Evaluation ***** >>>> MeanDice: 85.85
+
+[2024-02-09 12:25:33,243][    INFO] torch.Size([1, 9, 256, 216])
+[2024-02-09 12:25:33,243][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 83.21
+[2024-02-09 12:25:33,243][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 87.92
+[2024-02-09 12:25:33,243][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 97.22
+[2024-02-09 12:25:33,243][    INFO] ***** Evaluation ***** >>>> MeanDice: 89.45
+
+[2024-02-09 12:25:33,254][    INFO] torch.Size([1, 9, 256, 216])
+[2024-02-09 12:25:33,254][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 80.36
+[2024-02-09 12:25:33,254][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 88.47
+[2024-02-09 12:25:33,254][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.39
+[2024-02-09 12:25:33,254][    INFO] ***** Evaluation ***** >>>> MeanDice: 88.41
+
+[2024-02-09 12:25:33,288][    INFO] torch.Size([1, 10, 256, 216])
+[2024-02-09 12:25:33,288][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 92.55
+[2024-02-09 12:25:33,288][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 89.15
+[2024-02-09 12:25:33,288][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.23
+[2024-02-09 12:25:33,288][    INFO] ***** Evaluation ***** >>>> MeanDice: 92.64
+
+[2024-02-09 12:25:33,301][    INFO] torch.Size([1, 10, 256, 216])
+[2024-02-09 12:25:33,301][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 88.90
+[2024-02-09 12:25:33,301][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 91.00
+[2024-02-09 12:25:33,301][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.72
+[2024-02-09 12:25:33,301][    INFO] ***** Evaluation ***** >>>> MeanDice: 92.21
+
+[2024-02-09 12:25:33,336][    INFO] torch.Size([1, 12, 256, 208])
+[2024-02-09 12:25:33,336][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 85.68
+[2024-02-09 12:25:33,336][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 80.67
+[2024-02-09 12:25:33,336][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 94.21
+[2024-02-09 12:25:33,336][    INFO] ***** Evaluation ***** >>>> MeanDice: 86.85
+
+[2024-02-09 12:25:33,351][    INFO] torch.Size([1, 12, 256, 208])
+[2024-02-09 12:25:33,351][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 81.34
+[2024-02-09 12:25:33,351][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 86.48
+[2024-02-09 12:25:33,351][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 83.02
+[2024-02-09 12:25:33,351][    INFO] ***** Evaluation ***** >>>> MeanDice: 83.61
+
+[2024-02-09 12:25:33,394][    INFO] torch.Size([1, 10, 256, 216])
+[2024-02-09 12:25:33,395][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 88.39
+[2024-02-09 12:25:33,395][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 85.06
+[2024-02-09 12:25:33,395][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 89.56
+[2024-02-09 12:25:33,395][    INFO] ***** Evaluation ***** >>>> MeanDice: 87.67
+
+[2024-02-09 12:25:33,407][    INFO] torch.Size([1, 10, 256, 216])
+[2024-02-09 12:25:33,408][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 85.74
+[2024-02-09 12:25:33,408][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 85.27
+[2024-02-09 12:25:33,408][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 63.97
+[2024-02-09 12:25:33,408][    INFO] ***** Evaluation ***** >>>> MeanDice: 78.33
+
+[2024-02-09 12:25:33,444][    INFO] torch.Size([1, 10, 224, 180])
+[2024-02-09 12:25:33,444][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 88.77
+[2024-02-09 12:25:33,444][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 82.14
+[2024-02-09 12:25:33,444][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.80
+[2024-02-09 12:25:33,444][    INFO] ***** Evaluation ***** >>>> MeanDice: 89.24
+
+[2024-02-09 12:25:33,456][    INFO] torch.Size([1, 10, 224, 180])
+[2024-02-09 12:25:33,456][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 71.91
+[2024-02-09 12:25:33,456][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 89.48
+[2024-02-09 12:25:33,456][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 95.43
+[2024-02-09 12:25:33,456][    INFO] ***** Evaluation ***** >>>> MeanDice: 85.61
+
+[2024-02-09 12:25:33,494][    INFO] torch.Size([1, 7, 256, 200])
+[2024-02-09 12:25:33,494][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 92.11
+[2024-02-09 12:25:33,494][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 84.97
+[2024-02-09 12:25:33,495][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 87.76
+[2024-02-09 12:25:33,495][    INFO] ***** Evaluation ***** >>>> MeanDice: 88.28
+
+[2024-02-09 12:25:33,526][    INFO] torch.Size([1, 7, 256, 200])
+[2024-02-09 12:25:33,526][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 75.43
+[2024-02-09 12:25:33,526][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 86.80
+[2024-02-09 12:25:33,526][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 81.08
+[2024-02-09 12:25:33,526][    INFO] ***** Evaluation ***** >>>> MeanDice: 81.10
+
+[2024-02-09 12:25:33,536][    INFO] torch.Size([1, 7, 208, 256])
+[2024-02-09 12:25:33,536][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 92.07
+[2024-02-09 12:25:33,536][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 80.29
+[2024-02-09 12:25:33,536][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 94.86
+[2024-02-09 12:25:33,536][    INFO] ***** Evaluation ***** >>>> MeanDice: 89.08
+
+[2024-02-09 12:25:33,566][    INFO] torch.Size([1, 7, 208, 256])
+[2024-02-09 12:25:33,566][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 93.45
+[2024-02-09 12:25:33,566][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 82.87
+[2024-02-09 12:25:33,566][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 83.57
+[2024-02-09 12:25:33,566][    INFO] ***** Evaluation ***** >>>> MeanDice: 86.63
+
+[2024-02-09 12:25:33,582][    INFO] torch.Size([1, 8, 256, 208])
+[2024-02-09 12:25:33,582][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 93.81
+[2024-02-09 12:25:33,582][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 90.89
+[2024-02-09 12:25:33,582][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.14
+[2024-02-09 12:25:33,582][    INFO] ***** Evaluation ***** >>>> MeanDice: 93.61
+
+[2024-02-09 12:25:33,614][    INFO] torch.Size([1, 8, 256, 208])
+[2024-02-09 12:25:33,614][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 87.20
+[2024-02-09 12:25:33,614][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 93.34
+[2024-02-09 12:25:33,614][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 88.27
+[2024-02-09 12:25:33,614][    INFO] ***** Evaluation ***** >>>> MeanDice: 89.60
+
+[2024-02-09 12:25:33,624][    INFO] torch.Size([1, 6, 256, 208])
+[2024-02-09 12:25:33,624][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 94.83
+[2024-02-09 12:25:33,624][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 79.10
+[2024-02-09 12:25:33,624][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 89.77
+[2024-02-09 12:25:33,624][    INFO] ***** Evaluation ***** >>>> MeanDice: 87.90
+
+[2024-02-09 12:25:33,644][    INFO] torch.Size([1, 6, 256, 208])
+[2024-02-09 12:25:33,644][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 95.45
+[2024-02-09 12:25:33,644][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 86.77
+[2024-02-09 12:25:33,644][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 88.53
+[2024-02-09 12:25:33,644][    INFO] ***** Evaluation ***** >>>> MeanDice: 90.25
+
+[2024-02-09 12:25:33,694][    INFO] torch.Size([1, 17, 224, 154])
+[2024-02-09 12:25:33,694][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 94.12
+[2024-02-09 12:25:33,694][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 86.40
+[2024-02-09 12:25:33,694][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 97.66
+[2024-02-09 12:25:33,694][    INFO] ***** Evaluation ***** >>>> MeanDice: 92.73
+
+[2024-02-09 12:25:33,725][    INFO] torch.Size([1, 17, 224, 154])
+[2024-02-09 12:25:33,725][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 93.33
+[2024-02-09 12:25:33,725][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 89.29
+[2024-02-09 12:25:33,725][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 91.47
+[2024-02-09 12:25:33,725][    INFO] ***** Evaluation ***** >>>> MeanDice: 91.36
+
+[2024-02-09 12:25:33,733][    INFO] torch.Size([1, 6, 256, 216])
+[2024-02-09 12:25:33,733][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 96.95
+[2024-02-09 12:25:33,733][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 91.14
+[2024-02-09 12:25:33,733][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 97.30
+[2024-02-09 12:25:33,733][    INFO] ***** Evaluation ***** >>>> MeanDice: 95.13
+
+[2024-02-09 12:25:33,762][    INFO] torch.Size([1, 6, 256, 216])
+[2024-02-09 12:25:33,762][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 91.94
+[2024-02-09 12:25:33,762][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 94.82
+[2024-02-09 12:25:33,762][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.96
+[2024-02-09 12:25:33,762][    INFO] ***** Evaluation ***** >>>> MeanDice: 94.57
+
+[2024-02-09 12:25:33,776][    INFO] torch.Size([1, 10, 256, 216])
+[2024-02-09 12:25:33,776][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 92.56
+[2024-02-09 12:25:33,776][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 84.48
+[2024-02-09 12:25:33,776][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 94.73
+[2024-02-09 12:25:33,776][    INFO] ***** Evaluation ***** >>>> MeanDice: 90.59
+
+[2024-02-09 12:25:33,826][    INFO] torch.Size([1, 10, 256, 216])
+[2024-02-09 12:25:33,826][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 68.95
+[2024-02-09 12:25:33,826][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 89.62
+[2024-02-09 12:25:33,826][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 97.10
+[2024-02-09 12:25:33,826][    INFO] ***** Evaluation ***** >>>> MeanDice: 85.22
+
+[2024-02-09 12:25:33,839][    INFO] torch.Size([1, 10, 224, 222])
+[2024-02-09 12:25:33,839][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 95.14
+[2024-02-09 12:25:33,839][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 86.46
+[2024-02-09 12:25:33,839][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 94.09
+[2024-02-09 12:25:33,839][    INFO] ***** Evaluation ***** >>>> MeanDice: 91.90
+
+[2024-02-09 12:25:33,870][    INFO] torch.Size([1, 10, 224, 222])
+[2024-02-09 12:25:33,870][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 86.26
+[2024-02-09 12:25:33,870][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 87.85
+[2024-02-09 12:25:33,870][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.71
+[2024-02-09 12:25:33,870][    INFO] ***** Evaluation ***** >>>> MeanDice: 90.27
+
+[2024-02-09 12:25:33,892][    INFO] torch.Size([1, 9, 256, 240])
+[2024-02-09 12:25:33,893][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 91.84
+[2024-02-09 12:25:33,893][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 90.57
+[2024-02-09 12:25:33,893][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 97.49
+[2024-02-09 12:25:33,893][    INFO] ***** Evaluation ***** >>>> MeanDice: 93.30
+
+[2024-02-09 12:25:33,934][    INFO] torch.Size([1, 9, 256, 240])
+[2024-02-09 12:25:33,934][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 92.02
+[2024-02-09 12:25:33,934][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 92.16
+[2024-02-09 12:25:33,934][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 94.52
+[2024-02-09 12:25:33,934][    INFO] ***** Evaluation ***** >>>> MeanDice: 92.90
+
+[2024-02-09 12:25:33,954][    INFO] torch.Size([1, 10, 256, 200])
+[2024-02-09 12:25:33,954][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 95.75
+[2024-02-09 12:25:33,954][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 86.10
+[2024-02-09 12:25:33,954][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.82
+[2024-02-09 12:25:33,954][    INFO] ***** Evaluation ***** >>>> MeanDice: 92.89
+
+[2024-02-09 12:25:33,982][    INFO] torch.Size([1, 10, 256, 200])
+[2024-02-09 12:25:33,982][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 78.46
+[2024-02-09 12:25:33,982][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 88.06
+[2024-02-09 12:25:33,982][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.10
+[2024-02-09 12:25:33,982][    INFO] ***** Evaluation ***** >>>> MeanDice: 87.54
+
+[2024-02-09 12:25:34,026][    INFO] torch.Size([1, 8, 224, 210])
+[2024-02-09 12:25:34,026][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 94.04
+[2024-02-09 12:25:34,026][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 78.53
+[2024-02-09 12:25:34,026][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 93.39
+[2024-02-09 12:25:34,026][    INFO] ***** Evaluation ***** >>>> MeanDice: 88.65
+
+[2024-02-09 12:25:34,037][    INFO] torch.Size([1, 8, 224, 210])
+[2024-02-09 12:25:34,037][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 81.49
+[2024-02-09 12:25:34,037][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 89.26
+[2024-02-09 12:25:34,037][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 91.34
+[2024-02-09 12:25:34,037][    INFO] ***** Evaluation ***** >>>> MeanDice: 87.36
+
+[2024-02-09 12:25:34,074][    INFO] torch.Size([1, 14, 224, 168])
+[2024-02-09 12:25:34,074][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 96.21
+[2024-02-09 12:25:34,074][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 87.48
+[2024-02-09 12:25:34,074][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.79
+[2024-02-09 12:25:34,074][    INFO] ***** Evaluation ***** >>>> MeanDice: 93.49
+
+[2024-02-09 12:25:34,090][    INFO] torch.Size([1, 14, 224, 168])
+[2024-02-09 12:25:34,090][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 86.39
+[2024-02-09 12:25:34,090][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 92.64
+[2024-02-09 12:25:34,090][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 94.62
+[2024-02-09 12:25:34,090][    INFO] ***** Evaluation ***** >>>> MeanDice: 91.22
+
+[2024-02-09 12:25:34,144][    INFO] torch.Size([1, 10, 256, 216])
+[2024-02-09 12:25:34,144][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 96.14
+[2024-02-09 12:25:34,144][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 91.08
+[2024-02-09 12:25:34,144][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.54
+[2024-02-09 12:25:34,144][    INFO] ***** Evaluation ***** >>>> MeanDice: 94.59
+
+[2024-02-09 12:25:34,157][    INFO] torch.Size([1, 10, 256, 216])
+[2024-02-09 12:25:34,157][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 86.75
+[2024-02-09 12:25:34,157][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 92.24
+[2024-02-09 12:25:34,157][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 93.66
+[2024-02-09 12:25:34,157][    INFO] ***** Evaluation ***** >>>> MeanDice: 90.89
+
+[2024-02-09 12:25:34,198][    INFO] torch.Size([1, 9, 216, 256])
+[2024-02-09 12:25:34,198][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 95.16
+[2024-02-09 12:25:34,198][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 91.19
+[2024-02-09 12:25:34,198][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 97.37
+[2024-02-09 12:25:34,198][    INFO] ***** Evaluation ***** >>>> MeanDice: 94.58
+
+[2024-02-09 12:25:34,211][    INFO] torch.Size([1, 9, 216, 256])
+[2024-02-09 12:25:34,211][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 74.58
+[2024-02-09 12:25:34,211][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 89.21
+[2024-02-09 12:25:34,211][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 95.30
+[2024-02-09 12:25:34,211][    INFO] ***** Evaluation ***** >>>> MeanDice: 86.36
+
+[2024-02-09 12:25:34,222][    INFO] torch.Size([1, 8, 256, 216])
+[2024-02-09 12:25:34,222][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 91.83
+[2024-02-09 12:25:34,222][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 80.55
+[2024-02-09 12:25:34,222][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 91.44
+[2024-02-09 12:25:34,222][    INFO] ***** Evaluation ***** >>>> MeanDice: 87.94
+
+[2024-02-09 12:25:34,231][    INFO] torch.Size([1, 8, 256, 216])
+[2024-02-09 12:25:34,231][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 86.11
+[2024-02-09 12:25:34,231][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 81.79
+[2024-02-09 12:25:34,231][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 85.95
+[2024-02-09 12:25:34,231][    INFO] ***** Evaluation ***** >>>> MeanDice: 84.62
+

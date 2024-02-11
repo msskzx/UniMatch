@@ -10,3 +10,4 @@ h5py
 nibabel
 pandas
 Pyarrow
+matplotlib
