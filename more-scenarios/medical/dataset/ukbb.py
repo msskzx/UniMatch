@@ -26,32 +26,38 @@ class UKBBDataset(Dataset):
     def get_patient_images(self, patient_id):
         # Load original images for the current patient
         image_path = os.path.join(self.root_dir, patient_id, "sa_ES.nii.gz")
-        image = nib.load(image_path).get_fdata()
-        #slice_id = image.shape[2] // 2
-        slice_id = 3
-        image = image[:, :, slice_id]
+        image = nib.load(image_path).get_fdata()[:]
         
-        # Rotate the image using OpenCV
-        image = cv2.rotate(image, cv2.ROTATE_90_COUNTERCLOCKWISE)
-        # Convert the rotated image to uint8 (necessary for correct conversion to tensor)
-        image_uint8 = image.astype(np.uint8)
-        # Convert the uint8 image to a PyTorch tensor
-        image_tensor = torch.tensor(image_uint8).float().unsqueeze(0)
-        # Normalize the pixel values to the range [0, 1]
-        # TODO use z-score normalization
-        image = (image_tensor - torch.min(image_tensor)) / (torch.max(image_tensor) - torch.min(image_tensor))
+        # TODO
+        # 1. compare with and without rotation
+        # 2. use ED images as well
 
-        # Save or further process the rotated i
+        # Rotate the image using OpenCV to match the training data preprocessing
+        # image = cv2.rotate(image, cv2.ROTATE_90_COUNTERCLOCKWISE)
+        # Convert the rotated image to uint8 (necessary for correct conversion to tensor)
+        # image = image.astype(np.uint8)
+        # Convert the uint8 image to a PyTorch tensor
+
+        image = torch.tensor(image).float()
+
+        # Normalize the pixel values to the range [0, 1]
+        image = (image - torch.min(image)) / (torch.max(image) - torch.min(image))
+
         # Load segmentation images for the current patient
         massk_path = os.path.join(self.root_dir, patient_id, "seg_sa_ES.nii.gz")
-        mask = nib.load(massk_path).get_fdata()[:,:, slice_id]
-        # Rotate the mask 90 degrees counterclockwise using OpenCV
-        mask = cv2.rotate(mask, cv2.ROTATE_90_COUNTERCLOCKWISE)
-        mask = torch.tensor(mask).long().unsqueeze(0)
+        mask = nib.load(massk_path).get_fdata()[:]
 
+        # Rotate the mask 90 degrees counterclockwise using OpenCV
+        #mask = cv2.rotate(mask, cv2.ROTATE_90_COUNTERCLOCKWISE)
+
+        mask = torch.tensor(mask).long()
+
+        # TODO
+        # 1. fetch classes from global variable
+        
         # change classes
-        # RV should be white instead of dark gray
-        # LV should be dark gray instead of white
+        # RV should be white instead of dark gray: RV -> 3
+        # LV should be dark gray instead of white: LV -> 1
         mask_1 = mask == 1
         mask_3 = mask == 3
 
@@ -65,7 +71,6 @@ class UKBBDataset(Dataset):
         
         patient = {
             'patient_id': patient_id,
-            'slice_id': slice_id,
             'image': image,
             'mask': mask,
         }

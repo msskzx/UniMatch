@@ -40,15 +40,15 @@ def class_to_intensity(img):
     return np.vectorize(lambda x: class_to_intensity[x])(img)
     
 
-def save_pred_mask(image, mask, pred, cfg):
-    image = image.cpu().numpy()
-    image = ((image - image.min()) / (image.max() - image.min()) * 255).astype('uint8')
+def save_pred_mask(img, mask, pred, cfg):
+    img = img.cpu().numpy()
+    img = ((img - img.min()) / (img.max() - img.min()) * 255).astype('uint8')
 
     mask = class_to_intensity(mask.cpu().numpy())
     pred = class_to_intensity(pred.cpu().numpy())
 
-    # Concatenate the image, gt mask, and prediction horizontally
-    concat_img = np.concatenate((image, mask, pred), axis=1)
+    # Concatenate the img, gt mask, and prediction horizontally
+    concat_img = np.concatenate((img, mask, pred), axis=1)
     cv2.imwrite(cfg['pred_mask_path'], concat_img)
 
 
@@ -65,7 +65,7 @@ def eval_model(model, dataloader, cfg, logger):
             h, w = img.shape[-2:]
             img = F.interpolate(img, (cfg['crop_size'], cfg['crop_size']), mode='bilinear', align_corners=False)
 
-            # a batch of number slices in the image
+            # a batch of number slices in the img
             img = img.permute(1, 0, 2, 3)
 
             pred = model(img)
@@ -100,8 +100,8 @@ def eval_model(model, dataloader, cfg, logger):
 
             scores.loc[len(scores)] = {
                     'dice_mean': dice_mean,
-                    'dice_lv': dice_class[2],
-                    'dice_rv': dice_class[0],
+                    'dice_lv': dice_class[0],
+                    'dice_rv': dice_class[2],
                     'dice_myo': dice_class[1]}
             
             if i == 0:

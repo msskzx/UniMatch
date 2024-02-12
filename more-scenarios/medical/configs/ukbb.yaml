@@ -13,5 +13,5 @@ conf_thresh: 0.95
 # inference
 mode: val
 results_path: 'outputs/results/unimatch_ukbb_scores.csv'
-pred_mask_path: 'outputs/results/ukbb_pred_mask.png'
+pred_mask_path: 'outputs/results/imgs/unimatch7_ukbb_pred_mask_'
 num_workers: 2
