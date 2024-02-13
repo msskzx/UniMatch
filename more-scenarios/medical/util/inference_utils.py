@@ -52,7 +52,6 @@ def init_scores_df():
 
 
 def save_scores(scores_df, dice_class, dice_mean, patient_id, frame, logger, cfg):
-    # TODO get slice index from input img instead because it is random
     for slice_idx, dice_scores_slice in enumerate(dice_class):
         for cls_idx, dice_slice_cls in enumerate(dice_scores_slice):
             # TODO add patient_id, frame, slice_id
@@ -99,6 +98,8 @@ def eval_model(model, dataloader, cfg, logger):
             og_img = og_img.squeeze()
             dice_class, dice_mean = compute_dice(pred, mask)
             
+            # TODO get slice_idx from imgs instead of creating arbitrary idx
+
             # save og_img, mask, pred
             # save_pred_mask(og_img, mask, pred, patient_id, frame, cfg)
             

@@ -45,6 +45,7 @@ class ACDCDataset(Dataset):
             patient_id, frame = id.split('_') 
             patient_id = patient_id.split('patient')[1] # 011
             frame = frame.split('.')[0] # frame01
+            frame = FRAME[frame] # sa_ED
             return {
                 'patient_id': patient_id,
                 'frame': frame,

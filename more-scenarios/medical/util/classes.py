@@ -6,6 +6,6 @@ MASK = {'rv': 1,
         'lv': 3}
 
 FRAME = {
-    'frame01': 'ED',
-    'frame02': 'ES'
+    'frame01': 'sa_ED',
+    'frame02': 'sa_ES'
 }
