@@ -28,7 +28,7 @@ class ACDCDataset(Dataset):
                 self.ids *= math.ceil(nsample / len(self.ids))
                 self.ids = self.ids[:nsample]
         elif mode == 'test':
-            with open('splits/%s/val.txt' % name, 'r') as f:
+            with open('splits/%s/test.txt' % name, 'r') as f:
                 self.ids = f.read().splitlines()
         else:
             with open('splits/%s/valtest.txt' % name, 'r') as f:
