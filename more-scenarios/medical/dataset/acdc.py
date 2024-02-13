@@ -11,6 +11,7 @@ from scipy.ndimage.interpolation import zoom
 import torch
 from torch.utils.data import Dataset
 from torchvision import transforms
+from util.classes import FRAME
 
 
 class ACDCDataset(Dataset):
@@ -27,7 +28,7 @@ class ACDCDataset(Dataset):
                 self.ids *= math.ceil(nsample / len(self.ids))
                 self.ids = self.ids[:nsample]
         elif mode == 'test':
-            with open('splits/%s/test.txt' % name, 'r') as f:
+            with open('splits/%s/val.txt' % name, 'r') as f:
                 self.ids = f.read().splitlines()
         else:
             with open('splits/%s/valtest.txt' % name, 'r') as f:
@@ -39,7 +40,18 @@ class ACDCDataset(Dataset):
         img = sample['image'][:]
         mask = sample['label'][:]
 
-        if self.mode in ['val', 'test']:
+        if self.mode == 'test' :
+            # example data/patient011_frame01.h5
+            patient_id, frame = id.split('_') 
+            patient_id = patient_id.split('patient')[1] # 011
+            frame = frame.split('.')[0] # frame01
+            return {
+                'patient_id': patient_id,
+                'frame': frame,
+                'img': torch.from_numpy(img).float(),
+                'mask': torch.from_numpy(mask).long()}
+
+        if self.mode == 'val' :
             return torch.from_numpy(img).float(), torch.from_numpy(mask).long()
 
         if random.random() > 0.5:

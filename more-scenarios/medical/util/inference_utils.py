@@ -3,6 +3,7 @@ import numpy as np
 import cv2
 import pandas as pd
 from util.classes import CLASSES, MASK
+import torch.nn.functional as F
 
 def compute_dice(pred, mask, num_classes=4, epsilon=1e-9):
     num_slices = pred.shape[0]
@@ -51,6 +52,7 @@ def init_scores_df():
 
 
 def save_scores(scores_df, dice_class, dice_mean, patient_id, frame, logger, cfg):
+    # TODO get slice index from input img instead because it is random
     for slice_idx, dice_scores_slice in enumerate(dice_class):
         for cls_idx, dice_slice_cls in enumerate(dice_scores_slice):
             # TODO add patient_id, frame, slice_id
@@ -69,4 +71,38 @@ def save_scores(scores_df, dice_class, dice_mean, patient_id, frame, logger, cfg
     
     return scores_df
 
-        
+
+def eval_model(model, dataloader, cfg, logger):
+    model.eval()
+    model = model.cuda()
+    scores_df = init_scores_df()
+
+    with torch.no_grad():
+        for _, batch in enumerate(dataloader):
+            img, mask = batch['img'].cuda(), batch['mask'].cuda()
+            patient_id = batch['patient_id'][0]
+            frame = batch['frame'][0]
+
+            # a batch of number slices in the img
+            og_img = img
+            img = img.permute(1, 0, 2, 3)
+
+            # interpolate and predict
+            h, w = img.shape[-2:]
+            img = F.interpolate(img, (cfg['crop_size'], cfg['crop_size']), mode='bilinear', align_corners=False)
+            pred = model(img)
+            pred = F.interpolate(pred, (h, w), mode='bilinear', align_corners=False)
+            pred = pred.argmax(dim=1)
+
+            # adjust shape to compute dice
+            mask = mask.squeeze()
+            og_img = og_img.squeeze()
+            dice_class, dice_mean = compute_dice(pred, mask)
+            
+            # save og_img, mask, pred
+            # save_pred_mask(og_img, mask, pred, patient_id, frame, cfg)
+            
+            # log and save results
+            scores_df = save_scores(scores_df, dice_class, dice_mean, patient_id, frame, logger, cfg)
+            
+    return scores_df

@@ -21,4 +21,6 @@ conda activate unimatch # If this does not work, try 'source activate ptl'
 now=$(date +"%Y%m%d_%H%M%S")
 job='acdc_unimatch_unet_7'
 
-python -u acdc_inference.py
+config=configs/acdc_test_20.yaml
+
+python -u inference.py --config=$config

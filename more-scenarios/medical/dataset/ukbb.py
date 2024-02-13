@@ -82,11 +82,9 @@ class UKBBDataset(Dataset):
         # swap classes to match acdc
         mask = self.swap_classes(mask)
         
-        patient = {
+        return {
             'patient_id': patient_id,
             'frame': frame,
-            'image': img,
+            'img': img,
             'mask': mask,
         }
-
-        return patient

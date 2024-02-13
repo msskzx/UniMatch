@@ -5,7 +5,7 @@ MASK = {'rv': 1,
         'myo': 2,
         'lv': 3}
 
-ACDC_DATA = {
+FRAME = {
     'frame01': 'ED',
     'frame02': 'ES'
 }
