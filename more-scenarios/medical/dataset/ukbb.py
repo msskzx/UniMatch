@@ -5,6 +5,8 @@ import torch
 import numpy as np
 from scipy.ndimage.interpolation import zoom
 import cv2
+from util.classes import CLASSES, MASK
+
 
 class UKBBDataset(Dataset):
     def __init__(self, name, root_dir, mode, patient_ids, crop_size=None, id_path=None, nsample=None, transform=None):
@@ -23,55 +25,47 @@ class UKBBDataset(Dataset):
     def __len__(self):
         return len(self.patient_ids)
 
+
+    def ccw_rotate(self, in_img, normalize=False):
+        num_slices, height, width = in_img.shape
+        img = torch.empty((num_slices, width, height), dtype=torch.float)
+        for slice_idx in range(in_img.shape[0]):
+            img[slice_idx] = torch.from_numpy(cv2.rotate(in_img[slice_idx], cv2.ROTATE_90_COUNTERCLOCKWISE))
+            if normalize:
+                # Normalize the pixel values to the range [0, 1]
+                img[slice_idx] = (img[slice_idx] - torch.min(img[slice_idx])) / (torch.max(img[slice_idx]) - torch.min(img[slice_idx]))
+        return img
+
+    
+    def swap_classes(self, mask):
+        mask_lv = mask == MASK['rv']
+        mask_rv = mask == MASK['lv']
+        mask[mask_lv] = MASK['lv']
+        mask[mask_rv] = MASK['rv']
+        return mask
+
     def get_patient_images(self, patient_id):
+        # TODO use ED images as well
+
         # Load original images for the current patient
         image_path = os.path.join(self.root_dir, patient_id, "sa_ES.nii.gz")
-        image = nib.load(image_path).get_fdata()[:]
-        
-        # TODO
-        # 1. compare with and without rotation
-        # 2. use ED images as well
-
-        # Rotate the image using OpenCV to match the training data preprocessing
-        # image = cv2.rotate(image, cv2.ROTATE_90_COUNTERCLOCKWISE)
-        # Convert the rotated image to uint8 (necessary for correct conversion to tensor)
-        # image = image.astype(np.uint8)
-        # Convert the uint8 image to a PyTorch tensor
-
-        image = torch.tensor(image).float()
-
-        # Normalize the pixel values to the range [0, 1]
-        image = (image - torch.min(image)) / (torch.max(image) - torch.min(image))
+        in_img = nib.load(image_path).get_fdata()[:]
+        in_img = np.transpose(in_img, (2, 0, 1))
+        # Rotate the img using OpenCV to match the training data preprocessing
+        img = self.ccw_rotate(in_img, normalize=True)
 
         # Load segmentation images for the current patient
         massk_path = os.path.join(self.root_dir, patient_id, "seg_sa_ES.nii.gz")
-        mask = nib.load(massk_path).get_fdata()[:]
-
-        # Rotate the mask 90 degrees counterclockwise using OpenCV
-        #mask = cv2.rotate(mask, cv2.ROTATE_90_COUNTERCLOCKWISE)
-
-        mask = torch.tensor(mask).long()
-
-        # TODO
-        # 1. fetch classes from global variable
-        
-        # change classes
-        # RV should be white instead of dark gray: RV -> 3
-        # LV should be dark gray instead of white: LV -> 1
-        mask_1 = mask == 1
-        mask_3 = mask == 3
-
-        mask[mask_1] = 3
-        mask[mask_3] = 1
-
-        if self.mode == 'train':
-            x, y = image.shape
-            image = zoom(image, (self.crop_size / x, self.crop_size / y), order=0)
-            mask = zoom(mask, (self.crop_size / x, self.crop_size / y), order=0)
+        in_mask = nib.load(massk_path).get_fdata()[:]
+        in_mask = np.transpose(in_mask, (2, 0, 1))
+        # Rotate the mask using OpenCV to match the training data preprocessing
+        mask = self.ccw_rotate(in_mask, normalize=False)
+        # swap classes to match acdc
+        mask = self.swap_classes(mask)
         
         patient = {
             'patient_id': patient_id,
-            'image': image,
+            'image': img,
             'mask': mask,
         }
 

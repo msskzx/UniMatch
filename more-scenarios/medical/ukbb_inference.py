@@ -7,9 +7,10 @@ import logging
 from util.utils import init_log
 import yaml
 import pandas as pd
-from util.classes import CLASSES
+from util.classes import CLASSES, MASK
 import cv2
 import numpy as np
+
 
 def compute_dice(pred, mask, num_classes=4, epsilon=1e-9):
     num_slices = pred.shape[0]
@@ -55,16 +56,15 @@ def save_pred_mask(img, mask, pred, cfg, patient_id = 1, slice_idx=1):
 def eval_model(model, dataloader, cfg, logger):
     model.eval()
     model = model.cuda()
-    scores = pd.DataFrame(columns=['patient_id', 'slice_id', 'dice_mean', 'dice_lv', 'dice_rv', 'dice_myo'])
+    scores = pd.DataFrame(columns=['patient_id', 'slice_id', 'dice_mean', 'dice_rv', 'dice_myo', 'dice_lv'])
     
     with torch.no_grad():
         for _, batch in enumerate(dataloader):
             img, mask = batch['image'].cuda(), batch['mask'].cuda()
 
             # a batch of number slices in the img
-            img = img.permute(3, 0, 1, 2)
-            mask = mask.permute(0, 3, 1, 2)
-            og_img = img.permute(1, 0, 2, 3)
+            img = img.permute(1, 0, 2, 3)
+            og_img = img
             
             # interpolate and predict
             h, w = img.shape[-2:]
@@ -75,13 +75,12 @@ def eval_model(model, dataloader, cfg, logger):
             pred = F.interpolate(pred, (h, w), mode='bilinear', align_corners=False)
             pred = pred.argmax(dim=1)
 
-            # adjust shape
+            # adjust shape to compute dice
             mask = mask.squeeze()
+            og_img = og_img.squeeze()
 
             # compute dice
             dice_class, dice_mean = compute_dice(pred, mask)
-
-            og_img = og_img.squeeze()
 
             # save og_img, mask, pred
             for slice_idx,_ in enumerate(og_img):
@@ -95,14 +94,13 @@ def eval_model(model, dataloader, cfg, logger):
                                     '{:.2f}'.format(cls_idx, CLASSES[cfg['dataset']][cls_idx], dice_slice_cls))
                 logger.info('***** Evaluation ***** >>>> MeanDice: {:.2f}\n'.format(dice_mean[slice_idx]))
 
-                # TODO save class name and mask index globally and fetch that instead.
                 scores.loc[len(scores)] = {
                         'patient_id': batch['patient_id'][0],
                         'slice_id': slice_idx,
                         'dice_mean': dice_mean[slice_idx],
-                        'dice_lv': dice_class[slice_idx][0],
-                        'dice_rv': dice_class[slice_idx][2],
-                        'dice_myo': dice_class[slice_idx][1]}
+                        'dice_rv': dice_class[slice_idx][MASK['rv']-1],
+                        'dice_myo': dice_class[slice_idx][MASK['myo']-1],
+                        'dice_lv': dice_class[slice_idx][MASK['lv']-1]}
 
     return scores
     
