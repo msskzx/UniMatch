@@ -4,3 +4,8 @@ CLASSES = {'acdc': ['Right Ventricle', 'Myocardium', 'Left Ventricle'],
 MASK = {'rv': 1,
         'myo': 2,
         'lv': 3}
+
+ACDC_DATA = {
+    'frame01': 'ED',
+    'frame02': 'ES'
+}

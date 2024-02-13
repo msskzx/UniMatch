@@ -19,7 +19,6 @@ def eval_model(model, dataloader, cfg, logger):
     
     with torch.no_grad():
         for _, batch in enumerate(dataloader):
-            # TODO handle batch size
             img, mask = batch['image'].cuda(), batch['mask'].cuda()
             patient_id = batch['patient_id'][0]
             frame = batch['frame'][0]
@@ -31,9 +30,7 @@ def eval_model(model, dataloader, cfg, logger):
             # interpolate and predict
             h, w = img.shape[-2:]
             img = F.interpolate(img, (cfg['crop_size'], cfg['crop_size']), mode='bilinear', align_corners=False)
-
             pred = model(img)
-            
             pred = F.interpolate(pred, (h, w), mode='bilinear', align_corners=False)
             pred = pred.argmax(dim=1)
 

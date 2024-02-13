@@ -8,10 +8,8 @@ import os
 from PIL import Image
 import random
 from scipy.ndimage.interpolation import zoom
-from scipy import ndimage
 import torch
 from torch.utils.data import Dataset
-import torch.nn.functional as F
 from torchvision import transforms
 
 
@@ -28,6 +26,9 @@ class ACDCDataset(Dataset):
             if mode == 'train_l' and nsample is not None:
                 self.ids *= math.ceil(nsample / len(self.ids))
                 self.ids = self.ids[:nsample]
+        elif mode == 'test':
+            with open('splits/%s/test.txt' % name, 'r') as f:
+                self.ids = f.read().splitlines()
         else:
             with open('splits/%s/valtest.txt' % name, 'r') as f:
                 self.ids = f.read().splitlines()
@@ -38,7 +39,7 @@ class ACDCDataset(Dataset):
         img = sample['image'][:]
         mask = sample['label'][:]
 
-        if self.mode == 'val':
+        if self.mode in ['val', 'test']:
             return torch.from_numpy(img).float(), torch.from_numpy(mask).long()
 
         if random.random() > 0.5:

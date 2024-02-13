@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=acdc_unimatch_unet_7
-#SBATCH --output=outputs/out/acdc_unimatch_unet_7-%A.out  # Standard output of the script (Can be absolute or relative path). %A adds the job id to the file name so you can launch the same script multiple times and get different logging files
-#SBATCH --error=outputs/err/acdc_unimatch_unet_7-%A.err  # Standard error of the script
+#SBATCH --output=outputs/out/acdc/acdc_unimatch_unet_7-%A.out  # Standard output of the script (Can be absolute or relative path). %A adds the job id to the file name so you can launch the same script multiple times and get different logging files
+#SBATCH --error=outputs/err/acdc/acdc_unimatch_unet_7-%A.err  # Standard error of the script
 #SBATCH --time=0-00:20:00  # Limit on the total run time (format: days-hours:minutes:seconds)
 #SBATCH --gres=gpu:1  # Number of GPUs if needed
 #SBATCH --cpus-per-task=16  # Number of CPUs (Don't use more than 24 per GPU)
