@@ -31,15 +31,12 @@ def main():
 
     if cfg['dataset'] == 'ukbb':
         # UKBB
-        # TODO add splits/ukbb/test.txt
-        patient_ids_frames = [("5733285", "sa_ES"), ("5733285", "sa_ED")]
-
         test_dataset = UKBBDataset(
         name=cfg['dataset'],
         root_dir=cfg['data_root'],
         mode=cfg['mode'],
         crop_size=cfg['crop_size'],
-        patient_ids_frames=patient_ids_frames)
+        split=cfg['split'])
     else:
         # ACDC
         test_dataset = ACDCDataset(cfg['dataset'], cfg['data_root'], cfg['mode'])

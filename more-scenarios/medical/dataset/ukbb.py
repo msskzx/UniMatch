@@ -8,31 +8,55 @@ from util.classes import MASK
 
 
 class UKBBDataset(Dataset):
-    def __init__(self, name, root_dir, mode, patient_ids_frames, crop_size=None, id_path=None, nsample=None, transform=None):
+    def __init__(self, name, root_dir, mode, crop_size, split):
         """
         Arguments:
         str -- database name
         root_dir -- database path
-        patient_ids_frames -- array of patient id and frame tuples (patient_id, frame)
+        split -- split path
         """
         self.name = name
         self.root_dir = root_dir
         self.mode = mode
         self.crop_size = crop_size
-        self.patient_ids_frames = patient_ids_frames
+
+        self.patient_ids_frames = []
+        self.init_patient_ids_frames(split)
+
 
     def __getitem__(self, item):
         """
+        get data item with given item index
+
+        Arugments:
+        item -- item index
+
         return:
         patient_id_frame -- tuple
-        img -- example shape (1, 10, 204, 208) 1 is batch 10 represents slices
+        img -- img with shape (1, 10, 204, 208)
         mask -- same shape as img
         """
-        patient_id_frame = self.patient_ids_frames[item]
-        return self.get_patient_images(patient_id_frame)
+        return self.get_patient_images(self.patient_ids_frames[item])
+
 
     def __len__(self):
+        """
+        return: lengths of dataset
+        """
         return len(self.patient_ids_frames)
+
+
+    def init_patient_ids_frames(self, split):
+        """
+        initialize patient ids and frames 
+
+        Argument:
+        split -- split file path
+        """
+        with open(split, 'r') as f:
+            str_ids_frames = f.read().splitlines()
+        
+        self.patient_ids_frames = [x.split('-') for x in str_ids_frames]
 
 
     def ccw_rotate(self, in_img, normalize=False):
@@ -56,6 +80,9 @@ class UKBBDataset(Dataset):
     def swap_classes(self, mask):
         """
         swap rv and lv classes in mask to match acdc dataset
+        
+        Arguments:
+        mask -- mask to be converted
         """
         mask_lv = mask == MASK['rv']
         mask_rv = mask == MASK['lv']
@@ -64,6 +91,17 @@ class UKBBDataset(Dataset):
         return mask
 
     def get_patient_images(self, patient_id_frame):
+        """
+        helper to get data element
+        
+        Arguments:
+        patient_id_frame -- tuple (id, frame)
+
+        return:
+        patient_id_frame -- tuple
+        img -- img with shape (1, 10, 204, 208)
+        mask -- same shape as img
+        """
         patient_id, frame = patient_id_frame
 
         # Load original images for the current patient

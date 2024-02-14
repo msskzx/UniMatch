@@ -13,6 +13,7 @@ conf_thresh: 0.95
 # inference
 model: 'exp/acdc/unimatch/unet/7/best.pth'
 mode: test
+split: 'splits/ukbb/test.txt'
 results_path: 'outputs/results/csv/unimatch_ukbb_scores.csv'
 pred_mask_path: 'outputs/results/imgs/ukbb/unimatch_ukbb_pred_mask_'
 num_workers: 2
