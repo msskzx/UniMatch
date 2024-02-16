@@ -25,7 +25,7 @@ job='ukbb_unimatch_unet_7'
 # dataset: ['ukbb']
 # method: ['unimatch', 'supervised']
 # exp: just for specifying the 'save_path'
-# split: ['1', '3', '7']
+# split: ['1', '3', '7', '14']
 dataset='ukbb'
 method='unimatch'
 exp='unet'
