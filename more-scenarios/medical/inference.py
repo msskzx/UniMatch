@@ -36,7 +36,7 @@ def main():
         root_dir=cfg['data_root'],
         mode=cfg['mode'],
         crop_size=cfg['crop_size'],
-        split=cfg['split'])
+        split=cfg['test_split'])
     else:
         # ACDC
         test_dataset = ACDCDataset(cfg['dataset'], cfg['data_root'], cfg['mode'])

@@ -1,5 +1,4 @@
 from dataset.transform import random_rot_flip, random_rotate, blur, obtain_cutmix_box
-
 from copy import deepcopy
 import h5py
 import math
@@ -50,7 +49,8 @@ class ACDCDataset(Dataset):
                 'patient_id': patient_id,
                 'frame': frame,
                 'img': torch.from_numpy(img).float(),
-                'mask': torch.from_numpy(mask).long()}
+                'mask': torch.from_numpy(mask).long()
+            }
 
         if self.mode == 'val' :
             return torch.from_numpy(img).float(), torch.from_numpy(mask).long()

@@ -1,0 +1,44 @@
+[2024-02-16 12:45:23,588][    INFO] {'batch_size': 1,
+ 'conf_thresh': 0.95,
+ 'config': 'configs/ukbb.yaml',
+ 'crop_size': 256,
+ 'data_desc': 'UKBB Train Data - 8 Labeled Patients, 8 Unlabeled Patients',
+ 'data_root': '/vol/aimspace/projects/ukbb/data/cardiac/cardiac_segmentations/subjects',
+ 'dataset': 'ukbb',
+ 'epochs': 10,
+ 'labeled_id_path': 'splits/ukbb/7/labeled.txt',
+ 'labeled_split': 'splits/ukbb/7/labeled.txt',
+ 'local_rank': 0,
+ 'lr': 0.01,
+ 'mode': 'test',
+ 'model': 'exp/acdc/unimatch/unet/7/best.pth',
+ 'model_desc': 'Unimatch Unet 7 Training on UKBB',
+ 'nclass': 4,
+ 'ngpus': 1,
+ 'num_workers': 2,
+ 'port': 8013,
+ 'pred_mask_path': 'outputs/results/imgs/ukbb/unimatch_ukbb_pred_mask_',
+ 'results_path': 'outputs/results/csv/unimatch_ukbb_scores_test_1_patients.csv',
+ 'save_path': 'exp/ukbb/unimatch/unet/7',
+ 'test_split': 'splits/ukbb/test.txt',
+ 'unlabeled_id_path': 'splits/ukbb/7/unlabeled.txt',
+ 'unlabeled_split': 'splits/ukbb/7/unlabeled.txt',
+ 'val_split': 'splits/ukbb/val.txt'}
+
+[2024-02-16 12:45:23,757][    INFO] Total params: 1.8M
+
+[2024-02-16 12:45:25,161][    INFO] ===========> Epoch: 0, LR: 0.01000, Previous best: 0.00
+[2024-02-16 12:45:28,716][    INFO] Iters: 0, Total loss: 0.514, Loss x: 1.027, Loss s: 0.000, Loss w_fp: 0.000, Mask ratio: 0.000
+[2024-02-16 12:45:28,776][    INFO] Iters: 1, Total loss: 0.532, Loss x: 1.064, Loss s: 0.000, Loss w_fp: 0.000, Mask ratio: 0.000
+[2024-02-16 12:45:28,849][    INFO] Iters: 2, Total loss: 0.516, Loss x: 1.033, Loss s: 0.000, Loss w_fp: 0.000, Mask ratio: 0.000
+[2024-02-16 12:45:28,978][    INFO] Iters: 3, Total loss: 0.504, Loss x: 1.008, Loss s: 0.000, Loss w_fp: 0.000, Mask ratio: 0.000
+[2024-02-16 12:45:29,085][    INFO] Iters: 4, Total loss: 0.490, Loss x: 0.981, Loss s: 0.000, Loss w_fp: 0.000, Mask ratio: 0.000
+[2024-02-16 12:45:29,175][    INFO] Iters: 5, Total loss: 0.482, Loss x: 0.963, Loss s: 0.000, Loss w_fp: 0.000, Mask ratio: 0.000
+[2024-02-16 12:45:29,312][    INFO] Iters: 6, Total loss: 0.474, Loss x: 0.949, Loss s: 0.000, Loss w_fp: 0.000, Mask ratio: 0.000
+[2024-02-16 12:45:29,535][    INFO] Iters: 7, Total loss: 0.462, Loss x: 0.925, Loss s: 0.000, Loss w_fp: 0.000, Mask ratio: 0.000
+Traceback (most recent call last):
+  File "/vol/aimspace/users/khattab/UniMatch/more-scenarios/medical/unimatch_ukbb.py", line 279, in <module>
+    main()
+  File "/vol/aimspace/users/khattab/UniMatch/more-scenarios/medical/unimatch_ukbb.py", line 249, in main
+    dice_class[cls-1] += (2. * inter + epsilon) / (union + epsilon) * 100.0
+NameError: name 'epsilon' is not defined

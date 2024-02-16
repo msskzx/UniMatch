@@ -1,5 +1,5 @@
 model_desc: 'Unimatch Unet 7 Pretrained on ACDC'
-data_desc: 'Test Data - 20 Patients'
+data_desc: 'ACDC Test Data - 20 Patients'
 
 mode: test
 dataset: acdc

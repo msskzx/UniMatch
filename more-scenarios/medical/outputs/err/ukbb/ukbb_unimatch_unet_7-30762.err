@@ -1,0 +1,329 @@
+[2024-02-16 12:24:42,302][    INFO] {'batch_size': 1,
+ 'conf_thresh': 0.95,
+ 'config': 'configs/ukbb.yaml',
+ 'crop_size': 256,
+ 'data_desc': 'UKBB Test Data - 1 Patients',
+ 'data_root': '/vol/aimspace/projects/ukbb/data/cardiac/cardiac_segmentations/subjects',
+ 'dataset': 'ukbb',
+ 'epochs': 10,
+ 'labeled_id_path': 'splits/ukbb/7/labeled.txt',
+ 'labeled_split': 'splits/ukbb/7/labeled.txt',
+ 'local_rank': 0,
+ 'lr': 0.01,
+ 'mode': 'test',
+ 'model': 'exp/acdc/unimatch/unet/7/best.pth',
+ 'model_desc': 'Unimatch Unet 7 Pretrained on ACDC',
+ 'nclass': 4,
+ 'ngpus': 1,
+ 'num_workers': 2,
+ 'port': 8013,
+ 'pred_mask_path': 'outputs/results/imgs/ukbb/unimatch_ukbb_pred_mask_',
+ 'results_path': 'outputs/results/csv/unimatch_ukbb_scores_test_1_patients.csv',
+ 'save_path': 'exp/ukbb/unimatch/unet/7',
+ 'test_split': 'splits/ukbb/test.txt',
+ 'unlabeled_id_path': 'splits/ukbb/7/unlabeled.txt',
+ 'unlabeled_split': 'splits/ukbb/7/unlabeled.txt',
+ 'val_split': 'splits/ukbb/val.txt'}
+
+[2024-02-16 12:24:42,455][    INFO] Total params: 1.8M
+
+[2024-02-16 12:24:43,949][    INFO] ===========> Epoch: 0, LR: 0.01000, Previous best: 0.00
+[2024-02-16 12:24:47,705][    INFO] Iters: 0, Total loss: 0.587, Loss x: 1.175, Loss s: 0.000, Loss w_fp: 0.000, Mask ratio: 0.000
+[2024-02-16 12:24:47,765][    INFO] Iters: 1, Total loss: 0.588, Loss x: 1.177, Loss s: 0.000, Loss w_fp: 0.000, Mask ratio: 0.000
+[2024-02-16 12:24:47,859][    INFO] Iters: 2, Total loss: 0.584, Loss x: 1.167, Loss s: 0.000, Loss w_fp: 0.000, Mask ratio: 0.000
+[2024-02-16 12:24:47,991][    INFO] Iters: 3, Total loss: 0.572, Loss x: 1.145, Loss s: 0.000, Loss w_fp: 0.000, Mask ratio: 0.000
+[2024-02-16 12:24:48,091][    INFO] Iters: 4, Total loss: 0.619, Loss x: 1.127, Loss s: 0.071, Loss w_fp: 0.153, Mask ratio: 0.000
+[2024-02-16 12:24:48,163][    INFO] Iters: 5, Total loss: 0.673, Loss x: 1.125, Loss s: 0.181, Loss w_fp: 0.262, Mask ratio: 0.000
+[2024-02-16 12:24:48,257][    INFO] Iters: 6, Total loss: 0.697, Loss x: 1.098, Loss s: 0.258, Loss w_fp: 0.334, Mask ratio: 0.000
+[2024-02-16 12:24:48,445][    INFO] Iters: 7, Total loss: 0.712, Loss x: 1.073, Loss s: 0.317, Loss w_fp: 0.385, Mask ratio: 0.000
+[2024-02-16 12:24:48,886][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:24:48,887][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:24:49,069][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:24:49,069][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:24:49,098][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:24:49,098][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:24:49,313][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:24:49,313][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:24:49,400][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:24:49,400][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:24:49,515][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:24:49,515][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:24:49,603][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:24:49,603][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:24:49,776][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:24:49,776][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:24:49,892][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 0.00
+[2024-02-16 12:24:49,892][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 0.00
+[2024-02-16 12:24:49,892][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 0.00
+[2024-02-16 12:24:49,892][    INFO] ***** Evaluation ***** >>>> MeanDice: 0.00
+
+[2024-02-16 12:24:50,104][    INFO] ===========> Epoch: 1, LR: 0.00921, Previous best: 0.00
+[2024-02-16 12:24:50,515][    INFO] Iters: 0, Total loss: 0.746, Loss x: 0.807, Loss s: 0.745, Loss w_fp: 0.624, Mask ratio: 0.000
+[2024-02-16 12:24:50,638][    INFO] Iters: 1, Total loss: 0.703, Loss x: 0.810, Loss s: 0.630, Loss w_fp: 0.565, Mask ratio: 0.001
+[2024-02-16 12:24:50,759][    INFO] Iters: 2, Total loss: 0.659, Loss x: 0.791, Loss s: 0.562, Loss w_fp: 0.491, Mask ratio: 0.001
+[2024-02-16 12:24:50,859][    INFO] Iters: 3, Total loss: 0.683, Loss x: 0.783, Loss s: 0.604, Loss w_fp: 0.561, Mask ratio: 0.005
+[2024-02-16 12:24:50,920][    INFO] Iters: 4, Total loss: 0.683, Loss x: 0.774, Loss s: 0.619, Loss w_fp: 0.563, Mask ratio: 0.007
+[2024-02-16 12:24:51,008][    INFO] Iters: 5, Total loss: 0.665, Loss x: 0.754, Loss s: 0.641, Loss w_fp: 0.511, Mask ratio: 0.007
+[2024-02-16 12:24:51,168][    INFO] Iters: 6, Total loss: 0.656, Loss x: 0.735, Loss s: 0.649, Loss w_fp: 0.504, Mask ratio: 0.009
+[2024-02-16 12:24:51,333][    INFO] Iters: 7, Total loss: 0.644, Loss x: 0.718, Loss s: 0.662, Loss w_fp: 0.479, Mask ratio: 0.009
+[2024-02-16 12:24:51,656][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:24:51,656][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:24:51,799][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:24:51,799][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:24:51,942][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:24:51,943][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:24:52,079][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:24:52,079][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:24:52,183][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:24:52,183][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:24:52,259][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:24:52,259][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:24:52,321][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:24:52,321][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:24:52,420][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:24:52,421][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:24:52,529][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 0.00
+[2024-02-16 12:24:52,529][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 0.00
+[2024-02-16 12:24:52,529][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 3.64
+[2024-02-16 12:24:52,529][    INFO] ***** Evaluation ***** >>>> MeanDice: 1.21
+
+[2024-02-16 12:24:52,876][    INFO] ===========> Epoch: 2, LR: 0.00830, Previous best: 1.21
+[2024-02-16 12:24:53,353][    INFO] Iters: 0, Total loss: 0.536, Loss x: 0.569, Loss s: 0.247, Loss w_fp: 0.758, Mask ratio: 0.002
+[2024-02-16 12:24:53,460][    INFO] Iters: 1, Total loss: 0.638, Loss x: 0.638, Loss s: 0.475, Loss w_fp: 0.802, Mask ratio: 0.011
+[2024-02-16 12:24:53,605][    INFO] Iters: 2, Total loss: 0.623, Loss x: 0.607, Loss s: 0.490, Loss w_fp: 0.788, Mask ratio: 0.012
+[2024-02-16 12:24:53,660][    INFO] Iters: 3, Total loss: 0.574, Loss x: 0.593, Loss s: 0.480, Loss w_fp: 0.628, Mask ratio: 0.011
+[2024-02-16 12:24:53,744][    INFO] Iters: 4, Total loss: 0.538, Loss x: 0.581, Loss s: 0.482, Loss w_fp: 0.510, Mask ratio: 0.011
+[2024-02-16 12:24:53,847][    INFO] Iters: 5, Total loss: 0.534, Loss x: 0.568, Loss s: 0.488, Loss w_fp: 0.512, Mask ratio: 0.010
+[2024-02-16 12:24:53,958][    INFO] Iters: 6, Total loss: 0.533, Loss x: 0.559, Loss s: 0.490, Loss w_fp: 0.524, Mask ratio: 0.024
+[2024-02-16 12:24:54,069][    INFO] Iters: 7, Total loss: 0.530, Loss x: 0.554, Loss s: 0.492, Loss w_fp: 0.522, Mask ratio: 0.022
+[2024-02-16 12:24:54,332][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:24:54,332][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:24:54,472][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:24:54,473][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:24:54,614][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:24:54,614][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:24:54,748][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:24:54,748][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:24:54,904][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:24:54,904][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:24:55,052][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:24:55,053][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:24:55,171][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:24:55,171][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:24:55,267][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:24:55,268][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:24:55,371][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 0.00
+[2024-02-16 12:24:55,371][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 0.00
+[2024-02-16 12:24:55,372][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 4.45
+[2024-02-16 12:24:55,372][    INFO] ***** Evaluation ***** >>>> MeanDice: 1.48
+
+[2024-02-16 12:24:55,764][    INFO] ===========> Epoch: 3, LR: 0.00737, Previous best: 1.48
+[2024-02-16 12:24:56,217][    INFO] Iters: 0, Total loss: 0.530, Loss x: 0.552, Loss s: 0.506, Loss w_fp: 0.512, Mask ratio: 0.026
+[2024-02-16 12:24:56,331][    INFO] Iters: 1, Total loss: 0.531, Loss x: 0.527, Loss s: 0.527, Loss w_fp: 0.542, Mask ratio: 0.083
+[2024-02-16 12:24:56,481][    INFO] Iters: 2, Total loss: 0.543, Loss x: 0.522, Loss s: 0.539, Loss w_fp: 0.590, Mask ratio: 0.085
+[2024-02-16 12:24:56,624][    INFO] Iters: 3, Total loss: 0.531, Loss x: 0.504, Loss s: 0.539, Loss w_fp: 0.578, Mask ratio: 0.108
+[2024-02-16 12:24:56,791][    INFO] Iters: 4, Total loss: 0.529, Loss x: 0.493, Loss s: 0.545, Loss w_fp: 0.587, Mask ratio: 0.169
+[2024-02-16 12:24:56,951][    INFO] Iters: 5, Total loss: 0.534, Loss x: 0.483, Loss s: 0.560, Loss w_fp: 0.610, Mask ratio: 0.226
+[2024-02-16 12:24:57,078][    INFO] Iters: 6, Total loss: 0.532, Loss x: 0.483, Loss s: 0.558, Loss w_fp: 0.606, Mask ratio: 0.260
+[2024-02-16 12:24:57,209][    INFO] Iters: 7, Total loss: 0.535, Loss x: 0.482, Loss s: 0.558, Loss w_fp: 0.616, Mask ratio: 0.317
+[2024-02-16 12:24:57,454][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:24:57,454][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:24:57,524][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:24:57,524][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:24:57,628][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:24:57,628][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:24:57,777][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:24:57,778][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:24:57,902][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:24:57,902][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:24:58,043][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:24:58,043][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:24:58,177][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:24:58,177][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:24:58,301][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:24:58,301][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:24:58,399][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 0.00
+[2024-02-16 12:24:58,399][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 0.00
+[2024-02-16 12:24:58,399][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 1.33
+[2024-02-16 12:24:58,399][    INFO] ***** Evaluation ***** >>>> MeanDice: 0.44
+
+[2024-02-16 12:24:58,580][    INFO] ===========> Epoch: 4, LR: 0.00643, Previous best: 1.48
+[2024-02-16 12:24:59,039][    INFO] Iters: 0, Total loss: 0.539, Loss x: 0.450, Loss s: 0.610, Loss w_fp: 0.647, Mask ratio: 0.610
+[2024-02-16 12:24:59,105][    INFO] Iters: 1, Total loss: 0.573, Loss x: 0.460, Loss s: 0.676, Loss w_fp: 0.697, Mask ratio: 0.628
+[2024-02-16 12:24:59,165][    INFO] Iters: 2, Total loss: 0.580, Loss x: 0.456, Loss s: 0.691, Loss w_fp: 0.715, Mask ratio: 0.608
+[2024-02-16 12:24:59,223][    INFO] Iters: 3, Total loss: 0.585, Loss x: 0.455, Loss s: 0.706, Loss w_fp: 0.724, Mask ratio: 0.611
+[2024-02-16 12:24:59,293][    INFO] Iters: 4, Total loss: 0.584, Loss x: 0.445, Loss s: 0.715, Loss w_fp: 0.730, Mask ratio: 0.606
+[2024-02-16 12:24:59,387][    INFO] Iters: 5, Total loss: 0.585, Loss x: 0.443, Loss s: 0.721, Loss w_fp: 0.733, Mask ratio: 0.623
+[2024-02-16 12:24:59,540][    INFO] Iters: 6, Total loss: 0.586, Loss x: 0.441, Loss s: 0.725, Loss w_fp: 0.736, Mask ratio: 0.623
+[2024-02-16 12:24:59,633][    INFO] Iters: 7, Total loss: 0.586, Loss x: 0.439, Loss s: 0.728, Loss w_fp: 0.738, Mask ratio: 0.632
+[2024-02-16 12:24:59,898][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:24:59,898][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:24:59,940][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:24:59,940][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:24:59,970][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:24:59,970][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:25:00,016][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:25:00,016][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:25:00,102][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:25:00,102][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:25:00,185][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:25:00,185][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:25:00,257][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:25:00,257][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:25:00,351][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:25:00,351][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:25:00,453][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 0.00
+[2024-02-16 12:25:00,454][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 0.00
+[2024-02-16 12:25:00,454][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 4.18
+[2024-02-16 12:25:00,454][    INFO] ***** Evaluation ***** >>>> MeanDice: 1.39
+
+[2024-02-16 12:25:00,644][    INFO] ===========> Epoch: 5, LR: 0.00548, Previous best: 1.48
+[2024-02-16 12:25:01,095][    INFO] Iters: 0, Total loss: 0.607, Loss x: 0.463, Loss s: 0.750, Loss w_fp: 0.750, Mask ratio: 0.661
+[2024-02-16 12:25:01,210][    INFO] Iters: 1, Total loss: 0.603, Loss x: 0.455, Loss s: 0.750, Loss w_fp: 0.750, Mask ratio: 0.642
+[2024-02-16 12:25:01,308][    INFO] Iters: 2, Total loss: 0.600, Loss x: 0.450, Loss s: 0.750, Loss w_fp: 0.750, Mask ratio: 0.628
+[2024-02-16 12:25:01,409][    INFO] Iters: 3, Total loss: 0.597, Loss x: 0.443, Loss s: 0.750, Loss w_fp: 0.750, Mask ratio: 0.637
+[2024-02-16 12:25:01,507][    INFO] Iters: 4, Total loss: 0.596, Loss x: 0.442, Loss s: 0.750, Loss w_fp: 0.750, Mask ratio: 0.656
+[2024-02-16 12:25:01,603][    INFO] Iters: 5, Total loss: 0.594, Loss x: 0.438, Loss s: 0.750, Loss w_fp: 0.750, Mask ratio: 0.656
+[2024-02-16 12:25:01,743][    INFO] Iters: 6, Total loss: 0.591, Loss x: 0.432, Loss s: 0.750, Loss w_fp: 0.750, Mask ratio: 0.656
+[2024-02-16 12:25:01,872][    INFO] Iters: 7, Total loss: 0.594, Loss x: 0.437, Loss s: 0.750, Loss w_fp: 0.750, Mask ratio: 0.668
+[2024-02-16 12:25:02,193][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:25:02,193][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:25:02,282][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:25:02,282][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:25:02,346][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:25:02,346][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:25:02,376][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:25:02,376][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:25:02,431][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:25:02,431][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:25:02,568][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:25:02,568][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:25:02,687][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:25:02,687][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:25:02,768][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:25:02,768][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:25:02,874][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 0.00
+[2024-02-16 12:25:02,874][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 0.00
+[2024-02-16 12:25:02,874][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 0.61
+[2024-02-16 12:25:02,874][    INFO] ***** Evaluation ***** >>>> MeanDice: 0.20
+
+[2024-02-16 12:25:03,061][    INFO] ===========> Epoch: 6, LR: 0.00451, Previous best: 1.48
+[2024-02-16 12:25:03,514][    INFO] Iters: 0, Total loss: 0.595, Loss x: 0.440, Loss s: 0.750, Loss w_fp: 0.750, Mask ratio: 0.615
+[2024-02-16 12:25:03,643][    INFO] Iters: 1, Total loss: 0.595, Loss x: 0.440, Loss s: 0.750, Loss w_fp: 0.750, Mask ratio: 0.647
+[2024-02-16 12:25:03,802][    INFO] Iters: 2, Total loss: 0.587, Loss x: 0.424, Loss s: 0.750, Loss w_fp: 0.750, Mask ratio: 0.635
+[2024-02-16 12:25:03,867][    INFO] Iters: 3, Total loss: 0.588, Loss x: 0.426, Loss s: 0.750, Loss w_fp: 0.750, Mask ratio: 0.659
+[2024-02-16 12:25:03,936][    INFO] Iters: 4, Total loss: 0.590, Loss x: 0.430, Loss s: 0.750, Loss w_fp: 0.750, Mask ratio: 0.664
+[2024-02-16 12:25:04,035][    INFO] Iters: 5, Total loss: 0.592, Loss x: 0.434, Loss s: 0.750, Loss w_fp: 0.750, Mask ratio: 0.676
+[2024-02-16 12:25:04,171][    INFO] Iters: 6, Total loss: 0.593, Loss x: 0.435, Loss s: 0.750, Loss w_fp: 0.750, Mask ratio: 0.672
+[2024-02-16 12:25:04,294][    INFO] Iters: 7, Total loss: 0.590, Loss x: 0.429, Loss s: 0.750, Loss w_fp: 0.750, Mask ratio: 0.661
+[2024-02-16 12:25:04,525][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:25:04,525][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:25:04,557][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:25:04,557][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:25:04,626][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:25:04,627][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:25:04,750][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:25:04,750][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:25:04,860][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:25:04,861][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:25:05,001][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:25:05,001][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:25:05,146][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:25:05,146][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:25:05,220][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:25:05,221][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:25:05,326][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 0.00
+[2024-02-16 12:25:05,326][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 0.00
+[2024-02-16 12:25:05,327][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 0.37
+[2024-02-16 12:25:05,327][    INFO] ***** Evaluation ***** >>>> MeanDice: 0.12
+
+[2024-02-16 12:25:05,556][    INFO] ===========> Epoch: 7, LR: 0.00351, Previous best: 1.48
+[2024-02-16 12:25:06,016][    INFO] Iters: 0, Total loss: 0.598, Loss x: 0.445, Loss s: 0.750, Loss w_fp: 0.753, Mask ratio: 0.607
+[2024-02-16 12:25:06,089][    INFO] Iters: 1, Total loss: 0.595, Loss x: 0.439, Loss s: 0.750, Loss w_fp: 0.752, Mask ratio: 0.672
+[2024-02-16 12:25:06,241][    INFO] Iters: 2, Total loss: 0.589, Loss x: 0.428, Loss s: 0.750, Loss w_fp: 0.751, Mask ratio: 0.635
+[2024-02-16 12:25:06,324][    INFO] Iters: 3, Total loss: 0.584, Loss x: 0.418, Loss s: 0.750, Loss w_fp: 0.751, Mask ratio: 0.622
+[2024-02-16 12:25:06,405][    INFO] Iters: 4, Total loss: 0.586, Loss x: 0.421, Loss s: 0.750, Loss w_fp: 0.751, Mask ratio: 0.640
+[2024-02-16 12:25:06,489][    INFO] Iters: 5, Total loss: 0.583, Loss x: 0.416, Loss s: 0.750, Loss w_fp: 0.751, Mask ratio: 0.648
+[2024-02-16 12:25:06,623][    INFO] Iters: 6, Total loss: 0.583, Loss x: 0.417, Loss s: 0.750, Loss w_fp: 0.751, Mask ratio: 0.643
+[2024-02-16 12:25:06,701][    INFO] Iters: 7, Total loss: 0.584, Loss x: 0.418, Loss s: 0.750, Loss w_fp: 0.751, Mask ratio: 0.643
+[2024-02-16 12:25:07,022][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:25:07,022][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:25:07,143][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:25:07,143][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:25:07,284][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:25:07,285][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:25:07,399][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:25:07,400][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:25:07,521][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:25:07,521][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:25:07,645][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:25:07,645][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:25:07,732][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:25:07,732][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:25:07,795][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:25:07,795][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:25:07,898][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 0.00
+[2024-02-16 12:25:07,898][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 0.00
+[2024-02-16 12:25:07,899][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 0.55
+[2024-02-16 12:25:07,899][    INFO] ***** Evaluation ***** >>>> MeanDice: 0.18
+
+[2024-02-16 12:25:08,059][    INFO] ===========> Epoch: 8, LR: 0.00248, Previous best: 1.48
+[2024-02-16 12:25:08,519][    INFO] Iters: 0, Total loss: 0.594, Loss x: 0.438, Loss s: 0.750, Loss w_fp: 0.750, Mask ratio: 0.715
+[2024-02-16 12:25:08,612][    INFO] Iters: 1, Total loss: 0.592, Loss x: 0.433, Loss s: 0.750, Loss w_fp: 0.751, Mask ratio: 0.726
+[2024-02-16 12:25:08,773][    INFO] Iters: 2, Total loss: 0.584, Loss x: 0.417, Loss s: 0.750, Loss w_fp: 0.751, Mask ratio: 0.709
+[2024-02-16 12:25:08,903][    INFO] Iters: 3, Total loss: 0.586, Loss x: 0.422, Loss s: 0.750, Loss w_fp: 0.751, Mask ratio: 0.685
+[2024-02-16 12:25:09,070][    INFO] Iters: 4, Total loss: 0.583, Loss x: 0.415, Loss s: 0.750, Loss w_fp: 0.750, Mask ratio: 0.687
+[2024-02-16 12:25:09,200][    INFO] Iters: 5, Total loss: 0.584, Loss x: 0.419, Loss s: 0.750, Loss w_fp: 0.750, Mask ratio: 0.695
+[2024-02-16 12:25:09,309][    INFO] Iters: 6, Total loss: 0.582, Loss x: 0.414, Loss s: 0.750, Loss w_fp: 0.750, Mask ratio: 0.694
+[2024-02-16 12:25:09,446][    INFO] Iters: 7, Total loss: 0.584, Loss x: 0.418, Loss s: 0.750, Loss w_fp: 0.750, Mask ratio: 0.698
+[2024-02-16 12:25:09,707][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:25:09,707][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:25:09,832][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:25:09,833][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:25:09,971][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:25:09,971][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:25:10,080][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:25:10,080][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:25:10,203][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:25:10,203][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:25:10,341][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:25:10,341][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:25:10,465][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:25:10,465][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:25:10,593][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:25:10,594][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:25:10,717][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 0.00
+[2024-02-16 12:25:10,717][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 0.00
+[2024-02-16 12:25:10,717][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 1.35
+[2024-02-16 12:25:10,717][    INFO] ***** Evaluation ***** >>>> MeanDice: 0.45
+
+[2024-02-16 12:25:10,935][    INFO] ===========> Epoch: 9, LR: 0.00140, Previous best: 1.48
+[2024-02-16 12:25:11,383][    INFO] Iters: 0, Total loss: 0.589, Loss x: 0.427, Loss s: 0.750, Loss w_fp: 0.750, Mask ratio: 0.750
+[2024-02-16 12:25:11,445][    INFO] Iters: 1, Total loss: 0.589, Loss x: 0.427, Loss s: 0.750, Loss w_fp: 0.750, Mask ratio: 0.727
+[2024-02-16 12:25:11,525][    INFO] Iters: 2, Total loss: 0.581, Loss x: 0.412, Loss s: 0.750, Loss w_fp: 0.750, Mask ratio: 0.682
+[2024-02-16 12:25:11,660][    INFO] Iters: 3, Total loss: 0.578, Loss x: 0.406, Loss s: 0.750, Loss w_fp: 0.750, Mask ratio: 0.676
+[2024-02-16 12:25:11,801][    INFO] Iters: 4, Total loss: 0.581, Loss x: 0.412, Loss s: 0.750, Loss w_fp: 0.750, Mask ratio: 0.679
+[2024-02-16 12:25:11,958][    INFO] Iters: 5, Total loss: 0.585, Loss x: 0.420, Loss s: 0.750, Loss w_fp: 0.750, Mask ratio: 0.698
+[2024-02-16 12:25:12,109][    INFO] Iters: 6, Total loss: 0.583, Loss x: 0.415, Loss s: 0.750, Loss w_fp: 0.750, Mask ratio: 0.688
+[2024-02-16 12:25:12,265][    INFO] Iters: 7, Total loss: 0.580, Loss x: 0.409, Loss s: 0.750, Loss w_fp: 0.750, Mask ratio: 0.687
+[2024-02-16 12:25:12,547][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:25:12,548][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:25:12,570][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:25:12,570][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:25:12,611][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:25:12,611][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:25:12,643][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:25:12,643][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:25:12,673][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:25:12,673][    INFO] torch.Size([11, 208, 156])
+[2024-02-16 12:25:12,711][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:25:12,712][    INFO] torch.Size([12, 210, 208])
+[2024-02-16 12:25:12,743][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:25:12,743][    INFO] torch.Size([11, 208, 192])
+[2024-02-16 12:25:12,843][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:25:12,843][    INFO] torch.Size([11, 208, 198])
+[2024-02-16 12:25:12,959][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 0.00
+[2024-02-16 12:25:12,959][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 0.00
+[2024-02-16 12:25:12,959][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 1.07
+[2024-02-16 12:25:12,959][    INFO] ***** Evaluation ***** >>>> MeanDice: 0.36
+

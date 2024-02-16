@@ -1,8 +1,16 @@
-# arguments for dataset
+model_desc: 'Unimatch Unet 7 Training on UKBB'
+data_desc: 'UKBB Train Data - 8 Labeled Patients, 8 Unlabeled Patients'
+
 dataset: ukbb
+mode: test
 nclass: 4
 crop_size: 256
 data_root: /vol/aimspace/projects/ukbb/data/cardiac/cardiac_segmentations/subjects
+num_workers: 2
+
+model: 'exp/acdc/unimatch/unet/7/best.pth'
+results_path: 'outputs/results/csv/unimatch_ukbb_scores_test_1_patients.csv'
+pred_mask_path: 'outputs/results/imgs/ukbb/unimatch_ukbb_pred_mask_'
 
 # arguments for training
 epochs: 300
@@ -10,12 +18,7 @@ batch_size: 1 # 12 per GPU
 lr: 0.01
 conf_thresh: 0.95
 
-# inference
-model: 'exp/acdc/unimatch/unet/7/best.pth'
-mode: test
-split: 'splits/ukbb/test.txt'
-results_path: 'outputs/results/csv/unimatch_ukbb_scores.csv'
-pred_mask_path: 'outputs/results/imgs/ukbb/unimatch_ukbb_pred_mask_'
-num_workers: 2
-model_desc: 'Unimatch Unet 7 Pretrained on ACDC'
-data_desc: 'Test Data - 1 Patients'
+labeled_split: splits/ukbb/7/labeled.txt
+unlabeled_split: splits/ukbb/7/unlabeled.txt
+val_split: splits/ukbb/val.txt
+test_split: splits/ukbb/test.txt

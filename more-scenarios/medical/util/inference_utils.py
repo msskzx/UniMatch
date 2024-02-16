@@ -15,11 +15,10 @@ def compute_dice(pred, mask, num_classes=4, epsilon=1e-9):
             pred_class = (pred[slice] == cls).float()
             target_class = (mask[slice] == cls).float()
 
-            intersection = torch.sum(pred_class * target_class).item()
+            inter = torch.sum(pred_class * target_class).item()
             union = torch.sum(pred_class).item() + torch.sum(target_class).item()
             
-            dice = (2. * intersection + epsilon) / (union + epsilon)
-            dice_class[slice][cls - 1] = dice * 100
+            dice_class[slice][cls - 1] = (2. * inter + epsilon) / (union + epsilon) * 100
 
         dice_mean[slice] = sum(dice_class[slice]) / (num_classes - 1)
     return dice_class, dice_mean
@@ -89,7 +88,9 @@ def eval_model(model, dataloader, cfg, logger):
             # interpolate and predict
             h, w = img.shape[-2:]
             img = F.interpolate(img, (cfg['crop_size'], cfg['crop_size']), mode='bilinear', align_corners=False)
+
             pred = model(img)
+            
             pred = F.interpolate(pred, (h, w), mode='bilinear', align_corners=False)
             pred = pred.argmax(dim=1)
 
@@ -101,7 +102,7 @@ def eval_model(model, dataloader, cfg, logger):
             # TODO get slice_idx from imgs instead of creating arbitrary idx
 
             # save og_img, mask, pred
-            # save_pred_mask(og_img, mask, pred, patient_id, frame, cfg)
+            save_pred_mask(og_img, mask, pred, patient_id, frame, cfg)
             
             # log and save results
             scores_df = save_scores(scores_df, dice_class, dice_mean, patient_id, frame, logger, cfg)

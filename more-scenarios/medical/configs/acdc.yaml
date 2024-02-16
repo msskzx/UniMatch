@@ -6,6 +6,6 @@ data_root: ACDC/
 
 # arguments for training
 epochs: 300
-batch_size: 1 # 12 per GPU
+batch_size: 12 # 12 per GPU
 lr: 0.01
 conf_thresh: 0.95

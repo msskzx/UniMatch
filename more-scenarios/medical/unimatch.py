@@ -204,6 +204,8 @@ def main():
                             '{:.3f}'.format(i, total_loss.avg, total_loss_x.avg, total_loss_s.avg, 
                                             total_loss_w_fp.avg, total_mask_ratio.avg))
 
+        break
+
         model.eval()
         dice_class = [0] * 3
         
