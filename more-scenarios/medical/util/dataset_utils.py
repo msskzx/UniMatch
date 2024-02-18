@@ -2,6 +2,7 @@ import os
 import torch
 import cv2
 from util.classes import MASK
+import nibabel as nib
 
 
 def transform(in_img, normalize=False):
@@ -40,7 +41,7 @@ def swap_classes(mask):
     return mask
 
 
-def get_patient_ids_from_directory(directory):
+def get_patient_ids_from_directory(directory, num_slices=8):
     """
     read all patients ids from directory
 
@@ -49,7 +50,20 @@ def get_patient_ids_from_directory(directory):
 
     return: list of ids
     """
-    return [folder for folder in os.listdir(directory) if os.path.isdir(os.path.join(directory, folder))]
+    folders = []
+    for folder in os.listdir(directory):
+        if os.path.isdir(os.path.join(directory, folder)):
+            files = os.listdir(os.path.join(directory, folder))
+            # has imgs, masks
+            if ('sa_ED.nii.gz' in files
+                and 'seg_sa_ED.nii.gz' in files
+                and 'sa_ES.nii.gz' in files
+                and 'seg_sa_ES.nii.gz' in files):
+                image_path = os.path.join(directory, folder, 'sa_ED.nii.gz')
+                in_img = nib.load(image_path).get_fdata()[:]
+                if in_img.shape[2] >= num_slices:
+                    folders.append(folder)
+    return folders
 
 
 def save_patient_ids(patient_ids, output_file):
@@ -67,7 +81,7 @@ def save_patient_ids(patient_ids, output_file):
 
 def get_patient_ids_frames(split):
     """
-    get patient ids, frames, slices (if available) from split file
+    read patient ids, frames, slices (if available) from split file
 
     Arguments:
     split -- split file path
@@ -80,12 +94,16 @@ def get_patient_ids_frames(split):
     return [x.split('-') for x in str_ids_frames]
 
 
-def generate_split(output_file, num_patients=7, num_slices=8, num_frames=2, start_idx = 0):
+def generate_split(output_file, num_patients=7, num_slices=8, num_frames=2, start_idx = 0, mode='train'):
     patient_ids_frames = get_patient_ids_frames('splits/ukbb/all.txt')
 
     with open(output_file, 'w') as file:
         for i in range(num_patients * num_frames):
-            for slice_idx in range(num_slices):
-                # example slices 2-9
-                patient_id, frame = patient_ids_frames[i+start_idx]
-                file.write(f'{patient_id}-{frame}-{slice_idx+2}\n')
+            patient_id, frame = patient_ids_frames[i+start_idx]
+            
+            if mode == 'train':
+                for slice_idx in range(num_slices):
+                    file.write(f'{patient_id}-{frame}-{slice_idx}\n')
+            else:
+                file.write(f'{patient_id}-{frame}\n')
+

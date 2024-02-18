@@ -91,7 +91,7 @@ class UKBBDataset(Dataset):
             }
         
         # TODO optimize this step because you load the whole 3D img and preprocess then return one slice
-        slice_idx = patient_id_frame[2]
+        slice_idx = int(patient_id_frame[2])
         img = img[slice_idx]
         mask = mask[slice_idx]
     
