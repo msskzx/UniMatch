@@ -1,4 +1,4 @@
-model_desc: 'Unimatch Unet 7 Pretrained on ACDC'
+model_desc: 'Unimatch Unet 7 Pretrained on ACDC - 70 Patients - 7 Labeled, 63 Unlabeled'
 data_desc: 'ACDC Test Data - 20 Patients'
 
 mode: test
