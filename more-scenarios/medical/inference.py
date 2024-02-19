@@ -8,6 +8,7 @@ from util.utils import init_log
 import yaml
 from util.inference_utils import eval_model
 import argparse
+import pprint
 
 
 parser = argparse.ArgumentParser(description='Revisiting Weak-to-Strong Consistency in Semi-Supervised Semantic Segmentation')
@@ -21,8 +22,7 @@ def main():
     logger = init_log('global', logging.INFO)
     logger.propagate = 0
 
-    logger.info(cfg['model_desc'])
-    logger.info(cfg['data_desc'])
+    logger.info('{}\n'.format(pprint.pformat({**cfg, **vars(args)})))
 
     checkpoint = torch.load(cfg['model'])
     checkpoint = {k.replace('module.', ''): v for k, v in checkpoint['model'].items()}
