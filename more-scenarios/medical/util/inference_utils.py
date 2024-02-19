@@ -100,7 +100,7 @@ def eval_model(model, dataloader, cfg, logger):
             dice_class, dice_mean = compute_dice(pred, mask)
             
             # save og_img, mask, pred
-            # save_pred_mask(og_img, mask, pred, patient_id, frame, cfg)
+            save_pred_mask(og_img, mask, pred, patient_id, frame, cfg)
             
             # log and save results
             scores_df = save_scores(scores_df, dice_class, dice_mean, patient_id, frame, logger, cfg)
