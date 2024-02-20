@@ -7,7 +7,7 @@ nclass: 4
 crop_size: 256
 data_root: ACDC/
 batch_size: 1
-num_workers: 2
+num_workers: 1
 
 model: 'exp/acdc/unimatch/unet/7/best.pth'
 results_path: 'outputs/results/csv/unimatch_acdc_scores_20_patients.csv'

@@ -6,7 +6,7 @@ mode: test
 nclass: 4
 crop_size: 256
 data_root: /vol/aimspace/projects/ukbb/data/cardiac/cardiac_segmentations/subjects
-num_workers: 2
+num_workers: 1
 
 model: 'exp/acdc/unimatch/unet/7/best.pth'
 results_path: 'outputs/results/csv/unimatch_ukbb_scores_test_1_patients.csv'
@@ -22,3 +22,5 @@ labeled_split: splits/ukbb/7/labeled.txt
 unlabeled_split: splits/ukbb/7/unlabeled.txt
 val_split: splits/ukbb/val.txt
 test_split: splits/ukbb/test.txt
+all_split: splits/ukbb/all.txt
+all_csv: splits/ukbb/all.csv

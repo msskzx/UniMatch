@@ -86,19 +86,18 @@ def main():
         crop_size=cfg['crop_size'],
         split=cfg['val_split'])
     
-
     trainsampler_l = torch.utils.data.distributed.DistributedSampler(trainset_l)
     trainloader_l = DataLoader(trainset_l, batch_size=cfg['batch_size'],
-                               pin_memory=True, num_workers=1, drop_last=True, sampler=trainsampler_l)
+                               pin_memory=True, num_workers=cfg['num_workers'], drop_last=True, sampler=trainsampler_l)
     trainsampler_u = torch.utils.data.distributed.DistributedSampler(trainset_u)
     trainloader_u = DataLoader(trainset_u, batch_size=cfg['batch_size'],
-                               pin_memory=True, num_workers=1, drop_last=True, sampler=trainsampler_u)
+                               pin_memory=True, num_workers=cfg['num_workers'], drop_last=True, sampler=trainsampler_u)
 
     trainsampler_u_mix = torch.utils.data.distributed.DistributedSampler(trainset_u)
     trainloader_u_mix = DataLoader(trainset_u, batch_size=cfg['batch_size'],
-                                   pin_memory=True, num_workers=1, drop_last=True, sampler=trainsampler_u_mix)
+                                   pin_memory=True, num_workers=cfg['num_workers'], drop_last=True, sampler=trainsampler_u_mix)
     valsampler = torch.utils.data.distributed.DistributedSampler(valset)
-    valloader = DataLoader(valset, batch_size=1, pin_memory=True, num_workers=1,
+    valloader = DataLoader(valset, batch_size=1, pin_memory=True, num_workers=cfg['num_workers'],
                            drop_last=False, sampler=valsampler)
 
     total_iters = len(trainloader_u) * cfg['epochs']

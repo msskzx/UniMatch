@@ -1,0 +1,48 @@
+[2024-02-20 21:45:35,529][    INFO] {'all_csv': 'splits/ukbb/all.csv',
+ 'all_split': 'splits/ukbb/all.txt',
+ 'batch_size': 12,
+ 'conf_thresh': 0.95,
+ 'config': 'configs/ukbb.yaml',
+ 'crop_size': 256,
+ 'data_desc': 'UKBB Train Data - 7 Labeled Patients, 63 Unlabeled Patients',
+ 'data_root': '/vol/aimspace/projects/ukbb/data/cardiac/cardiac_segmentations/subjects',
+ 'dataset': 'ukbb',
+ 'epochs': 300,
+ 'labeled_id_path': 'splits/ukbb/7/labeled.txt',
+ 'labeled_split': 'splits/ukbb/7/labeled.txt',
+ 'local_rank': 0,
+ 'lr': 0.01,
+ 'mode': 'test',
+ 'model': 'exp/acdc/unimatch/unet/7/best.pth',
+ 'model_desc': 'Unimatch Unet 7 Training on UKBB',
+ 'nclass': 4,
+ 'ngpus': 1,
+ 'num_workers': 1,
+ 'port': 8013,
+ 'pred_mask_path': 'outputs/results/imgs/ukbb/unimatch_ukbb_pred_mask_',
+ 'results_path': 'outputs/results/csv/unimatch_ukbb_scores_test_1_patients.csv',
+ 'save_path': 'exp/ukbb/unimatch/unet/7',
+ 'test_split': 'splits/ukbb/test.txt',
+ 'unlabeled_id_path': 'splits/ukbb/7/unlabeled.txt',
+ 'unlabeled_split': 'splits/ukbb/7/unlabeled.txt',
+ 'val_split': 'splits/ukbb/val.txt'}
+
+[2024-02-20 21:45:36,032][    INFO] Total params: 1.8M
+
+[2024-02-20 21:45:37,912][    INFO] ************ Load from checkpoint at epoch 0
+
+[2024-02-20 21:45:37,912][    INFO] ===========> Epoch: 1, LR: 0.01000, Previous best: 0.00
+[2024-02-20 21:45:51,854][    INFO] Iters: 0, Total loss: 0.661, Loss x: 0.787, Loss s: 0.519, Loss w_fp: 0.550, Mask ratio: 0.003
+[2024-02-20 21:46:03,478][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 0.00
+[2024-02-20 21:46:03,478][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 0.00
+[2024-02-20 21:46:03,478][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 0.00
+[2024-02-20 21:46:03,478][    INFO] ***** Evaluation ***** >>>> MeanDice: 0.00
+
+[2024-02-20 21:46:03,659][    INFO] ===========> Epoch: 2, LR: 0.00997, Previous best: 0.00
+[2024-02-20 21:46:05,017][    INFO] Iters: 0, Total loss: 0.582, Loss x: 0.410, Loss s: 0.751, Loss w_fp: 0.756, Mask ratio: 0.723
+[2024-02-20 21:46:19,320][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 0.00
+[2024-02-20 21:46:19,320][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 0.00
+[2024-02-20 21:46:19,320][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 0.00
+[2024-02-20 21:46:19,320][    INFO] ***** Evaluation ***** >>>> MeanDice: 0.00
+
+[2024-02-20 21:46:19,445][    INFO] ===========> Epoch: 3, LR: 0.00994, Previous best: 0.00
