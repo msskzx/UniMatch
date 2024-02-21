@@ -43,7 +43,7 @@ def main():
 
     test_loader = DataLoader(test_dataset, batch_size=cfg['batch_size'], pin_memory=True, num_workers=cfg['num_workers'], drop_last=False)
     
-    scores_df = eval_model(model, test_loader, cfg, logger)
+    scores_df = eval_model(model, test_loader, cfg, logger, visualize=cfg['visualize'])
     scores_df.to_csv(cfg['results_path'], index=False)
 
 
