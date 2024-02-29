@@ -17,19 +17,21 @@ FRAME = {
 }
 
 
+"""
+0	Female
+1	Male
+"""
 PRIMARY_DEMOGRAPHICS = {
-    '31': 'sex',                # Sex, Baseline characteristics
-    '21003': 'age',             # Age when attended assessment centre, Reception
-    '21000': 'ethnicity'        # Ethnic background, Ethnicity
+    '31': 'sex',
+    '21003': 'age',
+    '21000': 'ethnicity'
 }
-    #'52': 'month_of_birth',     # Month of birth, Baseline characteristics
-    #'34': 'year_of_birth',      # Year of birth, Baseline characteristics
 
 
 """
 coding	meaning	
 -3	Prefer not to answer
--1	Do not know	
+-1	Do not know
 1	White
 2	Mixed
 3	Asian or Asian British
@@ -52,12 +54,8 @@ coding	meaning
 4003	Any other Black background
 """
 ETHNNICITY_CODING = {
-    '-3': 'Prefer not to answer',
-    '-1': 'Do not know',
     '1': 'White',
-    '2': 'Mixed',
     '3': 'Asian',
     '4': 'Black',
     '5': 'Chinese',
-    '6': 'Other',
 }

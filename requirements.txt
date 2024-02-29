@@ -11,3 +11,4 @@ nibabel
 pandas
 Pyarrow
 matplotlib
+seaborn
