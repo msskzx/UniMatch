@@ -18,6 +18,9 @@ FRAME = {
 
 
 """
+Sex
+
+code meaning
 0	Female
 1	Male
 """
@@ -29,15 +32,17 @@ PRIMARY_DEMOGRAPHICS = {
 
 
 """
+Ethnicity
+
 coding	meaning	
--3	Prefer not to answer
--1	Do not know
-1	White
-2	Mixed
-3	Asian or Asian British
-4	Black or Black British
-5	Chinese
-6	Other ethnic group
+-3	    Prefer not to answer
+-1	    Do not know
+1	    White
+2	    Mixed
+3	    Asian or Asian British
+4	    Black or Black British
+5	    Chinese
+6	    Other ethnic group
 1001	British
 1002	Irish
 1003	Any other white background
@@ -57,5 +62,4 @@ ETHNNICITY_CODING = {
     '1': 'White',
     '3': 'Asian',
     '4': 'Black',
-    '5': 'Chinese',
 }

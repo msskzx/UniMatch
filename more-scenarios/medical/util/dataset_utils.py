@@ -1,7 +1,7 @@
 import os
 import torch
 import cv2
-from util.classes import MASK
+from util.classes import MASK, ETHNNICITY_CODING
 import nibabel as nib
 import pandas as pd
 import random
@@ -124,3 +124,25 @@ def shuffle_split(lines, seed=42):
     random.seed(seed)
     random.shuffle(lines)
     return lines
+
+
+def control_ethnicity(df, n):
+    res_df = pd.DataFrame()
+    for k, v in ETHNNICITY_CODING.items():
+        cond = df['ethnicity'].astype(str).str.startswith(k)
+        cur_df = df[cond].sample(n=n, random_state=42)
+        res_df = pd.concat([res_df, cur_df])
+    return res_df
+
+
+def control_sex(df, split_prcnt, len_dataset):
+    n = int(len_dataset * split_prcnt / 2)
+    df_male = df[df['sex'] == 1].sample(n=n, random_state=42)
+    df_female = df[df['sex'] == 0].sample(n=n, random_state=42)
+    return pd.concat([df_male, df_female])
+
+
+def control_age(df, mean=51.0, std=7.0):
+    lw_bound = mean - std
+    up_bound = mean + std
+    return df[(df['age'] > lw_bound) & (df['age'] < up_bound)]
