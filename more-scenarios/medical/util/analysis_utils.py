@@ -16,15 +16,10 @@ def plot_age_dist(df):
         print(f'Mean age for {ETHNNICITY_CODING[k]}:', mean)
         print(f'STD age for {ETHNNICITY_CODING[k]}:', std)
 
-    # Add title and labels
     plt.title('Density Plot of Age Distribution per Ethnic Group')
     plt.xlabel('Age')
     plt.ylabel('Density')
-
-    # Add legend
     plt.legend()
-
-    # Show the plot
     plt.show()
 
 

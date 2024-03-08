@@ -3,7 +3,7 @@ from torch.utils.data import Dataset
 import nibabel as nib
 import torch
 import numpy as np
-from util.dataset_utils import get_patient_ids_frames, transform, swap_classes
+from util.dataset_utils import get_patient_ids_frames, transform, swap_classes, get_patient_ids_frames_from_csv
 import random
 from dataset.transform import random_rot_flip, random_rotate, blur, obtain_cutmix_box
 from scipy.ndimage.interpolation import zoom
@@ -24,7 +24,7 @@ class UKBBDataset(Dataset):
         self.root_dir = root_dir
         self.mode = mode
         self.crop_size = crop_size
-        self.patient_ids_frames = get_patient_ids_frames(split)
+        self.patient_ids_frames = get_patient_ids_frames_from_csv(split, mode)
 
     def __getitem__(self, item):
         """
@@ -63,8 +63,8 @@ class UKBBDataset(Dataset):
         img -- img with shape (1, 10, 204, 208)
         mask -- same shape as img
         """
-        patient_id = patient_id_frame[0]
-        frame = patient_id_frame[1]
+        patient_id = str(patient_id_frame[0])
+        frame = str(patient_id_frame[1])
 
         # Load original images for the current patient
         image_path = os.path.join(self.root_dir, patient_id, f"{frame}.nii.gz")

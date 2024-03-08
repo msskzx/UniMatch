@@ -1,7 +1,7 @@
 import os
 import torch
 import cv2
-from util.classes import MASK, ETHNNICITY_CODING
+from util.classes import MASK, ETHNNICITY_CODING, FRAME
 import nibabel as nib
 import pandas as pd
 import random
@@ -96,34 +96,61 @@ def get_patient_ids_frames(split):
     return [x.split('-') for x in str_ids_frames]
 
 
-def generate_split(output_file, data_root, all_split, num_patients=7, num_frames=2, start_idx=0, mode='train', shuffle=True):
-    patient_ids_frames = get_patient_ids_frames(all_split)
-    lines = []
-
-    for i in range(num_patients * num_frames):
-        patient_id, frame = patient_ids_frames[i+start_idx]
-        
-        if mode == 'train':
-            image_path = os.path.join(data_root, patient_id, f"{frame}.nii.gz")
-            in_img = nib.load(image_path).get_fdata()[:]
-            num_slices = in_img.shape[2]
-            for slice_idx in range(num_slices):
-                lines.append(f'{patient_id}-{frame}-{slice_idx}\n')
+def get_patient_ids_frames_from_csv(split, mode):
+    df = pd.read_csv(split)
+    res = []
+    for idx, row in df.iterrows():
+        if mode in ['train', 'train_l', 'train_u']:
+            res.append((row['eid'], row['frame'], row['slice_idx']))
         else:
-            lines.append(f'{patient_id}-{frame}\n')
-    
+            res.append((row['eid'], row['frame']))
+
+    return res
+
+
+def generate_split(input_file, output_file, cfg=None, mode='train', shuffle=True):
+    """
+    given csv file containing split generate a txt file with ids, frames, slices
+    """
+    df = pd.read_csv(input_file)
+    data = {
+        'eid': [],
+        'frame': [],
+    }
+    if mode == 'train':
+        data['slice_idx'] = []
+
+    for idx, row in df.iterrows():  
+        for k, frame in FRAME.items():
+            if mode == 'train':
+                image_path = os.path.join(cfg['data_root'], str(int(row['eid'])), f"{frame}.nii.gz")
+                in_img = nib.load(image_path).get_fdata()[:]
+                num_slices = in_img.shape[2]
+                for slice_idx in range(num_slices):
+                    data['eid'].append(str(int(row["eid"])))
+                    data['frame'].append(frame)
+                    data['slice_idx'].append(slice_idx)
+            else:
+                data['eid'].append(str(int(row["eid"])))
+                data['frame'].append(frame)
+
+
+    res_df = pd.DataFrame(data=data)
+
     if shuffle:
-        lines = shuffle_split(lines)
+        df = df.sample(frac=1, random_state=42)
     
-    with open(output_file, 'w') as file:
-        for line in lines:
-            file.write(line + '\n')
+    if mode == 'train':
+        split_un_labeled(res_df, cfg)
+
+    res_df.to_csv(output_file)
 
 
-def shuffle_split(lines, seed=42):
-    random.seed(seed)
-    random.shuffle(lines)
-    return lines
+def split_un_labeled(df, cfg, frac=0.1):
+    df_l = df.sample(frac=frac, random_state=42)
+    df_u = df.drop(df_l.index)
+    df_l.to_csv('splits/ukbb/labeled.csv')
+    df_u.to_csv('splits/ukbb/unlabeled.csv')
 
 
 def control_ethnicity(df, n):
@@ -146,3 +173,11 @@ def control_age(df, mean=51.0, std=7.0):
     lw_bound = mean - std
     up_bound = mean + std
     return df[(df['age'] > lw_bound) & (df['age'] < up_bound)]
+
+
+def run_get_all_eids_from_dir(cfg):
+    """
+    used only once to get all ids
+    """
+    patient_ids = get_patient_ids_from_directory(cfg['data_root'])
+    save_patient_ids(patient_ids, cfg['all_split'], cfg['all_csv'])
