@@ -1,0 +1,16 @@
+model_desc: 'Unimatch Unet 330 Pretrained on UKBB - 3301 Patients - 330 Labeled, 2971 Unlabeled'
+data_desc: 'UKBB Test Data - Sex Controlled -  962 Patients'
+
+dataset: ukbb
+mode: test
+nclass: 4
+crop_size: 256
+data_root: /vol/aimspace/projects/ukbb/data/cardiac/cardiac_segmentations/subjects
+batch_size: 1
+num_workers: 1
+visualize: False
+
+model: 'exp/ukbb/unimatch/unet/330/best.pth'
+results_path: 'outputs/results/csv/unimatch_ukbb_scores_sex_962_patients.csv'
+pred_mask_path: 'outputs/results/imgs/ukbb/unimatch_ukbb_pred_mask_'
+test_split: splits/ukbb/test_sex_ctrl.csv
