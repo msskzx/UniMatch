@@ -13,4 +13,4 @@ visualize: False
 model: 'exp/ukbb/unimatch/unet/330/best.pth'
 results_path: 'outputs/results/csv/unimatch_ukbb_scores_ethn_108_patients.csv'
 pred_mask_path: 'outputs/results/imgs/ukbb/unimatch_ukbb_pred_mask_'
-test_split: splits/ukbb/test_sex_ethn.csv
+test_split: splits/ukbb/test_ethn_ctrl.csv

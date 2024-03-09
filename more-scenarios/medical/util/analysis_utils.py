@@ -2,6 +2,73 @@ import pandas as pd
 from util.classes import ETHNNICITY_CODING
 import seaborn as sns
 import matplotlib.pyplot as plt
+from yaml import load, Loader
+from util.classes import PRIMARY_DEMOGRAPHICS
+import re
+
+def merge_result_info(df, patients_df):
+    return pd.merge(df, patients_df, left_on='patient_id', right_on='eid', how='inner')
+
+def get_patients_info():
+    og_df = pd.read_csv('/vol/aimspace/projects/ukbb/data/tabular/ukb668815_imaging.csv')
+    
+    # extract cols of interest
+    all_cols = og_df.columns
+    cols = []
+    for index, s in enumerate(all_cols):
+        for k, v in PRIMARY_DEMOGRAPHICS.items():
+            pattern = r'{}-(0.0)'.format(re.escape(k))
+            if re.match(pattern, s):
+                cols.append(s)
+
+    # rename cols instead of codes
+    new_cols = []
+    for old_col in cols:
+        new_cols.append(PRIMARY_DEMOGRAPHICS[old_col.split('-')[0]])
+    cols.append('eid')
+    new_cols.append('eid')
+    df = og_df[cols]
+    df.columns = new_cols
+
+    return df
+
+
+def get_group_results(df):
+    sex_df = df.groupby('sex')['dice_mean'].mean()
+    print(f'Dice Mean for Male: {sex_df[1]}')
+    print(f'Dice Mean for Female: {sex_df[0]}')
+
+    for i, k in enumerate(ETHNNICITY_CODING):
+        cond = df['ethnicity'].astype(str).str.startswith(k)
+        ethn_df = df[cond]
+
+        mean = ethn_df.groupby('ethnicity')['dice_mean'].mean().reset_index()
+        print(f'Mean Dice for {ETHNNICITY_CODING[k]}:\n{mean}')
+        print(f'Mean: {mean["dice_mean"][0]}')
+
+
+def get_results(df):
+    print('Number of Patients:', df['eid'].nunique())
+    print('Total number of slices:', len(df))
+
+    print('---')
+    print("DICE Mean: ", df['dice_mean'].mean())
+    print("RV Mean: ", df['dice_rv'].mean())
+    print("MYO Mean: ", df['dice_myo'].mean())
+    print("LV Mean: ", df['dice_lv'].mean())
+    print('---')
+
+    thresh = 50.0
+    filtered_rows = df[df['dice_mean'] < thresh]
+    print(f'Number of slices with DICE < {thresh}%:', len(filtered_rows))
+
+    count_df = filtered_rows[['slice_idx', 'eid']].groupby('slice_idx').count().reset_index()
+    count_df.columns = ['slice_idx', 'count']
+    sns.barplot(x='slice_idx', y='count', data=count_df)
+    plt.xlabel('Slice Index')
+    plt.ylabel('Count')
+    plt.title(f'Slice Index Distribution with DICE < {thresh}%')
+    plt.show()
 
 
 def plot_age_dist(df):
