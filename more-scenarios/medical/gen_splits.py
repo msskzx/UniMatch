@@ -9,6 +9,13 @@ from util.analysis_utils import prep_patients_df
 def generate_split(input_file, output_file, cfg=None, mode='train', shuffle=True):
     """
     given csv file containing eids generate a csv file with eids, frames, slices
+
+    Arguments:
+    input_file -- csv containing ukbb patients info
+    output_file -- csv containing patients eids for this split
+    cfg -- loaded cfg file
+    mode -- mode (train, val, test)
+    shuffle -- shuffle (True, False)
     """
     df = pd.read_csv(input_file)
     data = {
@@ -41,14 +48,14 @@ def generate_split(input_file, output_file, cfg=None, mode='train', shuffle=True
     if mode == 'train':
         split_un_labeled(res_df, cfg)
 
-    res_df.to_csv(output_file)
+    res_df.to_csv(output_file, index=False)
 
 
 def split_un_labeled(df, cfg, frac=0.1):
     df_l = df.sample(frac=frac, random_state=42)
     df_u = df.drop(df_l.index)
-    df_l.to_csv('splits/ukbb/labeled.csv')
-    df_u.to_csv('splits/ukbb/unlabeled.csv')
+    df_l.to_csv(cfg['labeled_split'], index=False)
+    df_u.to_csv(cfg['unlabeled_split'], index=False)
 
 
 def get_patient_ids_from_directory(directory):
@@ -326,18 +333,35 @@ def gen_train_val_ctrl_csv():
 
 
 def main():
+    # EXPERIMENT 1
     # generate baseline splits csv - expirement 1
     gen_baseline_splits_csv()
 
-    # generate train, val controlled - expirment 2
-    gen_train_val_ctrl_csv()
-
     # read generated csv files that contain ids only to produce splits that contain ids, frames, slices
-    cfg = load(open('configs/ukbb.yaml', "r"), Loader=Loader)
+    cfg = load(open('configs/ukbb.yaml', 'r'), Loader=Loader)
     generate_split(input_file='ukbb/val.csv', output_file='splits/ukbb/val.csv', mode='val', shuffle=True)
     generate_split(input_file='ukbb/test_sex_ctrl.csv', output_file='splits/ukbb/test_sex_ctrl.csv', mode='test', shuffle=False)
     generate_split(input_file='ukbb/test_ethn_ctrl.csv', output_file='splits/ukbb/test_ethn_ctrl.csv', mode='test', shuffle=False)
     generate_split(input_file='ukbb/train.csv', output_file='splits/ukbb/train.csv', mode='train', cfg=cfg, shuffle=True)
+
+    # EXPERIMENTS 2, 3, 4
+    gen_train_val_ctrl_csv()
+    
+    os.mkdir('splits/ukbb/18')
+    os.mkdir('splits/ukbb/26')
+    os.mkdir('splits/ukbb/80')
+
+    cfg_sex_ctrl = load(open('configs/ukbb_sex_ctrl.yaml', 'r'), Loader=Loader)
+    generate_split(input_file='ukbb/train_sex_ctrl.csv', output_file=cfg_sex_ctrl['train_split'], mode='train', cfg=cfg_sex_ctrl, shuffle=True)
+    generate_split(input_file='ukbb/val_sex_ctrl.csv', output_file=cfg_sex_ctrl['val_split'], mode='val', shuffle=True)
+
+    cfg_ethn_ctrl = load(open('configs/ukbb_ethn_ctrl.yaml', 'r'), Loader=Loader)
+    generate_split(input_file='ukbb/train_ethn_ctrl.csv', output_file=cfg_ethn_ctrl['train_split'], mode='train', cfg=cfg_ethn_ctrl, shuffle=True)
+    generate_split(input_file='ukbb/val_ethn_ctrl.csv', output_file=cfg_ethn_ctrl['val_split'], mode='val', shuffle=True)
+
+    cfg_sex_ethn_ctrl = load(open('configs/ukbb_sex_ethn_ctrl.yaml', 'r'), Loader=Loader)
+    generate_split(input_file='ukbb/train_sex_ethn_ctrl.csv', output_file=cfg_sex_ethn_ctrl['train_split'], mode='train', cfg=cfg_sex_ethn_ctrl, shuffle=True)
+    generate_split(input_file='ukbb/val_sex_ethn_ctrl.csv', output_file=cfg_sex_ethn_ctrl['val_split'], mode='val', shuffle=True)
 
 
 if __name__ == '__main__':
