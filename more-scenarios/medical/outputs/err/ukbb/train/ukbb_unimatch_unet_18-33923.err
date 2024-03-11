@@ -1,0 +1,32 @@
+[2024-03-11 14:58:40,294][    INFO] {'all_split': 'splits/ukbb/all.csv',
+ 'batch_size': 12,
+ 'conf_thresh': 0.95,
+ 'config': 'configs/ukbb_sex_ethn_ctrl.yaml',
+ 'crop_size': 256,
+ 'ctrl': 'age sex ethnicity',
+ 'data_desc': 'UKBB Train Data - 182 Patients, 18 Labeled, Rest Unlabeled '
+              'Patients',
+ 'data_root': '/vol/aimspace/projects/ukbb/data/cardiac/cardiac_segmentations/subjects',
+ 'dataset': 'ukbb',
+ 'epochs': 100,
+ 'labeled_id_path': 'splits/ukbb/18/labeled.csv',
+ 'labeled_split': 'splits/ukbb/18/labeled.csv',
+ 'local_rank': 0,
+ 'lr': 0.01,
+ 'mode': 'train',
+ 'model_desc': 'Unimatch Unet 18 Training on UKBB',
+ 'nclass': 4,
+ 'ngpus': 1,
+ 'num_workers': 1,
+ 'port': 8013,
+ 'save_path': 'exp/ukbb/unimatch/unet/18',
+ 'split': 18,
+ 'train_split': 'splits/ukbb/18/train.csv',
+ 'unlabeled_id_path': 'splits/ukbb/18/unlabeled.csv',
+ 'unlabeled_split': 'splits/ukbb/18/unlabeled.csv',
+ 'val_split': 'splits/ukbb/18/val.csv',
+ 'visualize': False}
+
+[2024-03-11 14:58:40,557][    INFO] Total params: 1.8M
+
+[2024-03-11 15:01:33,670][    INFO] ===========> Epoch: 0, LR: 0.01000, Previous best: 0.00

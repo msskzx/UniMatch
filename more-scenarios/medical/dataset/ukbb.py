@@ -3,7 +3,7 @@ from torch.utils.data import Dataset
 import nibabel as nib
 import torch
 import numpy as np
-from util.dataset_utils import get_patient_ids_frames, transform, swap_classes, get_patient_ids_frames_from_csv
+from util.dataset_utils import get_patient_ids_frames, transform, swap_classes
 import random
 from dataset.transform import random_rot_flip, random_rotate, blur, obtain_cutmix_box
 from scipy.ndimage.interpolation import zoom
@@ -24,7 +24,7 @@ class UKBBDataset(Dataset):
         self.root_dir = root_dir
         self.mode = mode
         self.crop_size = crop_size
-        self.patient_ids_frames = get_patient_ids_frames_from_csv(split, mode)
+        self.patient_ids_frames = get_patient_ids_frames(split, mode)
 
     def __getitem__(self, item):
         """
