@@ -2,20 +2,17 @@ import pandas as pd
 from util.classes import ETHNNICITY_CODING
 import seaborn as sns
 import matplotlib.pyplot as plt
-from yaml import load, Loader
 from util.classes import PRIMARY_DEMOGRAPHICS
 import re
 
-def merge_result_info(df, patients_df):
+def merge_results_patients(df, patients_df):
     return pd.merge(df, patients_df, left_on='patient_id', right_on='eid', how='inner')
 
-def get_patients_info():
-    og_df = pd.read_csv('/vol/aimspace/projects/ukbb/data/tabular/ukb668815_imaging.csv')
-    
+def prep_patients_df(og_df):   
     # extract cols of interest
     all_cols = og_df.columns
     cols = []
-    for index, s in enumerate(all_cols):
+    for _, s in enumerate(all_cols):
         for k, v in PRIMARY_DEMOGRAPHICS.items():
             pattern = r'{}-(0.0)'.format(re.escape(k))
             if re.match(pattern, s):
@@ -38,7 +35,7 @@ def get_group_results(df):
     print(f'Dice Mean for Male: {sex_df[1]}')
     print(f'Dice Mean for Female: {sex_df[0]}')
 
-    for i, k in enumerate(ETHNNICITY_CODING):
+    for _, k in enumerate(ETHNNICITY_CODING):
         cond = df['ethnicity'].astype(str).str.startswith(k)
         ethn_df = df[cond]
 
@@ -73,15 +70,15 @@ def get_results(df):
 
 def plot_age_dist(df):
     plt.figure(figsize=(8, 6))
-    for i, k in enumerate(ETHNNICITY_CODING):
+    for _, k in enumerate(ETHNNICITY_CODING):
         cond = df['ethnicity'].astype(str).str.startswith(k)
         ethnic_group_df = df[cond]
         sns.kdeplot(ethnic_group_df['age'], label=ETHNNICITY_CODING[k], fill=True)
         mean = ethnic_group_df['age'].mean()
         std = ethnic_group_df['age'].std()
         
-        print(f'Mean age for {ETHNNICITY_CODING[k]}:', mean)
-        print(f'STD age for {ETHNNICITY_CODING[k]}:', std)
+        print(f'Mean age for {ETHNNICITY_CODING[k]}: {mean:.2f}')
+        print(f'STD age for {ETHNNICITY_CODING[k]}: {std:.2f}')
 
     plt.title('Density Plot of Age Distribution per Ethnic Group')
     plt.xlabel('Age')

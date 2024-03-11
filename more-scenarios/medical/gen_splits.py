@@ -1,9 +1,339 @@
-from util.dataset_utils import generate_split
-import yaml
+from yaml import load, Loader
+from util.classes import FRAME, ETHNNICITY_CODING
+import nibabel as nib
+import pandas as pd
+import os
+from util.analysis_utils import prep_patients_df
+ 
+
+def generate_split(input_file, output_file, cfg=None, mode='train', shuffle=True):
+    """
+    given csv file containing eids generate a csv file with eids, frames, slices
+    """
+    df = pd.read_csv(input_file)
+    data = {
+        'eid': [],
+        'frame': [],
+    }
+    if mode == 'train':
+        data['slice_idx'] = []
+
+    for _, row in df.iterrows():  
+        for _, frame in FRAME.items():
+            if mode == 'train':
+                image_path = os.path.join(cfg['data_root'], str(int(row['eid'])), f"{frame}.nii.gz")
+                in_img = nib.load(image_path).get_fdata()[:]
+                num_slices = in_img.shape[2]
+                for slice_idx in range(num_slices):
+                    data['eid'].append(str(int(row["eid"])))
+                    data['frame'].append(frame)
+                    data['slice_idx'].append(slice_idx)
+            else:
+                data['eid'].append(str(int(row["eid"])))
+                data['frame'].append(frame)
+
+
+    res_df = pd.DataFrame(data=data)
+
+    if shuffle:
+        df = df.sample(frac=1, random_state=42)
+    
+    if mode == 'train':
+        split_un_labeled(res_df, cfg)
+
+    res_df.to_csv(output_file)
+
+
+def split_un_labeled(df, cfg, frac=0.1):
+    df_l = df.sample(frac=frac, random_state=42)
+    df_u = df.drop(df_l.index)
+    df_l.to_csv('splits/ukbb/labeled.csv')
+    df_u.to_csv('splits/ukbb/unlabeled.csv')
+
+
+def get_patient_ids_from_directory(directory):
+    """
+    read all patients ids from directory who have both
+    short axis ED, ES img, mask pairs
+
+    Arguements:
+    directory -- path
+
+    return: list of ids
+    """
+    folders = []
+    for folder in os.listdir(directory):
+        if os.path.isdir(os.path.join(directory, folder)):
+            files = os.listdir(os.path.join(directory, folder))
+            if ('sa_ED.nii.gz' in files
+                and 'seg_sa_ED.nii.gz' in files
+                and 'sa_ES.nii.gz' in files
+                and 'seg_sa_ES.nii.gz' in files):
+                folders.append(folder)
+    return folders
+
+
+def save_patient_ids(patient_ids, output_file, csv_file):
+    """
+    save the list of ids in split text file
+
+    Arguements:
+    patient_ids -- list of ids
+    output_file -- path
+    """
+    ids = pd.DataFrame(columns=['eid'])
+
+    with open(output_file, 'w') as file:
+        for patient_id in patient_ids:
+            ids.loc[len(ids)] = {'eid': patient_id}
+            file.write(f'{patient_id}-sa_ED\n{patient_id}-sa_ES\n')
+    
+    ids.to_csv(csv_file, index=False)
+
+
+def run_get_all_eids_from_dir(cfg):
+    """
+    used only once to get all ids
+    """
+    patient_ids = get_patient_ids_from_directory(cfg['data_root'])
+    save_patient_ids(patient_ids, cfg['all_split'], cfg['all_csv'])
+
+
+def control_ethnicity(df, n, sex_ctrl=False):
+    """
+    extract equal number of samples per ethnic group
+
+    Arguments:
+    df -- input df
+    n -- number of samples per ethnic group
+
+    return: ethnicity controlled df
+    """
+    res_df = pd.DataFrame()
+    for k, _ in ETHNNICITY_CODING.items():
+        cond = df['ethnicity'].astype(str).str.startswith(k)
+        cur_df = df[cond]
+        if sex_ctrl:
+            male_df = cur_df[cur_df['sex'] == 1].sample(n=n//2, random_state=42)
+            female_df = cur_df[cur_df['sex'] == 0].sample(n=n//2, random_state=42)
+            cur_df = pd.concat([male_df, female_df])
+        else:
+            cur_df = cur_df.sample(n=n, random_state=42)
+        res_df = pd.concat([res_df, cur_df])
+    return res_df
+
+
+def control_sex(df, split_prcnt):
+    """
+    extract equal number of samples per sex
+    
+    Arguments:
+    df -- input df
+    split_prcnt -- split percentage (train, val, test)
+    
+    return: sex controlled df
+    """
+    # number of samples per sex
+    n = int(len(df) * split_prcnt / 2)
+    male_count = len(df[df['sex'] == 1])
+    female_count = len(df) - male_count
+    n = min(n, male_count, female_count)
+
+    # sample
+    df_male = df[df['sex'] == 1].sample(n=n, random_state=42)
+    df_female = df[df['sex'] == 0].sample(n=n, random_state=42)
+    return pd.concat([df_male, df_female])
+
+
+def control_sex_ethn(df, split_prcnt):
+    return
+
+def control_age(df, mean=51.0, std=7.0):
+    """
+    extract samples within certain age range
+    
+    Arguments:
+    df -- input df
+    mean -- age mean to extract around
+    std -- standard deviation used to define range around mean
+    
+    return: sex controlled df
+    """
+    lw_bound = mean - std
+    up_bound = mean + std
+    return df[(df['age'] > lw_bound) & (df['age'] < up_bound)]
+
+
+def get_ethnic_group(df, grp):
+    """
+    extract ethnic group from df given code
+
+    Arguments:
+    df -- input df
+    grp -- ethnic group code
+
+    return: ethnic group df
+    """
+    res_df = df[df['ethnicity'].astype(str).str.startswith(grp)]
+    return res_df
+
+
+def sample_from_dataset(sa_patients_df, wht_n=4000):
+    """
+    sample from the whole data
+    """
+    all_wht_df = get_ethnic_group(sa_patients_df, '1')
+    all_as_df = get_ethnic_group(sa_patients_df, '3')
+    all_bl_df = get_ethnic_group(sa_patients_df, '4')
+
+    sample_wht_df = all_wht_df.sample(n=wht_n, random_state=42)
+    dataset_df = pd.concat([sample_wht_df, all_as_df, all_bl_df])
+    return dataset_df, sample_wht_df, all_as_df, all_bl_df
+
+
+def gen_sex_ctrl(all_wht_df, all_as_df, all_bl_df, output_csv, split_prcnt):
+    """
+    sample sex controlled df
+    """
+    # control for sex per ethnic group
+    # I wonder why?
+    wht_sex_ctrl_df = control_sex(all_wht_df, split_prcnt)
+    as_sex_ctrl_df = control_sex(all_as_df, split_prcnt)
+    bl_sex_ctrl_df = control_sex(all_bl_df, split_prcnt)
+    sex_ctrl_df = pd.concat([wht_sex_ctrl_df, as_sex_ctrl_df, bl_sex_ctrl_df])
+
+    # save to csv
+    sex_ctrl_df.to_csv(output_csv, index=False)
+    return sex_ctrl_df
+
+
+def gen_ethn_ctrl(sample_wht_df, all_as_df, all_bl_df, output_csv, split_prcnt, sex_ctrl=False):
+    """
+    sample ethnicity controlled df
+    """
+    dataset_df = pd.concat([sample_wht_df, all_as_df, all_bl_df])
+    # control for ethnicity
+    whtn = len(sample_wht_df) * split_prcnt
+    asn = len(all_as_df) * split_prcnt
+    bln = len(all_bl_df) * split_prcnt
+    n = int(min(whtn, asn, bln))
+    ethn_ctrl_df = control_ethnicity(dataset_df, n, sex_ctrl)
+    ethn_ctrl_df.to_csv(output_csv, index=False)
+    return ethn_ctrl_df
+
+
+def gen_baseline_splits_csv():
+    """
+    Experiment 1 - Baseline
+    extract train, val not controlled (4k)
+    extract test controlled for age, sex, ethnicity (1k)
+    """
+    # load ukbb patients data
+    og_df = pd.read_csv('/vol/aimspace/projects/ukbb/data/tabular/ukb668815_imaging.csv')
+
+    # prep
+    all_patients_df = prep_patients_df(og_df)
+
+    # data with short axis images available
+    all_sa_df = pd.read_csv('splits/ukbb/all.csv')
+
+    # merge
+    sa_patients_df = pd.merge(all_patients_df, all_sa_df, on='eid')
+
+    # sample 4k white
+    dataset_df, sample_wht_df, all_as_df, all_bl_df = sample_from_dataset(sa_patients_df, wht_n=4000)
+
+    # control for age
+    wht_age_ctrl_df = control_age(sample_wht_df)
+    as_age_ctrl_df = control_age(all_as_df)
+    bl_age_ctrl_df = control_age(all_bl_df)
+
+    # gen 2 test split controlled for sex, ethnicity (both controlled for age)
+    test_sex_ctrl_df = gen_sex_ctrl(wht_age_ctrl_df, as_age_ctrl_df, bl_age_ctrl_df, 'ukbb/test_sex_ctrl.csv', 0.2)
+    test_ethn_ctrl_df = gen_ethn_ctrl(wht_age_ctrl_df, as_age_ctrl_df, bl_age_ctrl_df, 'ukbb/test_ethn_ctrl.csv', 0.2)
+    whole_test_df = pd.concat([test_sex_ctrl_df, test_ethn_ctrl_df])
+
+    train_val_df = dataset_df.drop(whole_test_df.index)
+    val_df = train_val_df.sample(frac=0.13, random_state=42)
+    train_df = train_val_df.drop(val_df.index)
+
+    print(f'Train: {len(train_df)} subjects, {len(train_df)/len(dataset_df)*100.0:.2f}%')
+    print(f'Validation: {len(val_df)} subjects, {len(val_df)/len(dataset_df)*100.0:.2f}%')
+    print(f'Whole Test: {len(whole_test_df)} subjects, {len(whole_test_df)/len(dataset_df)*100.0:.2f}%')
+    print(f'Test Sex Controlled: {len(test_sex_ctrl_df)} subjects, {len(test_sex_ctrl_df)/len(dataset_df)*100.0:.2f}%')
+    print(f'Test Ethnicity Controlled: {len(test_ethn_ctrl_df)} subjects, {len(test_ethn_ctrl_df)/len(dataset_df)*100.0:.2f}%')
+
+    train_df.to_csv('ukbb/train.csv', index=False)
+    val_df.to_csv('ukbb/val.csv', index=False)
+
+
+def gen_train_val_ctrl_csv():
+    """
+    Experiment 2 - Train controlled
+    Extract train, val controlled for age, sex, ethnicity
+    """
+    # read already sampled train, val
+    all_train_df = pd.read_csv('ukbb/train.csv')
+    all_val_df = pd.read_csv('ukbb/val.csv')
+    all_train_val_df = pd.concat([all_train_df, all_val_df])
+
+    # extract ethnic groups
+    sample_wht_df = get_ethnic_group(all_train_val_df, '1')
+    all_as_df = get_ethnic_group(all_train_val_df, '3')
+    all_bl_df = get_ethnic_group(all_train_val_df, '4')
+
+    # control for age
+    wht_age_ctrl_df = control_age(sample_wht_df)
+    as_age_ctrl_df = control_age(all_as_df)
+    bl_age_ctrl_df = control_age(all_bl_df)
+    
+    # control for sex
+    train_val_sex_ctrl_df = gen_sex_ctrl(wht_age_ctrl_df, as_age_ctrl_df, bl_age_ctrl_df, 'ukbb/train_val_sex_ctrl.csv', split_prcnt=1.0)
+
+    # split train, val
+    val_sex_ctrl_df = train_val_sex_ctrl_df.sample(frac=0.13, random_state=42)
+    train_sex_ctrl_df = train_val_sex_ctrl_df.drop(val_sex_ctrl_df.index)
+
+    # save
+    val_sex_ctrl_df.to_csv('ukbb/val_sex_ctrl.csv', index=False)
+    train_sex_ctrl_df.to_csv('ukbb/train_sex_ctrl.csv', index=False)
+
+    # control for ethnicity
+    train_val_ethn_ctrl_df = gen_ethn_ctrl(wht_age_ctrl_df, as_age_ctrl_df, bl_age_ctrl_df, 'ukbb/train_val_ethn_ctrl.csv', split_prcnt=1.0)
+
+    # split train, val
+    val_ethn_ctrl_df = train_val_ethn_ctrl_df.sample(frac=0.13, random_state=42)
+    train_ethn_ctrl_df = train_val_ethn_ctrl_df.drop(val_ethn_ctrl_df.index)
+
+    # save
+    val_ethn_ctrl_df.to_csv('ukbb/val_ethn_ctrl.csv', index=False)
+    train_ethn_ctrl_df.to_csv('ukbb/train_ethn_ctrl.csv', index=False)
+
+    # control for sex, ethnicity
+    # extract ethnic groups
+    wht_ethn_ctrl_df = get_ethnic_group(train_val_sex_ctrl_df, '1')
+    as_ethn_ctrl_df = get_ethnic_group(train_val_sex_ctrl_df, '3')
+    bl_ethn_ctrl_df = get_ethnic_group(train_val_sex_ctrl_df, '4')
+    train_val_sex_ethn_ctrl_df = gen_ethn_ctrl(wht_ethn_ctrl_df, as_ethn_ctrl_df, bl_ethn_ctrl_df, 'ukbb/train_val_sex_ethn_ctrl.csv', split_prcnt=1.0, sex_ctrl=True)
+
+    # split train, val
+    val_sex_ethn_ctrl_df = train_val_sex_ethn_ctrl_df.sample(frac=0.13, random_state=42)
+    train_sex_ethn_ctrl_df = train_val_sex_ethn_ctrl_df.drop(val_sex_ethn_ctrl_df.index)
+
+    # save
+    val_sex_ethn_ctrl_df.to_csv('ukbb/val_sex_ethn_ctrl.csv', index=False)
+    train_sex_ethn_ctrl_df.to_csv('ukbb/train_sex_ethn_ctrl.csv', index=False)
 
 
 def main():
-    cfg = yaml.load(open('configs/ukbb.yaml', "r"), Loader=yaml.Loader)
+    # generate baseline splits csv - expirement 1
+    gen_baseline_splits_csv()
+
+    # generate train, val controlled - expirment 2
+    gen_train_val_ctrl_csv()
+
+    # read generated csv files that contain ids only to produce splits that contain ids, frames, slices
+    cfg = load(open('configs/ukbb.yaml', "r"), Loader=Loader)
     generate_split(input_file='ukbb/val.csv', output_file='splits/ukbb/val.csv', mode='val', shuffle=True)
     generate_split(input_file='ukbb/test_sex_ctrl.csv', output_file='splits/ukbb/test_sex_ctrl.csv', mode='test', shuffle=False)
     generate_split(input_file='ukbb/test_ethn_ctrl.csv', output_file='splits/ukbb/test_ethn_ctrl.csv', mode='test', shuffle=False)
