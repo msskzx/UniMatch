@@ -19,7 +19,7 @@ conda deactivate # If you launch your script from a terminal where your environm
 conda activate unimatch # If this does not work, try 'source activate ptl'
 
 now=$(date +"%Y%m%d_%H%M%S")
-job='acdc_unimatch_unet_7'
+job='acdc_unimatch_unet_18'
 
 config=configs/acdc_test_20.yaml
 
