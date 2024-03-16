@@ -5,6 +5,11 @@ import matplotlib.pyplot as plt
 from util.classes import PRIMARY_DEMOGRAPHICS
 import re
 
+one_palette = sns.color_palette("pastel")[0]
+two_palette = sns.color_palette("pastel")[8:]
+three_palette = sns.color_palette("pastel")[7:]
+four_palette = sns.color_palette("pastel")[0:4]
+
 def merge_results_patients(df, patients_df):
     return pd.merge(df, patients_df, left_on='patient_id', right_on='eid', how='inner')
 
@@ -30,10 +35,18 @@ def prep_patients_df(og_df):
     return df
 
 
-def get_group_results(df):
+def get_group_results(df, exp):
     sex_df = df.groupby('sex')['dice_mean'].mean()
-    print(f'Dice Mean for Male: {sex_df[1]}')
-    print(f'Dice Mean for Female: {sex_df[0]}')
+    sex_dice = {
+        'male': sex_df[1],
+        'female': sex_df[0],
+    }
+
+    print(f'Dice Mean for Male: {sex_df[1]:.2f}')
+    print(f'Dice Mean for Female: {sex_df[0]:.2f}')
+    plot_dice(sex_dice, two_palette, exp)
+
+    ethn_dice = {}
 
     for _, k in enumerate(ETHNNICITY_CODING):
         cond = df['ethnicity'].astype(str).str.startswith(k)
@@ -42,30 +55,62 @@ def get_group_results(df):
         mean = ethn_df.groupby('ethnicity')['dice_mean'].mean().reset_index()
         print(f'Mean Dice for {ETHNNICITY_CODING[k]}:\n{mean}')
         print(f'Mean: {mean["dice_mean"][0]}')
+        ethn_dice[ETHNNICITY_CODING[k]] = mean['dice_mean'][0]
 
+    plot_dice(ethn_dice, three_palette, exp)
 
-def get_results(df):
+def get_dice(df, exp):
     print('Number of Patients:', df['eid'].nunique())
     print('Total number of slices:', len(df))
 
     print('---')
-    print("DICE Mean: ", df['dice_mean'].mean())
-    print("RV Mean: ", df['dice_rv'].mean())
-    print("MYO Mean: ", df['dice_myo'].mean())
-    print("LV Mean: ", df['dice_lv'].mean())
+    dice = {
+        'mean': df['dice_mean'].mean(),
+        'rv': df['dice_rv'].mean(),
+        'myo': df['dice_myo'].mean(),
+        'lv': df['dice_lv'].mean(),
+    }
+    print(f"DICE Mean: {dice['mean']:.2f}")
+    print(f"RV Mean: {dice['rv']:.2f}")
+    print(f"MYO Mean: {dice['myo']:.2f}")
+    print(f"LV Mean: {dice['lv']:.2f}")
     print('---')
 
+    plot_dice(dice, four_palette, exp)
+
+
+def plot_dice(dice, palette, exp):
+    categories = list(dice.keys())
+    values = list(dice.values())
+    sns.pointplot(x=categories, hue=categories, y=values, palette=palette)
+    plt.xlabel('Class')
+    plt.ylabel('Mean')
+    plt.title(f'{exp} - Mean Dice per Class')
+    plt.show()
+
+
+def get_slices(df, exp):
     thresh = 50.0
     filtered_rows = df[df['dice_mean'] < thresh]
-    print(f'Number of slices with DICE < {thresh}%:', len(filtered_rows))
+    print(f'{exp} - Number of slices with DICE < {thresh}%: {len(filtered_rows)}')
 
-    count_df = filtered_rows[['slice_idx', 'eid']].groupby('slice_idx').count().reset_index()
-    count_df.columns = ['slice_idx', 'count']
-    sns.barplot(x='slice_idx', y='count', data=count_df)
+    plot_slices(filtered_rows, thresh, exp)
+
+
+def plot_slices(filtered_rows, thresh, exp):
+    sns.kdeplot(filtered_rows['slice_idx'], color=one_palette, fill=True)
     plt.xlabel('Slice Index')
     plt.ylabel('Count')
-    plt.title(f'Slice Index Distribution with DICE < {thresh}%')
+    plt.title(f'{exp} - Slice Index Distribution with DICE < {thresh}%')
     plt.show()
+
+
+def get_all_results(df, exp):
+    get_dice(df, exp)
+
+    get_group_results(df, exp)
+
+    get_slices(df, exp)
 
 
 def plot_age_dist(df):
