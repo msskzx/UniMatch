@@ -13,7 +13,7 @@ model: 'exp/acdc/unimatch/unet/330/best.pth'
 results_path: 'outputs/results/csv/unimatch_ukbb_scores_test_1k_patients.csv'
 pred_mask_path: 'outputs/results/imgs/ukbb/unimatch_ukbb_pred_mask_'
 
-epochs: 300
+epochs: 60
 batch_size: 12 # 12 per GPU
 lr: 0.01
 conf_thresh: 0.95
