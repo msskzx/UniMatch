@@ -1,3 +1,10 @@
+exp: 1
+model: unimatch unet
+split: 330
+train_set: 3301
+test_set: 962
+epochs: 57
+
 model_desc: 'Unimatch Unet 330 Pretrained on UKBB'
 data_desc: 'UKBB Test Data - Sex Controlled -  962 Patients'
 
@@ -10,7 +17,7 @@ batch_size: 1
 num_workers: 1
 visualize: False
 
-model: 'exp/ukbb/unimatch/unet/330/best.pth'
+model_path: 'exp/ukbb/unimatch/unet/330/best.pth'
 results_path: 'outputs/results/csv/unimatch_ukbb_330_scores_sex_962_patients.csv'
 pred_mask_path: 'outputs/results/imgs/ukbb/unimatch_ukbb_330_pred_mask_'
-test_split: splits/ukbb/test_sex_ctrl.csv
+test_split_path: splits/ukbb/test_sex_ctrl.csv

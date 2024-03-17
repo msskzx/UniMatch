@@ -1,0 +1,23 @@
+exp: 4
+model: unimatch unet
+split: 18
+train_set: 182
+test_set: 108
+epochs: 100
+
+model_desc: 'Unimatch Unet 18 Pretrained on UKBB'
+data_desc: 'UKBB Test Data - Sex Controlled -  962 Patients'
+
+dataset: ukbb
+mode: test
+nclass: 4
+crop_size: 256
+data_root: /vol/aimspace/projects/ukbb/data/cardiac/cardiac_segmentations/subjects
+batch_size: 1
+num_workers: 1
+visualize: False
+
+model_path: 'exp/ukbb/unimatch/unet/18/best.pth'
+results_path: 'outputs/results/csv/unimatch_ukbb_18_scores_sex_962_patients.csv'
+pred_mask_path: 'outputs/results/imgs/ukbb/unimatch_ukbb_18_pred_mask_'
+test_split_path: splits/ukbb/test_sex_ctrl.csv

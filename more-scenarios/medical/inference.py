@@ -24,7 +24,7 @@ def main():
 
     logger.info('{}\n'.format(pprint.pformat({**cfg, **vars(args)})))
 
-    checkpoint = torch.load(cfg['model'])
+    checkpoint = torch.load(cfg['model_path'])
     checkpoint = {k.replace('module.', ''): v for k, v in checkpoint['model'].items()}
     model = UNet(in_chns=1, class_num=4)
     model.load_state_dict(checkpoint)
@@ -36,7 +36,7 @@ def main():
         root_dir=cfg['data_root'],
         mode=cfg['mode'],
         crop_size=cfg['crop_size'],
-        split=cfg['test_split'])
+        split=cfg['test_split_path'])
     else:
         # ACDC
         test_dataset = ACDCDataset(cfg['dataset'], cfg['data_root'], cfg['mode'])
