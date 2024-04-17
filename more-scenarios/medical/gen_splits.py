@@ -341,9 +341,10 @@ def main():
     #generate_split(input_file='ukbb/test_ethn_ctrl.csv', output_file='splits/ukbb/test_ethn_ctrl.csv', mode='test', shuffle=False)
     #generate_split(input_file='ukbb/train.csv', output_file='splits/ukbb/train.csv', mode='train', cfg=cfg, shuffle=True)
 
-    # EXPERIMENTS 2, 3, 4
+    # EXPERIMENTS 2, 3, 4s
     gen_train_val_ctrl_csv(seed=43)
     
+    # if directory not created
     #os.mkdir('splits/ukbb/18')
     #os.mkdir('splits/ukbb/26')
     #os.mkdir('splits/ukbb/80')

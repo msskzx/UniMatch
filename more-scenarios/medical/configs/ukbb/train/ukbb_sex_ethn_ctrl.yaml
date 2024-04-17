@@ -2,6 +2,7 @@ model_desc: 'Unimatch Unet 18 Training on UKBB'
 data_desc: 'UKBB Train Data - 182 Patients - 18 Labeled, Rest Unlabeled'
 ctrl: 'age sex ethnicity'
 split: 18
+seed: 43
 
 dataset: ukbb
 mode: train

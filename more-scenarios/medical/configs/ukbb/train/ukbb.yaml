@@ -1,5 +1,8 @@
 model_desc: 'Unimatch Unet 330 Training on UKBB'
 data_desc: 'UKBB Train Data - 3300 Patients, 330 Labeled, Rest Unlabeled Patients'
+ctrl: 'none'
+split: 26
+seed: 42
 
 dataset: ukbb
 mode: train
