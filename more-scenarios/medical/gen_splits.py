@@ -329,7 +329,7 @@ def gen_train_val_ctrl_csv(seed=42):
     train_sex_ethn_ctrl_df.to_csv('ukbb/train_sex_ethn_ctrl.csv', index=False)
 
 
-def main():
+def main(seed=43):
     # EXPERIMENT 1
     # generate baseline splits csv - expirement 1
     #gen_baseline_splits_csv()
@@ -341,8 +341,8 @@ def main():
     #generate_split(input_file='ukbb/test_ethn_ctrl.csv', output_file='splits/ukbb/test_ethn_ctrl.csv', mode='test', shuffle=False)
     #generate_split(input_file='ukbb/train.csv', output_file='splits/ukbb/train.csv', mode='train', cfg=cfg, shuffle=True)
 
-    # EXPERIMENTS 2, 3, 4s
-    gen_train_val_ctrl_csv(seed=43)
+    # EXPERIMENTS 2, 3, 4
+    gen_train_val_ctrl_csv(seed)
     
     # if directory not created
     #os.mkdir('splits/ukbb/18')

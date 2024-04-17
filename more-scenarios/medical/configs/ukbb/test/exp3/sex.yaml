@@ -3,7 +3,7 @@ model: unimatch unet
 split: 26
 train_set: 264
 test_set: 962
-epochs: 100
+epochs: 200
 
 model_desc: 'Unimatch Unet 26 Pretrained on UKBB'
 data_desc: 'UKBB Test Data - Sex Controlled -  962 Patients'
@@ -18,6 +18,6 @@ num_workers: 1
 visualize: False
 
 model_path: 'exp/ukbb/unimatch/unet/26/best.pth'
-results_path: 'outputs/results/csv/unimatch_ukbb_26_scores_sex_962_patients.csv'
+results_path: 'outputs/results/csv/ukbb/exp3/sex_seed_43.csv'
 pred_mask_path: 'outputs/results/imgs/ukbb/unimatch_ukbb_26_pred_mask_'
 test_split_path: splits/ukbb/test_sex_ctrl.csv

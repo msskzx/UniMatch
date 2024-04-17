@@ -3,7 +3,7 @@ model: unimatch unet
 split: 80
 train_set: 805
 test_set: 108
-epochs: 100
+epochs: 57
 
 model_desc: 'Unimatch Unet 80 Pretrained on UKBB'
 data_desc: 'UKBB Test Data - Ethnicity Controlled -  108 Patients'
@@ -18,6 +18,6 @@ num_workers: 1
 visualize: False
 
 model_path: 'exp/ukbb/unimatch/unet/80/best.pth'
-results_path: 'outputs/results/csv/unimatch_ukbb_80_scores_ethn_108_patients.csv'
+results_path: 'outputs/results/csv/ukbb/exp2/ethn_seed_43.csv'
 pred_mask_path: 'outputs/results/imgs/ukbb/unimatch_ukbb_80_pred_mask_'
 test_split_path: splits/ukbb/test_ethn_ctrl.csv
