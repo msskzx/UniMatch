@@ -4,6 +4,7 @@ split: 80
 train_set: 805
 test_set: 962
 epochs: 57
+seed: 43
 
 model_desc: 'Unimatch Unet 80 Pretrained on UKBB'
 data_desc: 'UKBB Test Data - Sex Controlled -  962 Patients'
