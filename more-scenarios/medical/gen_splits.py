@@ -1,5 +1,5 @@
 from yaml import load, Loader
-from util.classes import FRAME, ETHNNICITY_CODING
+from util.classes import FRAME, ETHNNICITY_CODING, ETHNNICITY_CODING_REVERSED, EXPERIMENTS
 import nibabel as nib
 import pandas as pd
 import os
@@ -54,8 +54,8 @@ def generate_split(input_file, output_file, cfg=None, mode='train', shuffle=True
 def split_un_labeled(df, cfg, frac=0.1):
     df_l = df.sample(frac=frac, random_state=42)
     df_u = df.drop(df_l.index)
-    df_l.to_csv(cfg['labeled_split'], index=False)
-    df_u.to_csv(cfg['unlabeled_split'], index=False)
+    df_l.to_csv(f'splits/{cfg["dataset"]}/{cfg["split"]}/seed{cfg["seed"]}/labeled.csv', index=False)
+    df_u.to_csv(f'splits/{cfg["dataset"]}/{cfg["split"]}/seed{cfg["seed"]}/unlabeled.csv', index=False)
 
 
 def get_patient_ids_from_directory(directory):
@@ -80,7 +80,7 @@ def get_patient_ids_from_directory(directory):
     return folders
 
 
-def save_patient_ids(patient_ids, output_file, csv_file):
+def save_patient_ids(patient_ids, csv_file):
     """
     save the list of ids in split text file
 
@@ -88,13 +88,7 @@ def save_patient_ids(patient_ids, output_file, csv_file):
     patient_ids -- list of ids
     output_file -- path
     """
-    ids = pd.DataFrame(columns=['eid'])
-
-    with open(output_file, 'w') as file:
-        for patient_id in patient_ids:
-            ids.loc[len(ids)] = {'eid': patient_id}
-            file.write(f'{patient_id}-sa_ED\n{patient_id}-sa_ES\n')
-    
+    ids = pd.DataFrame({'eids': patient_ids})
     ids.to_csv(csv_file, index=False)
 
 
@@ -103,7 +97,7 @@ def run_get_all_eids_from_dir(cfg):
     used only once to get all ids
     """
     patient_ids = get_patient_ids_from_directory(cfg['data_root'])
-    save_patient_ids(patient_ids, cfg['all_split'], cfg['all_csv'])
+    save_patient_ids(patient_ids, f'splits/{cfg["dataset"]}/all.csv')
 
 
 def control_ethnicity(df, n, sex_ctrl=False, seed=42):
@@ -186,9 +180,9 @@ def sample_from_dataset(sa_patients_df, wht_n=4000, seed=42):
     """
     sample from the whole data
     """
-    all_wht_df = get_ethnic_group(sa_patients_df, '1')
-    all_as_df = get_ethnic_group(sa_patients_df, '3')
-    all_bl_df = get_ethnic_group(sa_patients_df, '4')
+    all_wht_df = get_ethnic_group(sa_patients_df, ETHNNICITY_CODING_REVERSED['White'])
+    all_as_df = get_ethnic_group(sa_patients_df, ETHNNICITY_CODING_REVERSED['Asian'])
+    all_bl_df = get_ethnic_group(sa_patients_df, ETHNNICITY_CODING_REVERSED['Black'])
 
     sample_wht_df = all_wht_df.sample(n=wht_n, random_state=seed)
     dataset_df = pd.concat([sample_wht_df, all_as_df, all_bl_df])
@@ -273,63 +267,70 @@ def gen_baseline_splits_csv():
 
 def gen_train_val_ctrl_csv(seed=42):
     """
-    Experiment 2 - Train controlled
-    Extract train, val controlled for age, sex, ethnicity
+    Experiment 2, 3, 4
+    Train sets are controlled for age, sex, ethnicity
     """
+    dataset = 'ukbb'
     # read already sampled train, val
-    all_train_df = pd.read_csv('ukbb/train.csv')
-    all_val_df = pd.read_csv('ukbb/val.csv')
+    all_train_df = pd.read_csv(f'{dataset}/train.csv')
+    all_val_df = pd.read_csv(f'{dataset}/val.csv')
     all_train_val_df = pd.concat([all_train_df, all_val_df])
 
     # extract ethnic groups
-    sample_wht_df = get_ethnic_group(all_train_val_df, '1')
-    all_as_df = get_ethnic_group(all_train_val_df, '3')
-    all_bl_df = get_ethnic_group(all_train_val_df, '4')
+    sample_wht_df = get_ethnic_group(all_train_val_df, ETHNNICITY_CODING_REVERSED['White'])
+    all_as_df = get_ethnic_group(all_train_val_df, ETHNNICITY_CODING_REVERSED['Asian'])
+    all_bl_df = get_ethnic_group(all_train_val_df, ETHNNICITY_CODING_REVERSED['Black'])
 
     # control for age
     wht_age_ctrl_df = control_age(sample_wht_df)
     as_age_ctrl_df = control_age(all_as_df)
     bl_age_ctrl_df = control_age(all_bl_df)
     
+    # EXPERIMENT 2
     # control for sex
-    train_val_sex_ctrl_df = gen_sex_ctrl(wht_age_ctrl_df, as_age_ctrl_df, bl_age_ctrl_df, 'ukbb/train_val_sex_ctrl.csv', split_prcnt=1.0, seed=seed)
+    train_val_sex_ctrl_df = gen_sex_ctrl(wht_age_ctrl_df, as_age_ctrl_df, bl_age_ctrl_df, f'{dataset}/exp2/seed{seed}/train_val.csv', split_prcnt=1.0, seed=seed)
 
     # split train, val
     val_sex_ctrl_df = train_val_sex_ctrl_df.sample(frac=0.13, random_state=seed)
     train_sex_ctrl_df = train_val_sex_ctrl_df.drop(val_sex_ctrl_df.index)
 
     # save
-    val_sex_ctrl_df.to_csv('ukbb/val_sex_ctrl.csv', index=False)
-    train_sex_ctrl_df.to_csv('ukbb/train_sex_ctrl.csv', index=False)
+    val_sex_ctrl_df.to_csv(f'{dataset}/exp2/seed{seed}/val.csv', index=False)
+    train_sex_ctrl_df.to_csv(f'{dataset}/exp2/seed{seed}/train.csv', index=False)
 
+    # EXPERIMENT 3
     # control for ethnicity
-    train_val_ethn_ctrl_df = gen_ethn_ctrl(wht_age_ctrl_df, as_age_ctrl_df, bl_age_ctrl_df, 'ukbb/train_val_ethn_ctrl.csv', split_prcnt=1.0, seed=seed)
+    train_val_ethn_ctrl_df = gen_ethn_ctrl(wht_age_ctrl_df, as_age_ctrl_df, bl_age_ctrl_df, f'{dataset}/exp3/seed{seed}/train_val.csv', split_prcnt=1.0, seed=seed)
 
     # split train, val
     val_ethn_ctrl_df = train_val_ethn_ctrl_df.sample(frac=0.13, random_state=seed)
     train_ethn_ctrl_df = train_val_ethn_ctrl_df.drop(val_ethn_ctrl_df.index)
 
     # save
-    val_ethn_ctrl_df.to_csv('ukbb/val_ethn_ctrl.csv', index=False)
-    train_ethn_ctrl_df.to_csv('ukbb/train_ethn_ctrl.csv', index=False)
+    val_ethn_ctrl_df.to_csv(f'{dataset}/exp3/seed{seed}/val.csv', index=False)
+    train_ethn_ctrl_df.to_csv(f'{dataset}/exp3/seed{seed}/train.csv', index=False)
 
+    # EXPERIMENT 4
     # control for sex, ethnicity
     # extract ethnic groups
-    wht_ethn_ctrl_df = get_ethnic_group(train_val_sex_ctrl_df, '1')
-    as_ethn_ctrl_df = get_ethnic_group(train_val_sex_ctrl_df, '3')
-    bl_ethn_ctrl_df = get_ethnic_group(train_val_sex_ctrl_df, '4')
-    train_val_sex_ethn_ctrl_df = gen_ethn_ctrl(wht_ethn_ctrl_df, as_ethn_ctrl_df, bl_ethn_ctrl_df, 'ukbb/train_val_sex_ethn_ctrl.csv', split_prcnt=1.0, sex_ctrl=True, seed=seed)
+    wht_ethn_ctrl_df = get_ethnic_group(train_val_sex_ctrl_df, ETHNNICITY_CODING_REVERSED['White'])
+    as_ethn_ctrl_df = get_ethnic_group(train_val_sex_ctrl_df, ETHNNICITY_CODING_REVERSED['Asian'])
+    bl_ethn_ctrl_df = get_ethnic_group(train_val_sex_ctrl_df, ETHNNICITY_CODING_REVERSED['Black'])
+    train_val_sex_ethn_ctrl_df = gen_ethn_ctrl(wht_ethn_ctrl_df, as_ethn_ctrl_df, bl_ethn_ctrl_df, f'{dataset}/exp4/train_val_seedseed{seed}.csv', split_prcnt=1.0, sex_ctrl=True, seed=seed)
 
     # split train, val
     val_sex_ethn_ctrl_df = train_val_sex_ethn_ctrl_df.sample(frac=0.13, random_state=seed)
     train_sex_ethn_ctrl_df = train_val_sex_ethn_ctrl_df.drop(val_sex_ethn_ctrl_df.index)
 
     # save
-    val_sex_ethn_ctrl_df.to_csv('ukbb/val_sex_ethn_ctrl.csv', index=False)
-    train_sex_ethn_ctrl_df.to_csv('ukbb/train_sex_ethn_ctrl.csv', index=False)
+    val_sex_ethn_ctrl_df.to_csv(f'{dataset}/exp4/seed{seed}/val.csv', index=False)
+    train_sex_ethn_ctrl_df.to_csv(f'{dataset}/exp4/seed{seed}/train.csv', index=False)
 
 
 def main(seed=43):
+    dataset = 'ukbb'
+    mode = 'train'
+
     # EXPERIMENT 1
     # generate baseline splits csv - expirement 1
     #gen_baseline_splits_csv()
@@ -341,25 +342,20 @@ def main(seed=43):
     #generate_split(input_file='ukbb/test_ethn_ctrl.csv', output_file='splits/ukbb/test_ethn_ctrl.csv', mode='test', shuffle=False)
     #generate_split(input_file='ukbb/train.csv', output_file='splits/ukbb/train.csv', mode='train', cfg=cfg, shuffle=True)
 
+    # ---
     # EXPERIMENTS 2, 3, 4
+
+    # prepare train and validation data distributions
     gen_train_val_ctrl_csv(seed)
-    
-    # if directory not created
-    #os.mkdir('splits/ukbb/18')
-    #os.mkdir('splits/ukbb/26')
-    #os.mkdir('splits/ukbb/80')
 
-    cfg_sex_ctrl = load(open('configs/ukbb/train/ukbb_sex_ctrl.yaml', 'r'), Loader=Loader)
-    generate_split(input_file='ukbb/train_sex_ctrl.csv', output_file=cfg_sex_ctrl['train_split'], mode='train', cfg=cfg_sex_ctrl, shuffle=True)
-    generate_split(input_file='ukbb/val_sex_ctrl.csv', output_file=cfg_sex_ctrl['val_split'], mode='val', shuffle=True)
-
-    cfg_ethn_ctrl = load(open('configs/ukbb/train/ukbb_ethn_ctrl.yaml', 'r'), Loader=Loader)
-    generate_split(input_file='ukbb/train_ethn_ctrl.csv', output_file=cfg_ethn_ctrl['train_split'], mode='train', cfg=cfg_ethn_ctrl, shuffle=True)
-    generate_split(input_file='ukbb/val_ethn_ctrl.csv', output_file=cfg_ethn_ctrl['val_split'], mode='val', shuffle=True)
-
-    cfg_sex_ethn_ctrl = load(open('configs/ukbb/train/ukbb_sex_ethn_ctrl.yaml', 'r'), Loader=Loader)
-    generate_split(input_file='ukbb/train_sex_ethn_ctrl.csv', output_file=cfg_sex_ethn_ctrl['train_split'], mode='train', cfg=cfg_sex_ethn_ctrl, shuffle=True)
-    generate_split(input_file='ukbb/val_sex_ethn_ctrl.csv', output_file=cfg_sex_ethn_ctrl['val_split'], mode='val', shuffle=True)
+    config_file = 'config.yaml'
+    for exp, split in EXPERIMENTS.items():
+        # EXPERIMENT k
+        if not os.path.exists(f'splits/{dataset}/{split}'):
+            os.mkdir(f'splits/{dataset}/{split}')
+        cfg_sex_ctrl = load(open(f'configs/{dataset}/{mode}/{config_file}', 'r'), Loader=Loader)
+        generate_split(input_file=f'{dataset}/exp{exp}/seed{seed}/train.csv', output_file=f'splits/{dataset}/{split}/seed{seed}/train.csv', mode='train', cfg=cfg_sex_ctrl, shuffle=True)
+        generate_split(input_file=f'{dataset}/exp{exp}/seed{seed}/val.csv', output_file=f'splits/{dataset}/{split}/seed{seed}/val.csv', mode='val', shuffle=True)
 
 
 if __name__ == '__main__':

@@ -16,9 +16,3 @@ epochs: 57
 batch_size: 12 # 12 per GPU
 lr: 0.01
 conf_thresh: 0.95
-
-labeled_split: splits/ukbb/80/labeled.csv
-unlabeled_split: splits/ukbb/80/unlabeled.csv
-train_split: splits/ukbb/80/train.csv
-val_split: splits/ukbb/80/val.csv
-all_split: splits/ukbb/all.csv

@@ -63,3 +63,24 @@ ETHNNICITY_CODING = {
     '3': 'Asian',
     '4': 'Black',
 }
+
+
+ETHNNICITY_CODING_REVERSED = {
+    'White': '1',
+    'Asian': '3',
+    'Black': '4',
+}
+
+
+EXPERIMENTS = {
+    '2': 80,
+    '3': 26,
+    '4': 18
+}
+
+
+EXPERIMENTS_DEFINITION = {
+    '2': 'Sex Controlled',
+    '3': 'Ethnicity Controlled',
+    '4': 'Sex Ethnicity Controlled'
+}
