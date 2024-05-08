@@ -36,7 +36,7 @@ seed='42'
 config=configs/ukbb/train/exp$exp_num/config.yaml
 labeled_id_path=splits/$dataset/$split/seed$seed/labeled.csv
 unlabeled_id_path=splits/$dataset/$split/seed$seed/unlabeled.csv
-save_path=exp/$dataset/$method/$exp/$split
+save_path=exp/$dataset/$method/$exp/$split/$seed
 
 mkdir -p $save_path
 

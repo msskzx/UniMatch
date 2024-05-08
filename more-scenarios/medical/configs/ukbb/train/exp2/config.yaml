@@ -12,7 +12,7 @@ data_root: /vol/aimspace/projects/ukbb/data/cardiac/cardiac_segmentations/subjec
 num_workers: 1
 visualize: False
 
-epochs: 57
+epochs: 1 #57
 batch_size: 12 # 12 per GPU
 lr: 0.01
 conf_thresh: 0.95

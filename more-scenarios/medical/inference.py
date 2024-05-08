@@ -24,6 +24,7 @@ def main():
 
     logger.info('{}\n'.format(pprint.pformat({**cfg, **vars(args)})))
 
+    # TODO change model path seed
     checkpoint = torch.load(cfg['model_path'])
     checkpoint = {k.replace('module.', ''): v for k, v in checkpoint['model'].items()}
     model = UNet(in_chns=1, class_num=4)

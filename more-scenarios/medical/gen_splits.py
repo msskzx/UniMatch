@@ -6,7 +6,7 @@ import os
 from util.analysis_utils import prep_patients_df
  
 
-def generate_split(input_file, output_file, cfg=None, mode='train', shuffle=True):
+def generate_split(input_file, output_file, cfg=None, mode='train', seed=42, shuffle=True):
     """
     given csv file containing eids generate a csv file with eids, frames, slices
 
@@ -46,16 +46,16 @@ def generate_split(input_file, output_file, cfg=None, mode='train', shuffle=True
         df = df.sample(frac=1, random_state=42)
     
     if mode == 'train':
-        split_un_labeled(res_df, cfg)
+        split_un_labeled(res_df, cfg, seed=seed)
 
     res_df.to_csv(output_file, index=False)
 
 
-def split_un_labeled(df, cfg, frac=0.1):
+def split_un_labeled(df, cfg, seed=42, frac=0.1):
     df_l = df.sample(frac=frac, random_state=42)
     df_u = df.drop(df_l.index)
-    df_l.to_csv(f'splits/{cfg["dataset"]}/{cfg["split"]}/seed{cfg["seed"]}/labeled.csv', index=False)
-    df_u.to_csv(f'splits/{cfg["dataset"]}/{cfg["split"]}/seed{cfg["seed"]}/unlabeled.csv', index=False)
+    df_l.to_csv(f'splits/{cfg["dataset"]}/{cfg["split"]}/seed{seed}/labeled.csv', index=False)
+    df_u.to_csv(f'splits/{cfg["dataset"]}/{cfg["split"]}/seed{seed}/unlabeled.csv', index=False)
 
 
 def get_patient_ids_from_directory(directory):
@@ -316,7 +316,7 @@ def gen_train_val_ctrl_csv(seed=42):
     wht_ethn_ctrl_df = get_ethnic_group(train_val_sex_ctrl_df, ETHNNICITY_CODING_REVERSED['White'])
     as_ethn_ctrl_df = get_ethnic_group(train_val_sex_ctrl_df, ETHNNICITY_CODING_REVERSED['Asian'])
     bl_ethn_ctrl_df = get_ethnic_group(train_val_sex_ctrl_df, ETHNNICITY_CODING_REVERSED['Black'])
-    train_val_sex_ethn_ctrl_df = gen_ethn_ctrl(wht_ethn_ctrl_df, as_ethn_ctrl_df, bl_ethn_ctrl_df, f'{dataset}/exp4/train_val_seedseed{seed}.csv', split_prcnt=1.0, sex_ctrl=True, seed=seed)
+    train_val_sex_ethn_ctrl_df = gen_ethn_ctrl(wht_ethn_ctrl_df, as_ethn_ctrl_df, bl_ethn_ctrl_df, f'{dataset}/exp4/seed{seed}/train_val.csv', split_prcnt=1.0, sex_ctrl=True, seed=seed)
 
     # split train, val
     val_sex_ethn_ctrl_df = train_val_sex_ethn_ctrl_df.sample(frac=0.13, random_state=seed)
@@ -345,17 +345,24 @@ def main(seed=43):
     # ---
     # EXPERIMENTS 2, 3, 4
 
+    # make dirs
+    for exp, split in EXPERIMENTS.items():
+        dataset_exp_path = f'{dataset}/exp{exp}/seed{seed}'
+        if not os.path.exists(dataset_exp_path):
+            os.makedirs(dataset_exp_path)
+
+        split_exp_path = f'splits/{dataset}/{split}/seed{seed}'
+        if not os.path.exists(split_exp_path):
+            os.makedirs(split_exp_path)
+
     # prepare train and validation data distributions
     gen_train_val_ctrl_csv(seed)
 
-    config_file = 'config.yaml'
     for exp, split in EXPERIMENTS.items():
         # EXPERIMENT k
-        if not os.path.exists(f'splits/{dataset}/{split}'):
-            os.mkdir(f'splits/{dataset}/{split}')
-        cfg_sex_ctrl = load(open(f'configs/{dataset}/{mode}/{config_file}', 'r'), Loader=Loader)
-        generate_split(input_file=f'{dataset}/exp{exp}/seed{seed}/train.csv', output_file=f'splits/{dataset}/{split}/seed{seed}/train.csv', mode='train', cfg=cfg_sex_ctrl, shuffle=True)
-        generate_split(input_file=f'{dataset}/exp{exp}/seed{seed}/val.csv', output_file=f'splits/{dataset}/{split}/seed{seed}/val.csv', mode='val', shuffle=True)
+        cfg = load(open(f'configs/{dataset}/{mode}/exp{exp}/config.yaml', 'r'), Loader=Loader)
+        generate_split(input_file=f'{dataset}/exp{exp}/seed{seed}/train.csv', output_file=f'splits/{dataset}/{split}/seed{seed}/train.csv', mode='train', cfg=cfg, seed=seed, shuffle=True)
+        generate_split(input_file=f'{dataset}/exp{exp}/seed{seed}/val.csv', output_file=f'splits/{dataset}/{split}/seed{seed}/val.csv', mode='val', seed=seed, shuffle=True)
 
 
 if __name__ == '__main__':

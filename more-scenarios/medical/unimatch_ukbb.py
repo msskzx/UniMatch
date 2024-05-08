@@ -70,21 +70,21 @@ def main():
         root_dir=cfg['data_root'],
         mode='train_l',
         crop_size=cfg['crop_size'],
-        split=cfg['labeled_split'])
+        split=f'splits/{cfg["dataset"]}/{cfg["split"]}/seed{cfg["seed"]}/labeled.csv')
     
     trainset_u = UKBBDataset(
         name=cfg['dataset'],
         root_dir=cfg['data_root'],
         mode='train_u',
         crop_size=cfg['crop_size'],
-        split=cfg['unlabeled_split'])
+        split=f'splits/{cfg["dataset"]}/{cfg["split"]}/seed{cfg["seed"]}/unlabeled.csv')
     
     valset = UKBBDataset(
         name=cfg['dataset'],
         root_dir=cfg['data_root'],
         mode='val',
         crop_size=cfg['crop_size'],
-        split=cfg['val_split'])
+        split=f'splits/{cfg["dataset"]}/{cfg["split"]}/seed{cfg["seed"]}/val.csv')
     
     trainsampler_l = torch.utils.data.distributed.DistributedSampler(trainset_l)
     trainloader_l = DataLoader(trainset_l, batch_size=cfg['batch_size'],
