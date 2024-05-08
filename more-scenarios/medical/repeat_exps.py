@@ -5,10 +5,15 @@ from util.classes import EXPERIMENTS
 
 
 def edit_config_slurm(dataset, mode, exp, seed, cfg_file):
+    """
+    cfg_file: values in ['config', 'sex', 'ethn']
+    """
     # edit config
     cfg_path = f'configs/{dataset}/{mode}/exp{exp}/{cfg_file}.yaml'
     cfg = load(open(cfg_path, 'r'), Loader=Loader)
     cfg['seed'] = seed
+    if 'control' in cfg:
+        cfg['control'] = cfg_file
     with open(cfg_path, 'w') as file:
         dump(cfg, file)
 
@@ -25,9 +30,11 @@ def edit_config_slurm(dataset, mode, exp, seed, cfg_file):
             lines[i] = lines[i].replace(lines[i][idx+3], str(exp))
 
         # change exp num    
-        if 'exp_num' in lines[i]:
+        if 'exp_num=' in lines[i]:
             lines[i] = f"exp_num='{exp}'\n"
-            break
+
+        if 'control=' in lines[i]:
+            lines[i] = f"control='{cfg_file}'\n"
 
     with open(script_path, 'w') as file:
         file.writelines(lines)
@@ -56,9 +63,8 @@ def main():
             # generate train data for the exps
             gen_splits.main(seed=seed)
 
-    seeds = [42]
     # skip if already trained the models
-    trained = True
+    trained = False
     if not trained:
         # train 3 models per sampling
         mode = 'train'
@@ -68,7 +74,6 @@ def main():
                 edit_config_slurm(dataset, mode, exp, seed, cfg_file='config')
                 # train model
                 run_slurm(mode)
-                # TODO flag the exp as trained
 
 
     # skip if already tested the models
@@ -83,8 +88,6 @@ def main():
                     edit_config_slurm(dataset, mode, exp, seed, cfg_file=testset)
                     # run test
                     run_slurm(mode)
-
-                # TODO flag the exp as tested
 
 
 if __name__ == '__main__':

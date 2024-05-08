@@ -22,9 +22,15 @@ def main():
     logger = init_log('global', logging.INFO)
     logger.propagate = 0
 
+    cfg.update({
+        'model_path': f'exp/{cfg["dataset"]}/unimatch/unet/{cfg["split"]}/seed{cfg["seed"]}/best.pth',
+        'results_path': f'outputs/results/csv/{cfg["dataset"]}/exp{cfg["exp"]}/seed{cfg["seed"]}/{cfg["control"]}.csv',
+        'pred_mask_path': f'outputs/results/imgs/{cfg["dataset"]}/unimatch_{cfg["dataset"]}_{cfg["split"]}_seed{cfg["seed"]}_pred_mask_',
+        'test_split_path': f'splits/{cfg["dataset"]}/{cfg["mode"]}/{cfg["control"]}.csv',
+    })
+
     logger.info('{}\n'.format(pprint.pformat({**cfg, **vars(args)})))
 
-    # TODO change model path seed
     checkpoint = torch.load(cfg['model_path'])
     checkpoint = {k.replace('module.', ''): v for k, v in checkpoint['model'].items()}
     model = UNet(in_chns=1, class_num=4)

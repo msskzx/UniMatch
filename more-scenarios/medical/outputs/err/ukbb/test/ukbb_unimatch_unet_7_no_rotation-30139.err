@@ -1,0 +1,55 @@
+[2024-02-12 17:08:04,709][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 100.00
+[2024-02-12 17:08:04,709][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 100.00
+[2024-02-12 17:08:04,709][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 100.00
+[2024-02-12 17:08:04,709][    INFO] ***** Evaluation ***** >>>> MeanDice: 100.00
+
+[2024-02-12 17:08:04,713][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 0.00
+[2024-02-12 17:08:04,713][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 100.00
+[2024-02-12 17:08:04,713][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 100.00
+[2024-02-12 17:08:04,713][    INFO] ***** Evaluation ***** >>>> MeanDice: 66.67
+
+[2024-02-12 17:08:04,717][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 44.44
+[2024-02-12 17:08:04,717][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 79.25
+[2024-02-12 17:08:04,717][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 95.17
+[2024-02-12 17:08:04,717][    INFO] ***** Evaluation ***** >>>> MeanDice: 72.95
+
+[2024-02-12 17:08:04,718][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 97.56
+[2024-02-12 17:08:04,718][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 85.41
+[2024-02-12 17:08:04,718][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 92.90
+[2024-02-12 17:08:04,718][    INFO] ***** Evaluation ***** >>>> MeanDice: 91.96
+
+[2024-02-12 17:08:04,719][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 96.15
+[2024-02-12 17:08:04,719][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 84.16
+[2024-02-12 17:08:04,719][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 89.29
+[2024-02-12 17:08:04,719][    INFO] ***** Evaluation ***** >>>> MeanDice: 89.86
+
+[2024-02-12 17:08:04,720][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 91.55
+[2024-02-12 17:08:04,720][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 76.56
+[2024-02-12 17:08:04,720][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 80.67
+[2024-02-12 17:08:04,720][    INFO] ***** Evaluation ***** >>>> MeanDice: 82.92
+
+[2024-02-12 17:08:04,721][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 67.78
+[2024-02-12 17:08:04,721][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 50.14
+[2024-02-12 17:08:04,721][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 17.16
+[2024-02-12 17:08:04,721][    INFO] ***** Evaluation ***** >>>> MeanDice: 45.03
+
+[2024-02-12 17:08:04,721][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 0.00
+[2024-02-12 17:08:04,721][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 60.20
+[2024-02-12 17:08:04,722][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 22.45
+[2024-02-12 17:08:04,722][    INFO] ***** Evaluation ***** >>>> MeanDice: 27.55
+
+[2024-02-12 17:08:04,722][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 0.00
+[2024-02-12 17:08:04,722][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 0.00
+[2024-02-12 17:08:04,722][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 0.00
+[2024-02-12 17:08:04,722][    INFO] ***** Evaluation ***** >>>> MeanDice: 0.00
+
+[2024-02-12 17:08:04,723][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 100.00
+[2024-02-12 17:08:04,723][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 100.00
+[2024-02-12 17:08:04,723][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 100.00
+[2024-02-12 17:08:04,723][    INFO] ***** Evaluation ***** >>>> MeanDice: 100.00
+
+[2024-02-12 17:08:04,724][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 100.00
+[2024-02-12 17:08:04,724][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 100.00
+[2024-02-12 17:08:04,724][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 100.00
+[2024-02-12 17:08:04,724][    INFO] ***** Evaluation ***** >>>> MeanDice: 100.00
+

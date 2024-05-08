@@ -14,7 +14,7 @@
 # load python module
 module load python/anaconda3
 source activate
-conda deactivate # If you launch your script from a terminal where your environment is already loaded, conda won't activate the environment.
+conda deactivate # If env is loaded, conda won't activate the environment.
 conda activate unimatch # If this does not work, try 'source activate ptl'
 
 now=$(date +"%Y%m%d_%H%M%S")

@@ -1,24 +1,17 @@
-exp: 2
-model: unimatch unet
-split: 80
-train_set: 805
-test_set: 108
-epochs: 57
-seed: 43
-
-model_desc: 'Unimatch Unet 80 Pretrained on UKBB'
-data_desc: 'UKBB Test Data - Ethnicity Controlled -  108 Patients'
-
-dataset: ukbb
-mode: test
-nclass: 4
-crop_size: 256
-data_root: /vol/aimspace/projects/ukbb/data/cardiac/cardiac_segmentations/subjects
 batch_size: 1
+control: ethn
+crop_size: 256
+data_desc: UKBB Test Data - Ethnicity Controlled -  108 Patients
+data_root: /vol/aimspace/projects/ukbb/data/cardiac/cardiac_segmentations/subjects
+dataset: ukbb
+exp: 2
+mode: test
+model: unimatch unet
+model_desc: Unimatch Unet 80 Pretrained on UKBB
+nclass: 4
 num_workers: 1
-visualize: False
-
-model_path: 'exp/ukbb/unimatch/unet/80/best.pth'
-results_path: 'outputs/results/csv/ukbb/exp2/ethn_seed_43.csv'
-pred_mask_path: 'outputs/results/imgs/ukbb/unimatch_ukbb_80_pred_mask_'
-test_split_path: splits/ukbb/test_ethn_ctrl.csv
+seed: 83
+split: 80
+test_set: 108
+train_set: 805
+visualize: false

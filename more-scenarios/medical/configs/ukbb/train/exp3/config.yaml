@@ -11,6 +11,6 @@ mode: train
 model_desc: Unimatch Unet 26 Training on UKBB
 nclass: 4
 num_workers: 1
-seed: 42
+seed: 83
 split: 26
 visualize: false

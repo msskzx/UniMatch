@@ -1,0 +1,26 @@
+/var/lib/slurm/slurmd/job04379/slurm_script: line 15: module: command not found
+[2024-05-08 21:16:09,455][    INFO] {'batch_size': 12,
+ 'conf_thresh': 0.95,
+ 'config': 'configs/ukbb/train/exp2/config.yaml',
+ 'crop_size': 256,
+ 'ctrl': 'age sex',
+ 'data_desc': 'UKBB Train Data - 805 Patients, 80 Labeled, Rest Unlabeled '
+              'Patients',
+ 'data_root': '/vol/aimspace/projects/ukbb/data/cardiac/cardiac_segmentations/subjects',
+ 'dataset': 'ukbb',
+ 'epochs': 1,
+ 'local_rank': 0,
+ 'lr': 0.01,
+ 'mode': 'train',
+ 'model_desc': 'Unimatch Unet 80 Training on UKBB',
+ 'nclass': 4,
+ 'ngpus': 1,
+ 'num_workers': 1,
+ 'seed': 83,
+ 'split': 80,
+ 'visualize': False}
+
+[2024-05-08 21:16:09,502][    INFO] Total params: 1.8M
+
+[2024-05-08 21:16:12,350][    INFO] ===========> Epoch: 0, LR: 0.01000, Previous best: 0.00
+[2024-05-08 21:16:17,267][    INFO] Iters: 0, Total loss: 0.902, Loss x: 1.094, Loss s: 0.655, Loss w_fp: 0.763, Mask ratio: 0.000

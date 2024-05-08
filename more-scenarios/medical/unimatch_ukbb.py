@@ -31,7 +31,7 @@ def main():
     method = 'unimatch'
     exp = 'unet'
     save_path = f'exp/{cfg["dataset"]}/{method}/{exp}/{cfg["split"]}/seed{cfg["seed"]}'
-    port = int(f'83{cfg['split']}')
+    port = int(f'83{cfg["split"]}')
     logger = init_log('global', logging.INFO)
     logger.propagate = 0
 
