@@ -12,4 +12,3 @@ num_workers: 1
 model: 'exp/acdc/unimatch/unet/7/best.pth'
 results_path: 'outputs/results/csv/unimatch_acdc_scores_20_patients.csv'
 pred_mask_path: 'outputs/results/imgs/acdc/unimatch_acdc_pred_mask_'
-

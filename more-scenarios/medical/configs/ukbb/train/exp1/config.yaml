@@ -3,7 +3,6 @@ data_desc: 'UKBB Train Data - 3300 Patients, 330 Labeled, Rest Unlabeled Patient
 ctrl: 'none'
 split: 26
 seed: 42
-
 dataset: ukbb
 mode: train
 nclass: 4
@@ -11,11 +10,6 @@ crop_size: 256
 data_root: /vol/aimspace/projects/ukbb/data/cardiac/cardiac_segmentations/subjects
 num_workers: 1
 visualize: False
-
-model: 'exp/acdc/unimatch/unet/330/42/best.pth'
-results_path: 'outputs/results/csv/unimatch_ukbb_scores_test_1k_patients.csv'
-pred_mask_path: 'outputs/results/imgs/ukbb/unimatch_ukbb_pred_mask_'
-
 epochs: 60
 batch_size: 12 # 12 per GPU
 lr: 0.01

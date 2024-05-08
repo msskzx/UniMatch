@@ -21,35 +21,34 @@ from dataset.ukbb import UKBBDataset
 
 parser = argparse.ArgumentParser(description='Revisiting Weak-to-Strong Consistency in Semi-Supervised Semantic Segmentation')
 parser.add_argument('--config', type=str, required=True)
-parser.add_argument('--labeled-id-path', type=str, required=True)
-parser.add_argument('--unlabeled-id-path', type=str, required=True)
-parser.add_argument('--save-path', type=str, required=True)
 parser.add_argument('--local_rank', default=0, type=int)
-parser.add_argument('--port', default=None, type=int)
 
 
 def main():
     args = parser.parse_args()
 
     cfg = yaml.load(open(args.config, "r"), Loader=yaml.Loader)
-
+    method = 'unimatch'
+    exp = 'unet'
+    save_path = f'exp/{cfg["dataset"]}/{method}/{exp}/{cfg["split"]}/seed{cfg["seed"]}'
+    port = int(f'83{cfg['split']}')
     logger = init_log('global', logging.INFO)
     logger.propagate = 0
 
-    rank, world_size = setup_distributed(port=args.port)
+    rank, world_size = setup_distributed(port=port)
 
     if rank == 0:
         all_args = {**cfg, **vars(args), 'ngpus': world_size}
         logger.info('{}\n'.format(pprint.pformat(all_args)))
         
-        writer = SummaryWriter(args.save_path)
+        writer = SummaryWriter(save_path)
         
-        os.makedirs(args.save_path, exist_ok=True)
+        os.makedirs(save_path, exist_ok=True)
     
     cudnn.enabled = True
     cudnn.benchmark = True
 
-    model = UNet(in_chns=1, class_num=cfg['nclass'])    
+    model = UNet(in_chns=1, class_num=cfg['nclass'])
     if rank == 0:
         logger.info('Total params: {:.1f}M\n'.format(count_params(model)))
         
@@ -104,8 +103,8 @@ def main():
     previous_best = 0.0
     epoch = -1
     
-    if os.path.exists(os.path.join(args.save_path, 'latest.pth')):
-        checkpoint = torch.load(os.path.join(args.save_path, 'latest.pth'))
+    if os.path.exists(os.path.join(save_path, 'latest.pth')):
+        checkpoint = torch.load(os.path.join(save_path, 'latest.pth'))
         model.load_state_dict(checkpoint['model'])
         optimizer.load_state_dict(checkpoint['optimizer'])
         epoch = checkpoint['epoch']
@@ -270,9 +269,9 @@ def main():
                 'epoch': epoch,
                 'previous_best': previous_best,
             }
-            torch.save(checkpoint, os.path.join(args.save_path, 'latest.pth'))
+            torch.save(checkpoint, os.path.join(save_path, 'latest.pth'))
             if is_best:
-                torch.save(checkpoint, os.path.join(args.save_path, 'best.pth'))
+                torch.save(checkpoint, os.path.join(save_path, 'best.pth'))
 
 
 if __name__ == '__main__':
