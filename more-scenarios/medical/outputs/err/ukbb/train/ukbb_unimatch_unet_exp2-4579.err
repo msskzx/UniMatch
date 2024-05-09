@@ -1,0 +1,124 @@
+/var/lib/slurm/slurmd/job04579/slurm_script: line 15: module: command not found
+/var/lib/slurm/slurmd/job04579/slurm_script: line 16: activate: No such file or directory
+
+CommandNotFoundError: Your shell has not been properly configured to use 'conda deactivate'.
+To initialize your shell, run
+
+    $ conda init <SHELL_NAME>
+
+Currently supported shells are:
+  - bash
+  - fish
+  - tcsh
+  - xonsh
+  - zsh
+  - powershell
+
+See 'conda init --help' for more information and options.
+
+IMPORTANT: You may need to close and restart your shell after running 'conda init'.
+
+
+
+CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
+To initialize your shell, run
+
+    $ conda init <SHELL_NAME>
+
+Currently supported shells are:
+  - bash
+  - fish
+  - tcsh
+  - xonsh
+  - zsh
+  - powershell
+
+See 'conda init --help' for more information and options.
+
+IMPORTANT: You may need to close and restart your shell after running 'conda init'.
+
+
+[2024-05-09 12:13:09,628][    INFO] {'batch_size': 12,
+ 'conf_thresh': 0.95,
+ 'config': 'configs/ukbb/train/exp2/seed42/config.yaml',
+ 'crop_size': 256,
+ 'ctrl': 'age sex',
+ 'data_desc': 'UKBB Train Data - 805 Patients, 80 Labeled, Rest Unlabeled '
+              'Patients',
+ 'data_root': '/vol/aimspace/projects/ukbb/data/cardiac/cardiac_segmentations/subjects',
+ 'dataset': 'ukbb',
+ 'epochs': 100,
+ 'local_rank': 0,
+ 'lr': 0.01,
+ 'mode': 'train',
+ 'model_desc': 'Unimatch Unet 80 Training on UKBB',
+ 'nclass': 4,
+ 'ngpus': 1,
+ 'num_workers': 1,
+ 'seed': 42,
+ 'split': 80,
+ 'visualize': False}
+
+[2024-05-09 12:13:09,677][    INFO] Total params: 1.8M
+
+[2024-05-09 12:13:12,412][    INFO] ************ Load from checkpoint at epoch 0
+
+[2024-05-09 12:13:12,412][    INFO] ===========> Epoch: 1, LR: 0.00901, Previous best: 20.68
+[2024-05-09 12:13:17,726][    INFO] Iters: 0, Total loss: 0.503, Loss x: 0.254, Loss s: 0.752, Loss w_fp: 0.753, Mask ratio: 0.904
+[2024-05-09 12:14:13,580][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 53.79
+[2024-05-09 12:14:13,580][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 59.30
+[2024-05-09 12:14:13,580][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 75.44
+[2024-05-09 12:14:13,581][    INFO] ***** Evaluation ***** >>>> MeanDice: 62.85
+
+[2024-05-09 12:14:13,723][    INFO] ===========> Epoch: 2, LR: 0.00990, Previous best: 62.85
+[2024-05-09 12:14:14,617][    INFO] Iters: 0, Total loss: 0.108, Loss x: 0.154, Loss s: 0.103, Loss w_fp: 0.022, Mask ratio: 0.978
+[2024-05-09 12:15:01,937][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 74.73
+[2024-05-09 12:15:01,937][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 75.57
+[2024-05-09 12:15:01,937][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 85.46
+[2024-05-09 12:15:01,937][    INFO] ***** Evaluation ***** >>>> MeanDice: 78.59
+
+[2024-05-09 12:15:02,028][    INFO] ===========> Epoch: 3, LR: 0.00981, Previous best: 78.59
+[2024-05-09 12:15:02,945][    INFO] Iters: 0, Total loss: 0.127, Loss x: 0.105, Loss s: 0.257, Loss w_fp: 0.043, Mask ratio: 0.977
+[2024-05-09 12:15:54,818][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 79.83
+[2024-05-09 12:15:54,819][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 79.38
+[2024-05-09 12:15:54,819][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 89.21
+[2024-05-09 12:15:54,819][    INFO] ***** Evaluation ***** >>>> MeanDice: 82.81
+
+[2024-05-09 12:15:54,933][    INFO] ===========> Epoch: 4, LR: 0.00972, Previous best: 82.81
+[2024-05-09 12:15:55,860][    INFO] Iters: 0, Total loss: 0.049, Loss x: 0.074, Loss s: 0.041, Loss w_fp: 0.007, Mask ratio: 0.986
+[2024-05-09 12:16:45,892][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 76.64
+[2024-05-09 12:16:45,892][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 80.21
+[2024-05-09 12:16:45,892][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 89.45
+[2024-05-09 12:16:45,892][    INFO] ***** Evaluation ***** >>>> MeanDice: 82.10
+
+[2024-05-09 12:16:45,964][    INFO] ===========> Epoch: 5, LR: 0.00963, Previous best: 82.81
+[2024-05-09 12:16:46,783][    INFO] Iters: 0, Total loss: 0.080, Loss x: 0.085, Loss s: 0.136, Loss w_fp: 0.017, Mask ratio: 0.982
+[2024-05-09 12:17:40,497][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 80.76
+[2024-05-09 12:17:40,497][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 78.60
+[2024-05-09 12:17:40,497][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 89.47
+[2024-05-09 12:17:40,497][    INFO] ***** Evaluation ***** >>>> MeanDice: 82.95
+
+[2024-05-09 12:17:40,633][    INFO] ===========> Epoch: 6, LR: 0.00954, Previous best: 82.95
+[2024-05-09 12:17:41,428][    INFO] Iters: 0, Total loss: 0.052, Loss x: 0.072, Loss s: 0.059, Loss w_fp: 0.006, Mask ratio: 0.985
+[2024-05-09 12:18:32,265][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 84.08
+[2024-05-09 12:18:32,265][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 82.43
+[2024-05-09 12:18:32,265][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 92.33
+[2024-05-09 12:18:32,265][    INFO] ***** Evaluation ***** >>>> MeanDice: 86.28
+
+[2024-05-09 12:18:32,379][    INFO] ===========> Epoch: 7, LR: 0.00945, Previous best: 86.28
+[2024-05-09 12:18:33,301][    INFO] Iters: 0, Total loss: 0.042, Loss x: 0.039, Loss s: 0.075, Loss w_fp: 0.014, Mask ratio: 0.984
+[2024-05-09 12:19:21,745][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 82.38
+[2024-05-09 12:19:21,745][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 84.56
+[2024-05-09 12:19:21,745][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 92.46
+[2024-05-09 12:19:21,745][    INFO] ***** Evaluation ***** >>>> MeanDice: 86.47
+
+[2024-05-09 12:19:21,840][    INFO] ===========> Epoch: 8, LR: 0.00936, Previous best: 86.47
+[2024-05-09 12:19:22,644][    INFO] Iters: 0, Total loss: 0.042, Loss x: 0.056, Loss s: 0.048, Loss w_fp: 0.007, Mask ratio: 0.988
+[2024-05-09 12:20:15,723][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 82.55
+[2024-05-09 12:20:15,724][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 80.88
+[2024-05-09 12:20:15,724][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 92.71
+[2024-05-09 12:20:15,724][    INFO] ***** Evaluation ***** >>>> MeanDice: 85.38
+
+[2024-05-09 12:20:15,795][    INFO] ===========> Epoch: 9, LR: 0.00927, Previous best: 86.47
+[2024-05-09 12:20:16,687][    INFO] Iters: 0, Total loss: 0.051, Loss x: 0.051, Loss s: 0.060, Loss w_fp: 0.043, Mask ratio: 0.988
+slurmstepd-prometheus: error: *** JOB 4579 ON prometheus CANCELLED AT 2024-05-09T12:21:03 ***

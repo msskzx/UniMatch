@@ -64,9 +64,7 @@ def main():
     repeat experiments 10 times while sampling again from distribution
     """
     dataset = 'ukbb'
-    # TODO save exps states in a file to handle inturruptions
-    #seeds = [42, 43, 47, 53, 57, 61, 71, 73, 79, 83]
-    seeds = [42, 43, 47]
+    seeds = [42, 43, 47, 53, 57, 61, 71, 73, 79, 83]
 
     # skip if files are already generated
     generated = True

@@ -2,7 +2,7 @@
 #SBATCH --job-name=ukbb_unimatch_unet_exp4
 #SBATCH --output=outputs/out/ukbb/ukbb_unimatch_unet_exp4-%A.out  # Standard output  %A adds the job id
 #SBATCH --error=outputs/err/ukbb/train/ukbb_unimatch_unet_exp4-%A.err  # Standard error 
-#SBATCH --time=0-07:00:00  # Limit time (format: days-hours:minutes:seconds)
+#SBATCH --time=0-01:00:00  # Limit time (format: days-hours:minutes:seconds)
 #SBATCH --gres=gpu:1  # Number of GPUs if needed
 #SBATCH --cpus-per-task=16  # Number of CPUs (limit 24 per GPU)
 #SBATCH --ntasks 1
@@ -19,7 +19,7 @@ conda activate unimatch # If this does not work, try 'source activate ptl'
 
 now=$(date +"%Y%m%d_%H%M%S")
 exp_num='4'
-seed='47'
+seed='83'
 job=ukbb_unimatch_unet_exp$exp_num
 config=configs/ukbb/train/exp$exp_num/seed$seed/config.yaml
 

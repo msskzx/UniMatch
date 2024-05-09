@@ -5,7 +5,7 @@ ctrl: age sex
 data_desc: UKBB Train Data - 805 Patients, 80 Labeled, Rest Unlabeled Patients
 data_root: /vol/aimspace/projects/ukbb/data/cardiac/cardiac_segmentations/subjects
 dataset: ukbb
-epochs: 1
+epochs: 100
 lr: 0.01
 mode: train
 model_desc: Unimatch Unet 80 Training on UKBB

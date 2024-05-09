@@ -10,7 +10,7 @@ crop_size: 256
 data_root: /vol/aimspace/projects/ukbb/data/cardiac/cardiac_segmentations/subjects
 num_workers: 1
 visualize: False
-epochs: 60
+epochs: 50
 batch_size: 12 # 12 per GPU
 lr: 0.01
 conf_thresh: 0.95
