@@ -86,7 +86,7 @@ def main():
                 run_slurm(mode)
 
     # skip if already tested the models
-    tested = False
+    tested = True
     if not tested:
         testsets = ['sex', 'ethn']
         mode = 'test'
