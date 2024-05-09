@@ -1,0 +1,16 @@
+batch_size: 12
+conf_thresh: 0.95
+crop_size: 256
+ctrl: age ethnicity
+data_desc: UKBB Train Data - 264 Patients, 26 Labeled, Rest Unlabeled Patients
+data_root: /vol/aimspace/projects/ukbb/data/cardiac/cardiac_segmentations/subjects
+dataset: ukbb
+epochs: 1
+lr: 0.01
+mode: train
+model_desc: Unimatch Unet 26 Training on UKBB
+nclass: 4
+num_workers: 1
+seed: 42
+split: 26
+visualize: false

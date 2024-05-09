@@ -9,6 +9,7 @@ import yaml
 from util.inference_utils import eval_model
 import argparse
 import pprint
+import os
 
 
 parser = argparse.ArgumentParser(description='Revisiting Weak-to-Strong Consistency in Semi-Supervised Semantic Segmentation')
@@ -51,6 +52,10 @@ def main():
     test_loader = DataLoader(test_dataset, batch_size=cfg['batch_size'], pin_memory=True, num_workers=cfg['num_workers'], drop_last=False)
     
     scores_df = eval_model(model, test_loader, cfg, logger, visualize=cfg['visualize'])
+
+    dir_res = os.path.dirname(cfg['results_path'])
+    if not os.path.exists(dir_res):
+        os.makedirs(dir_res)
     scores_df.to_csv(cfg['results_path'], index=False)
 
 

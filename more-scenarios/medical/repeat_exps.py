@@ -2,19 +2,26 @@ from yaml import load, Loader, dump
 import gen_splits
 import subprocess
 from util.classes import EXPERIMENTS
-
+import os
 
 def edit_config_slurm(dataset, mode, exp, seed, cfg_file):
     """
     cfg_file: values in ['config', 'sex', 'ethn']
     """
-    # edit config
     cfg_path = f'configs/{dataset}/{mode}/exp{exp}/{cfg_file}.yaml'
+
     cfg = load(open(cfg_path, 'r'), Loader=Loader)
+    # edit config
     cfg['seed'] = seed
+    # only in test configs
     if 'control' in cfg:
         cfg['control'] = cfg_file
-    with open(cfg_path, 'w') as file:
+
+    cfg_out_dir = f'configs/{dataset}/{mode}/exp{exp}/seed{seed}'
+    cfg_out_path = os.path.join(cfg_out_dir, f'{cfg_file}.yaml')
+    if not os.path.exists(cfg_out_dir):
+        os.makedirs(cfg_out_dir)
+    with open(cfg_out_path, 'w') as file:
         dump(cfg, file)
 
     # edit slurm_ukbb_train.sh or test
@@ -29,10 +36,14 @@ def edit_config_slurm(dataset, mode, exp, seed, cfg_file):
             idx = lines[i].find('exp')
             lines[i] = lines[i].replace(lines[i][idx+3], str(exp))
 
-        # change exp num    
+        # change exp num
         if 'exp_num=' in lines[i]:
             lines[i] = f"exp_num='{exp}'\n"
-
+        
+        # change exp num    
+        if 'seed=' in lines[i]:
+            lines[i] = f"seed='{seed}'\n"
+        
         if 'control=' in lines[i]:
             lines[i] = f"control='{cfg_file}'\n"
 
@@ -45,7 +56,7 @@ def run_slurm(mode):
         subprocess.run(f'sbatch scripts/slurm_ukbb_{mode}.sh', shell=True, check=True)
         print('Script execution completed successfully.')
     except subprocess.CalledProcessError as e:
-        print(f'Error: {e}')
+        print(f'Error: {e} sbatch scripts/slurm_ukbb_{mode}.sh')
 
 
 def main():
@@ -54,8 +65,9 @@ def main():
     """
     dataset = 'ukbb'
     # TODO save exps states in a file to handle inturruptions
-    seeds = [42, 43, 47, 53, 57, 61, 71, 73, 79, 83]
-     
+    #seeds = [42, 43, 47, 53, 57, 61, 71, 73, 79, 83]
+    seeds = [42, 43, 47]
+
     # skip if files are already generated
     generated = True
     if not generated:
@@ -74,7 +86,6 @@ def main():
                 edit_config_slurm(dataset, mode, exp, seed, cfg_file='config')
                 # train model
                 run_slurm(mode)
-
 
     # skip if already tested the models
     tested = False
