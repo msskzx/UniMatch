@@ -19,7 +19,7 @@ conda activate unimatch # If this does not work, try 'source activate ptl'
 
 now=$(date +"%Y%m%d_%H%M%S")
 exp_num='4'
-seed='83'
+seed='61'
 job=ukbb_unimatch_unet_exp$exp_num
 config=configs/ukbb/train/exp$exp_num/seed$seed/config.yaml
 
