@@ -74,7 +74,7 @@ def main():
             gen_splits.main(seed=seed)
 
     # skip if already trained the models
-    trained = False
+    trained = True
     if not trained:
         # train 3 models per sampling
         mode = 'train'
@@ -86,7 +86,7 @@ def main():
                 run_slurm(mode)
 
     # skip if already tested the models
-    tested = True
+    tested = False
     if not tested:
         testsets = ['sex', 'ethn']
         mode = 'test'
