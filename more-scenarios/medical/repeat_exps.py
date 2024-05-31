@@ -1,7 +1,7 @@
 from yaml import load, Loader, dump
 import gen_splits
 import subprocess
-from util.classes import EXPERIMENTS
+from util.classes import EXPERIMENTS, SEEDS
 import os
 
 def edit_config_slurm(dataset, mode, exp, seed, cfg_file):
@@ -64,12 +64,11 @@ def main():
     repeat experiments 10 times while sampling again from distribution
     """
     dataset = 'ukbb'
-    seeds = [42, 43, 47, 53, 57, 61, 71, 73, 79, 83]
 
     # skip if files are already generated
     generated = True
     if not generated:
-        for seed in seeds:
+        for seed in SEEDS:
             # generate train data for the exps
             gen_splits.main(seed=seed)
 
@@ -78,7 +77,7 @@ def main():
     if not trained:
         # train 3 models per sampling
         mode = 'train'
-        for seed in seeds:
+        for seed in SEEDS:
             for exp, _ in EXPERIMENTS.items():
                 # edit config, slurm script for train
                 edit_config_slurm(dataset, mode, exp, seed, cfg_file='config')
@@ -90,13 +89,14 @@ def main():
     if not tested:
         testsets = ['sex', 'ethn']
         mode = 'test'
-        for seed in seeds:
+        for seed in SEEDS:
             for exp, _ in EXPERIMENTS.items():
                 for testset in testsets:
-                    # edit config, slurm script
-                    edit_config_slurm(dataset, mode, exp, seed, cfg_file=testset)
-                    # run test
-                    run_slurm(mode)
+                    if exp == '3':
+                        # edit config, slurm script
+                        edit_config_slurm(dataset, mode, exp, seed, cfg_file=testset)
+                        # run test
+                        run_slurm(mode)
 
 
 if __name__ == '__main__':

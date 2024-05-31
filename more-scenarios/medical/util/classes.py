@@ -84,3 +84,9 @@ EXPERIMENTS_DEFINITION = {
     '3': 'Ethnicity Controlled',
     '4': 'Sex Ethnicity Controlled'
 }
+
+
+TESTSETS = ['sex', 'ethn']
+
+
+SEEDS = [42, 43, 47, 53, 57, 61, 71, 73, 79, 83]

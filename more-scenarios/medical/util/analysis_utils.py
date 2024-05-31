@@ -2,7 +2,7 @@ import pandas as pd
 from util.classes import ETHNNICITY_CODING
 import seaborn as sns
 import matplotlib.pyplot as plt
-from util.classes import PRIMARY_DEMOGRAPHICS
+from util.classes import PRIMARY_DEMOGRAPHICS, EXPERIMENTS
 import re
 
 
@@ -26,17 +26,22 @@ def get_all_results(df, cfg):
         'model': [cfg['model']],
         'train_set': [cfg['train_set']],
         'test_set': [cfg['test_set']],
-        'epochs': [cfg['epochs']],
-        'dice_mean': [dice['mean']],
-        'rv_mean': [dice['rv']],
-        'myo_mean': [dice['myo']],
-        'lv_mean': [dice['lv']],
-        'male_dice': [sex_dice['male']],
-        'female_dice': [sex_dice['female']],
-        'white_dice': [ethn_dice['White']],
-        'asian_dice': [ethn_dice['Asian']],
-        'black_dice': [ethn_dice['Black']],
-        'low_scores_prcnt': [low_scores_prcnt]
+        'dice_mean': [dice['dice_mean']],
+        'dice_lv': [dice['dice_lv']],
+        'dice_rv': [dice['dice_rv']],
+        'dice_myo': [dice['dice_myo']],
+        'male': [sex_dice['male']],
+        'male_lv': [sex_dice['male_lv']],
+        'male_rv': [sex_dice['male_rv']],
+        'male_myo': [sex_dice['male_myo']],
+        'female': [sex_dice['female']],
+        'female_lv': [sex_dice['female_lv']],
+        'female_rv': [sex_dice['female_rv']],
+        'female_myo': [sex_dice['female_myo']],
+        'white': [ethn_dice['White']],
+        'asian': [ethn_dice['Asian']],
+        'black': [ethn_dice['Black']],
+        'low_scores_prcnt': [low_scores_prcnt],
     }
 
     return pd.DataFrame(res)
@@ -68,24 +73,38 @@ def prep_patients_df(og_df):
     return df
 
 
+def boxplot_sex_dice(df, male, female):
+    for exp, _ in EXPERIMENTS.items():
+        df_melted = pd.melt(df[df['experiment'] == int(exp)], value_vars=[male, female], var_name='sex', value_name='sex_dice')
+        boxplot_all_dice(df_melted, x='sex', y='sex_dice', hue='sex', palette=two_palette, xlabel='Sex', title=f'Experiment {exp} - Male vs. Female Mean Dice')
+
+
+def boxplot_ethn_dice(df):
+    for exp, _ in EXPERIMENTS.items():
+        df_melted = pd.melt(df[df['experiment'] == int(exp)], value_vars=['white', 'asian', 'black'], var_name='ethnicity', value_name='ethnicity_dice')
+        boxplot_all_dice(df_melted, x='ethnicity', y='ethnicity_dice', hue='ethnicity', palette=three_palette, xlabel='Ethnicity', title=f'Experiment {exp} - Ethnic Groups Dice')
+    
+
 def plot_exps(df):
-    plot_all_dice(df, x='experiment', y='dice_mean', hue='experiment', palette=four_palette, title='Mean Dice')
-
-    plot_all_dice(df, x='experiment', y='male_dice', hue='experiment', palette=four_palette, title='Male Dice')
-
-    plot_all_dice(df, x='experiment', y='female_dice', hue='experiment', palette=four_palette, title='Female Dice')
-
-    plot_all_dice(df, x='experiment', y='white_dice', hue='experiment', palette=four_palette, title='White Dice')
-
-    plot_all_dice(df, x='experiment', y='asian_dice', hue='experiment', palette=four_palette, title='Asian Dice')
-
-    plot_all_dice(df, x='experiment', y='black_dice', hue='experiment', palette=four_palette, title='Black Dice')
-
-    plot_all_dice(df, x='experiment', y='low_scores_prcnt', hue='experiment', palette=four_palette, title='Slices Scores < 50%')
+    boxplot_all_dice(df, x='experiment', y='mean', hue='experiment', palette=three_palette, title='All Experiments - Overall Mean Dice')
+    boxplot_all_dice(df, x='experiment', y='male', hue='experiment', palette=three_palette, title='All Experiments - Males Mean Dice')
+    boxplot_all_dice(df, x='experiment', y='female', hue='experiment', palette=three_palette, title='All Experiments - Females Mean Dice')
+    boxplot_all_dice(df, x='experiment', y='white', hue='experiment', palette=three_palette, title='All Experiments - Whites Mean Dice')
+    boxplot_all_dice(df, x='experiment', y='asian', hue='experiment', palette=three_palette, title='All Experiments - Asians Mean Dice')
+    boxplot_all_dice(df, x='experiment', y='black', hue='experiment', palette=three_palette, title='All Experiments - Blacks Mean Dice')
+    boxplot_all_dice(df, x='experiment', y='low_scores_prcnt', hue='experiment', palette=three_palette, title='All Experiments - Slices Scores < 50%')
 
 
+def boxplot_all_dice(df, x, y, hue, palette, title, xlabel, ylabel='Mean Dice'):
+    sns.boxplot(data=df, x=x, y=y, hue=hue, palette=palette)
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    plt.title(title)
+    #plt.legend().remove()
+    plt.show()
 
-def plot_all_dice(df, x, y, hue, palette, title):
+
+def scatterplot_all_dice(df, x, y, hue, palette, title):
     min_val = df[y].min() - 0.5
     max_val = df[y].max() + 0.5
     sns.scatterplot(data=df, x=x, y=y, hue=hue, palette=palette).set_ylim(min_val, max_val)
@@ -96,16 +115,27 @@ def plot_all_dice(df, x, y, hue, palette, title):
     plt.show()
 
 
-def get_group_results(df, cfg):
-    sex_df = df.groupby('sex')['dice_mean'].mean()
+def get_group_results(df, cfg, plot=False):
+    sex_df = df.groupby('sex').agg({
+        'dice_mean': 'mean',
+        'dice_lv': 'mean',
+        'dice_rv': 'mean',
+        'dice_myo': 'mean',
+    })
+
     sex_dice = {
-        'male': sex_df[1],
-        'female': sex_df[0],
+        'male': sex_df.loc[1, 'dice_mean'],
+        'male_lv': sex_df.loc[1, 'dice_lv'],
+        'male_rv': sex_df.loc[1, 'dice_rv'],
+        'male_myo': sex_df.loc[1, 'dice_myo'],
+        'female': sex_df.loc[0, 'dice_mean'],
+        'female_lv': sex_df.loc[0, 'dice_lv'],
+        'female_rv': sex_df.loc[0, 'dice_rv'],
+        'female_myo': sex_df.loc[0, 'dice_myo'],
     }
 
-    print(f'Dice Mean for Male: {sex_df[1]:.2f}')
-    print(f'Dice Mean for Female: {sex_df[0]:.2f}')
-    plot_dice(sex_dice, two_palette, cfg)
+    if plot:
+        plot_dice(sex_dice, two_palette, cfg)
 
     ethn_dice = {}
 
@@ -114,31 +144,33 @@ def get_group_results(df, cfg):
         ethn_df = df[cond]
 
         mean = ethn_df.groupby('ethnicity')['dice_mean'].mean().reset_index()
-        print(f'Mean Dice for {ETHNNICITY_CODING[k]}:\n{mean}')
-        print(f'Mean: {mean["dice_mean"][0]}')
+        
         ethn_dice[ETHNNICITY_CODING[k]] = mean['dice_mean'][0]
 
-    plot_dice(ethn_dice, three_palette, cfg)
+    if plot:
+        plot_dice(ethn_dice, three_palette, cfg)
 
     return sex_dice, ethn_dice
 
 
-def get_dice(df, cfg):
-    print('Number of Patients:', df['eid'].nunique())
-    print('Total number of slices:', len(df))
-
+def get_dice(df, cfg, plot=False, stdout=False):
     dice = {
-        'mean': df['dice_mean'].mean(),
-        'rv': df['dice_rv'].mean(),
-        'myo': df['dice_myo'].mean(),
-        'lv': df['dice_lv'].mean(),
+        'dice_mean': df['dice_mean'].mean(),
+        'dice_rv': df['dice_rv'].mean(),
+        'dice_myo': df['dice_myo'].mean(),
+        'dice_lv': df['dice_lv'].mean(),
     }
-    print(f"DICE Mean: {dice['mean']:.2f}")
-    print(f"RV Mean: {dice['rv']:.2f}")
-    print(f"MYO Mean: {dice['myo']:.2f}")
-    print(f"LV Mean: {dice['lv']:.2f}")
 
-    plot_dice(dice, four_palette, cfg)
+    if stdout:
+        print('Number of Patients:', df['eid'].nunique())
+        print('Total number of slices:', len(df))
+        print(f"DICE Mean: {dice['dice_mean']:.2f}")
+        print(f"RV Mean: {dice['dice_rv']:.2f}")
+        print(f"MYO Mean: {dice['dice_myo']:.2f}")
+        print(f"LV Mean: {dice['dice_lv']:.2f}")
+
+    if plot:
+        plot_dice(dice, four_palette, cfg)
     return dice
 
 
@@ -152,12 +184,16 @@ def plot_dice(dice, palette, cfg):
     plt.show()
 
 
-def get_slices(df, cfg):
+def get_slices(df, cfg, plot=False, stdout=False):
     thresh = 50.0
     filtered_rows = df[df['dice_mean'] < thresh]
-    print(f'Experiment {cfg["exp"]} - Number of slices with DICE < {thresh}%: {len(filtered_rows)}')
+    
+    if stdout:
+        print(f'Experiment {cfg["exp"]} - Number of slices with DICE < {thresh}%: {len(filtered_rows)}')
 
-    plot_slices(filtered_rows, thresh, cfg)
+    if plot:
+        plot_slices(filtered_rows, thresh, cfg)
+    
     return len(filtered_rows) / len(df) * 100.0
 
 
