@@ -13,7 +13,7 @@ from PIL import Image
 
 
 class UKBBDataset(Dataset):
-    def __init__(self, name, root_dir, mode, crop_size, split, p_unlabeled=None, p_labeled=None):
+    def __init__(self, name, root_dir, mode, crop_size, split, p_unlabeled=None, p_labeled=None, nclass=4):
         """
         Arguments:
         str -- database name
@@ -27,6 +27,7 @@ class UKBBDataset(Dataset):
         self.patient_ids_frames = get_patient_ids_frames(split, mode)
         self.p_unlabeled = p_unlabeled
         self.p_labeled = p_labeled
+        self.nclass = nclass
 
     def __getitem__(self, item):
         """

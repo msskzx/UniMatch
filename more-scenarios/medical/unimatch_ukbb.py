@@ -17,7 +17,7 @@ from util.classes import CLASSES
 from util.utils import AverageMeter, count_params, init_log, DiceLoss
 from util.dist_helper import setup_distributed
 from dataset.ukbb import UKBBDataset
-
+from util.dist_align import PMovingAverage, PData
 
 parser = argparse.ArgumentParser(description='Revisiting Weak-to-Strong Consistency in Semi-Supervised Semantic Segmentation')
 parser.add_argument('--config', type=str, required=True)
@@ -30,7 +30,7 @@ def main():
     cfg = yaml.load(open(args.config, "r"), Loader=yaml.Loader)
     method = 'unimatch'
     exp = 'unet'
-    save_path = f'exp/{cfg["dataset"]}/{method}/{exp}/{cfg["split"]}/seed{cfg["seed"]}'
+    save_path = f'exp/{cfg["dataset"]}/{method}/{exp}/{cfg["split"]}/seed{cfg["seed"]}/da'
     port = int(f'83{cfg["split"]}')
     logger = init_log('global', logging.INFO)
     logger.propagate = 0
@@ -84,6 +84,11 @@ def main():
         mode='val',
         crop_size=cfg['crop_size'],
         split=f'splits/{cfg["dataset"]}/{cfg["split"]}/seed{cfg["seed"]}/val.csv')
+    
+    # Moving average of the current estimated label distribution
+    p_model = PMovingAverage('p_model', buf_size=128, crop_size=256)
+    # Known (or inferred) true labeled distribution
+    p_data = PData(trainset_u, crop_size=256)
     
     trainsampler_l = torch.utils.data.distributed.DistributedSampler(trainset_l)
     trainloader_l = DataLoader(trainset_l, batch_size=cfg['batch_size'],
@@ -164,6 +169,24 @@ def main():
             pred_u_s1, pred_u_s2 = model(torch.cat((img_u_s1, img_u_s2))).chunk(2)
 
             pred_u_w = pred_u_w.detach()
+            
+            da = False
+            if da:
+                # Distribution Alignment
+                logger.info(pred_u_w.shape)
+                p_model_y = pred_u_w.softmax(dim=1).cuda()
+                logger.info(p_model_y.shape)
+                p_ratio = (1e-6 + p_data().cuda()) / (1e-6 + p_model().cuda())
+                logger.info(p_ratio.shape)
+                p_weighted = p_model_y * p_ratio
+                logger.info(p_weighted.shape)
+                p_weighted /= torch.sum(p_weighted, dim=1, keepdim=True)
+                logger.info(p_weighted.shape)
+                pred_u_w = p_weighted
+                logger.info(pred_u_w.shape)
+                p_model.update(p_model_y.mean(dim=0))
+                p_data.update(mask_x)
+
             conf_u_w = pred_u_w.softmax(dim=1).max(dim=1)[0]
             mask_u_w = pred_u_w.argmax(dim=1)
 

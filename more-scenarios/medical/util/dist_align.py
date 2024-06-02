@@ -5,37 +5,36 @@ FixMatch, ReMixMatch PyTorch adaptation for image segmentation instead of classi
 import torch
 import torch.nn.functional as F
 
-def renorm(v):
-    return v / torch.sum(v, dim=-1, keepdim=True)
 
 class PMovingAverage:
     """
-    Distribution Moving Average for Image Segmentation
+    Model Distribution Moving Average for Image Segmentation
     """
-    def __init__(self, name, nclass, buf_size):
+    def __init__(self, name, buf_size, crop_size, nclass=4):
         self.name = name
         self.nclass = nclass
         self.buf_size = buf_size
-        # Initialize buffer with uniform distribution
-        self.ma = torch.ones(buf_size, nclass) / nclass
+        self.crop_size = crop_size
+        self.ma = torch.ones(buf_size, crop_size, crop_size) / (crop_size * crop_size)
 
     def __call__(self):
         v = torch.mean(self.ma, dim=0)
-        return v / torch.sum(v)
+        return v / torch.sum(v, keepdim=True)
 
     def update(self, entry):
-        entry_one_hot = F.one_hot(entry, num_classes=self.nclass).float()
-        entry_summed = torch.sum(entry_one_hot, dim=(0, 1, 2))
-        entry_mean = entry_summed / torch.sum(entry_summed)
-        # Update the buffer by removing the oldest entry and adding the new one
-        self.ma = torch.cat([self.ma[1:], entry_mean.unsqueeze(0)], dim=0)
+        print(entry.shape)
+        entry_mean = torch.mean(entry, dim=0)
+        entry_mean = entry_mean.unsqueeze(0)
+        print(entry_mean.shape)
+        print(self.ma.shape)
+        self.ma = torch.cat([self.ma[1:], entry_mean], dim=0)
 
 
 class PData:
     """
-    Distribution Management for Image Segmentation
+    Data Distribution for Image Segmentation
     """
-    def __init__(self, dataset):
+    def __init__(self, dataset, crop_size, nclass=4):
         self.has_update = False
         
         if dataset.p_unlabeled is not None:
@@ -43,8 +42,8 @@ class PData:
         elif dataset.p_labeled is not None:
             self.p_data = torch.tensor(dataset.p_labeled, dtype=torch.float32)
         else:
-            # Initialize with uniform distribution
-            self.p_data = renorm(torch.ones(dataset.nclass, dtype=torch.float32))
+            self.p_data = torch.ones(crop_size, crop_size, dtype=torch.float32).cuda()
+            self.p_data = self.p_data / torch.sum(self.p_data)
             self.has_update = True
 
     def __call__(self):
@@ -52,6 +51,13 @@ class PData:
 
     def update(self, entry, decay=0.999):
         entry_one_hot = F.one_hot(entry, num_classes=self.p_data.shape[0]).float()
-        entry_summed = torch.sum(entry_one_hot, dim=(0, 1, 2))
+        entry_summed = torch.sum(entry_one_hot, dim=(0, 2, 3))
         entry_mean = entry_summed / torch.sum(entry_summed)
+        entry_mean = entry_mean.unsqueeze(0)
         self.p_data = self.p_data * decay + entry_mean * (1 - decay)
+
+
+def guess_label(logits_y):
+    p_model_y = sum(F.softmax(x, dim=1) for x in logits_y) / len(logits_y)
+    p_model_y = p_model_y.repeat(len(logits_y), 1, 1, 1)
+    return p_model_y
