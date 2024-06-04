@@ -72,11 +72,13 @@ ETHNNICITY_CODING_REVERSED = {
 }
 
 
-EXPERIMENTS = {
+EXPERIMENTS_SPLITS = {
     '2': 80,
     '3': 26,
     '4': 18
 }
+
+EXPERIMENTS = [2, 3, 4]
 
 
 EXPERIMENTS_DEFINITION = {
@@ -90,3 +92,5 @@ TESTSETS = ['sex', 'ethn']
 
 
 SEEDS = [42, 43, 47, 53, 57, 61, 71, 73, 79, 83]
+
+ETHNICITIES = ['white', 'asian', 'black']
