@@ -88,52 +88,59 @@ def prep_patients_df(og_df):
     return df
 
 
-def boxplot_sex_dice(df, cls=''):
-    for exp, _ in EXPERIMENTS.items():
-        df_melted = pd.melt(df[df['experiment'] == int(exp)], value_vars=[f'male{cls}', f'female{cls}'], var_name='sex', value_name='sex_dice')
+def boxplot_sex_dice(df, cls='', g1='', g2=''):
+    if not g1:
+        g1 = f'male{cls}'
+    if not g2:
+        g2 = f'female{cls}'
+
+    for exp in EXPERIMENTS:
+        df_melted = pd.melt(df[df['experiment'] == int(exp)], value_vars=[g1, g2], var_name='sex', value_name='sex_dice')
         boxplot_all_dice(df_melted, x='sex', y='sex_dice', hue='sex', palette=two_palette, xlabel='Sex', title=f'Experiment {exp} - Male vs. Female Mean Dice')
 
 
 def boxplot_ethn_dice(df, cls =''):
-    for exp, _ in EXPERIMENTS.items():
+    for exp in EXPERIMENTS:
         df_melted = pd.melt(df[df['experiment'] == int(exp)], value_vars=[f'white{cls}', f'asian{cls}', f'black{cls}'], var_name='ethnicity', value_name='ethnicity_dice')
         boxplot_all_dice(df_melted, x='ethnicity', y='ethnicity_dice', hue='ethnicity', palette=three_palette, xlabel='Ethnicity', title=f'Experiment {exp} - Ethnic Groups Dice')
     
 
 def plot_exps(df):
     # overall segmentation
-    boxplot_all_dice(df, x='experiment', y='dice_mean', palette=three_palette, title='All Experiments - Overall Mean Dice')
-    boxplot_all_dice(df, x='experiment', y='dice_rv', palette=three_palette, title='All Experiments - RV Mean Dice')
-    boxplot_all_dice(df, x='experiment', y='dice_lv', palette=three_palette, title='All Experiments - LV Mean Dice')
-    boxplot_all_dice(df, x='experiment', y='dice_myo', palette=three_palette, title='All Experiments - MYO Mean Dice')
+    boxplot_all_dice(df, x='experiment', y='dice_mean', palette=three_palette, title='All Experiments - Overall Mean Dice', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='dice_rv', palette=three_palette, title='All Experiments - RV Mean Dice', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='dice_lv', palette=three_palette, title='All Experiments - LV Mean Dice', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='dice_myo', palette=three_palette, title='All Experiments - MYO Mean Dice', rm_lgnd=True)
 
     # sex groups
-    boxplot_all_dice(df, x='experiment', y='male', palette=three_palette, title='All Experiments - Males Mean Dice')
-    boxplot_all_dice(df, x='experiment', y='female', palette=three_palette, title='All Experiments - Females Mean Dice')
+    boxplot_all_dice(df, x='experiment', y='male', palette=three_palette, title='All Experiments - Males Mean Dice', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='female', palette=three_palette, title='All Experiments - Females Mean Dice', rm_lgnd=True)
     
     # ethnic groups
-    boxplot_all_dice(df, x='experiment', y='white', palette=three_palette, title='All Experiments - Whites Mean Dice')
-    boxplot_all_dice(df, x='experiment', y='asian', palette=three_palette, title='All Experiments - Asians Mean Dice')
-    boxplot_all_dice(df, x='experiment', y='black', palette=three_palette, title='All Experiments - Blacks Mean Dice')
+    boxplot_all_dice(df, x='experiment', y='white', palette=three_palette, title='All Experiments - Whites Mean Dice', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='asian', palette=three_palette, title='All Experiments - Asians Mean Dice', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='black', palette=three_palette, title='All Experiments - Blacks Mean Dice', rm_lgnd=True)
 
     # intersectional groups dice mean
-    boxplot_all_dice(df, x='experiment', y='white_male', palette=three_palette, title='All Experiments - Whites Male Mean Dice')
-    boxplot_all_dice(df, x='experiment', y='asian_male', palette=three_palette, title='All Experiments - Asian Male Mean Dice')
-    boxplot_all_dice(df, x='experiment', y='black_male', palette=three_palette, title='All Experiments - Black Male Mean Dice')
+    boxplot_all_dice(df, x='experiment', y='white_male', palette=three_palette, title='All Experiments - Whites Male Mean Dice', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='asian_male', palette=three_palette, title='All Experiments - Asian Male Mean Dice', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='black_male', palette=three_palette, title='All Experiments - Black Male Mean Dice', rm_lgnd=True)
 
-    boxplot_all_dice(df, x='experiment', y='white_female', palette=three_palette, title='All Experiments - Whites Female Mean Dice')
-    boxplot_all_dice(df, x='experiment', y='asian_female', palette=three_palette, title='All Experiments - Asian Female Mean Dice')
-    boxplot_all_dice(df, x='experiment', y='black_female', palette=three_palette, title='All Experiments - Black Female Mean Dice')
+    boxplot_all_dice(df, x='experiment', y='white_female', palette=three_palette, title='All Experiments - Whites Female Mean Dice', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='asian_female', palette=three_palette, title='All Experiments - Asian Female Mean Dice', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='black_female', palette=three_palette, title='All Experiments - Black Female Mean Dice', rm_lgnd=True)
 
-    boxplot_all_dice(df, x='experiment', y='low_scores_prcnt', palette=three_palette, title='All Experiments - Slices Scores < 50%')
+    boxplot_all_dice(df, x='experiment', y='low_scores_prcnt', palette=three_palette, title='All Experiments - Slices Scores < 50%', rm_lgnd=True)
 
 
-def boxplot_all_dice(df, x, y, palette, title, hue='experiment', xlabel='Experiment', ylabel='Mean Dice'):
-    sns.boxplot(data=df, x=x, y=y, hue=hue, palette=palette)
+def boxplot_all_dice(df, x, y, palette, title, hue='experiment', xlabel='Experiment', ylabel='Mean Dice', rm_lgnd=False):
+    plt.subplots(figsize=(4, 4))
+    sns.boxplot(data=df, x=x, y=y, hue=hue, palette=palette, width=0.1)
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
-    plt.title(title)
-    #plt.legend().remove()
+    if rm_lgnd:
+        plt.legend().remove()
+    plt.title(title, fontsize=11)
     plt.show()
 
 

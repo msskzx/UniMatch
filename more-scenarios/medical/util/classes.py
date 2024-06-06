@@ -78,6 +78,7 @@ EXPERIMENTS_SPLITS = {
     '4': 18
 }
 
+
 EXPERIMENTS = [2, 3, 4]
 
 
@@ -92,5 +93,6 @@ TESTSETS = ['sex', 'ethn']
 
 
 SEEDS = [42, 43, 47, 53, 57, 61, 71, 73, 79, 83]
+
 
 ETHNICITIES = ['white', 'asian', 'black']
