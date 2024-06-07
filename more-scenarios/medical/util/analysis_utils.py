@@ -7,9 +7,10 @@ import re
 
 
 one_palette = sns.color_palette("pastel")[0]
-two_palette = sns.color_palette("pastel")[:2]
+two_palette = sns.color_palette("pastel")[8:]
 three_palette = sns.color_palette("pastel")[:3]
-four_palette = sns.color_palette("pastel")[0:4]
+three_palette_exps = sns.color_palette("pastel")[3:6]
+four_palette = sns.color_palette("pastel")[2:6]
 
 
 def get_all_results(df, cfg):
@@ -107,35 +108,39 @@ def boxplot_ethn_dice(df, cls =''):
 
 def plot_exps(df):
     # overall segmentation
-    boxplot_all_dice(df, x='experiment', y='dice_mean', palette=three_palette, title='All Experiments - Overall Mean Dice', rm_lgnd=True)
-    boxplot_all_dice(df, x='experiment', y='dice_rv', palette=three_palette, title='All Experiments - RV Mean Dice', rm_lgnd=True)
-    boxplot_all_dice(df, x='experiment', y='dice_lv', palette=three_palette, title='All Experiments - LV Mean Dice', rm_lgnd=True)
-    boxplot_all_dice(df, x='experiment', y='dice_myo', palette=three_palette, title='All Experiments - MYO Mean Dice', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='dice_mean', palette=three_palette_exps, title='All Experiments - Overall Mean Dice', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='dice_rv', palette=three_palette_exps, title='All Experiments - RV Mean Dice', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='dice_lv', palette=three_palette_exps, title='All Experiments - LV Mean Dice', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='dice_myo', palette=three_palette_exps, title='All Experiments - MYO Mean Dice', rm_lgnd=True)
 
     # sex groups
-    boxplot_all_dice(df, x='experiment', y='male', palette=three_palette, title='All Experiments - Males Mean Dice', rm_lgnd=True)
-    boxplot_all_dice(df, x='experiment', y='female', palette=three_palette, title='All Experiments - Females Mean Dice', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='male', palette=three_palette_exps, title='All Experiments - Males Mean Dice', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='female', palette=three_palette_exps, title='All Experiments - Females Mean Dice', rm_lgnd=True)
     
     # ethnic groups
-    boxplot_all_dice(df, x='experiment', y='white', palette=three_palette, title='All Experiments - Whites Mean Dice', rm_lgnd=True)
-    boxplot_all_dice(df, x='experiment', y='asian', palette=three_palette, title='All Experiments - Asians Mean Dice', rm_lgnd=True)
-    boxplot_all_dice(df, x='experiment', y='black', palette=three_palette, title='All Experiments - Blacks Mean Dice', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='white', palette=three_palette_exps, title='All Experiments - White Group Mean Dice', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='asian', palette=three_palette_exps, title='All Experiments - Asian Group Mean Dice', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='black', palette=three_palette_exps, title='All Experiments - Black Group Mean Dice', rm_lgnd=True)
 
     # intersectional groups dice mean
-    boxplot_all_dice(df, x='experiment', y='white_male', palette=three_palette, title='All Experiments - Whites Male Mean Dice', rm_lgnd=True)
-    boxplot_all_dice(df, x='experiment', y='asian_male', palette=three_palette, title='All Experiments - Asian Male Mean Dice', rm_lgnd=True)
-    boxplot_all_dice(df, x='experiment', y='black_male', palette=three_palette, title='All Experiments - Black Male Mean Dice', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='white_male', palette=three_palette_exps, title='All Experiments - White Males Mean Dice', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='asian_male', palette=three_palette_exps, title='All Experiments - Asian Males Mean Dice', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='black_male', palette=three_palette_exps, title='All Experiments - Black Males Mean Dice', rm_lgnd=True)
 
-    boxplot_all_dice(df, x='experiment', y='white_female', palette=three_palette, title='All Experiments - Whites Female Mean Dice', rm_lgnd=True)
-    boxplot_all_dice(df, x='experiment', y='asian_female', palette=three_palette, title='All Experiments - Asian Female Mean Dice', rm_lgnd=True)
-    boxplot_all_dice(df, x='experiment', y='black_female', palette=three_palette, title='All Experiments - Black Female Mean Dice', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='white_female', palette=three_palette_exps, title='All Experiments - White Females Mean Dice', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='asian_female', palette=three_palette_exps, title='All Experiments - Asian Females Mean Dice', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='black_female', palette=three_palette_exps, title='All Experiments - Black Females Mean Dice', rm_lgnd=True)
 
-    boxplot_all_dice(df, x='experiment', y='low_scores_prcnt', palette=three_palette, title='All Experiments - Slices Scores < 50%', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='low_scores_prcnt', palette=three_palette_exps, title='All Experiments - Slices Scores < 50%', rm_lgnd=True)
 
 
-def boxplot_all_dice(df, x, y, palette, title, hue='experiment', xlabel='Experiment', ylabel='Mean Dice', rm_lgnd=False):
+def boxplot_all_dice(df, x, y, palette, title, hue='experiment', xlabel='Experiment', ylabel='Mean Dice', rm_lgnd=False, min_y=None, max_y=None):
     plt.subplots(figsize=(4, 4))
-    sns.boxplot(data=df, x=x, y=y, hue=hue, palette=palette, width=0.1)
+    if min_y:
+        sns.boxplot(data=df, x=x, y=y, hue=hue, palette=palette, width=0.1).set_ylim(min_y, max_y)
+    else:
+        sns.boxplot(data=df, x=x, y=y, hue=hue, palette=palette, width=0.1)
+
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
     if rm_lgnd:

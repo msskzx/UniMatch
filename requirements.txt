@@ -12,3 +12,4 @@ pandas
 Pyarrow
 matplotlib
 seaborn
+jinja2

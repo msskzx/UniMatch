@@ -1,0 +1,620 @@
+Comparing dice_mean
+Experiment 2 vs. 3
+-------------
+t-statistic: 10.289522582228173
+p-value: 5.746039545780501e-09
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 dice_mean and 3 dice_mean.
+
+Experiment 2 vs. 4
+-------------
+t-statistic: 5.820813899687802
+p-value: 1.630020750367708e-05
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 dice_mean and 4 dice_mean.
+
+Experiment 3 vs. 4
+-------------
+t-statistic: -4.6605658777753245
+p-value: 0.0001945660493208868
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 3 dice_mean and 4 dice_mean.
+
+-----------------------------------------------------------------
+Comparing dice_lv
+Experiment 2 vs. 3
+-------------
+t-statistic: 7.999923782396608
+p-value: 2.45105308030604e-07
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 dice_lv and 3 dice_lv.
+
+Experiment 2 vs. 4
+-------------
+t-statistic: 5.546883442550742
+p-value: 2.8878682645897075e-05
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 dice_lv and 4 dice_lv.
+
+Experiment 3 vs. 4
+-------------
+t-statistic: -3.2767615656944646
+p-value: 0.004190764788075977
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 3 dice_lv and 4 dice_lv.
+
+-----------------------------------------------------------------
+Comparing dice_rv
+Experiment 2 vs. 3
+-------------
+t-statistic: 11.140464113015149
+p-value: 1.6535468038527911e-09
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 dice_rv and 3 dice_rv.
+
+Experiment 2 vs. 4
+-------------
+t-statistic: 4.105638226495309
+p-value: 0.0006638416055641129
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 dice_rv and 4 dice_rv.
+
+Experiment 3 vs. 4
+-------------
+t-statistic: -3.232594525267849
+p-value: 0.004619116235703774
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 3 dice_rv and 4 dice_rv.
+
+-----------------------------------------------------------------
+Comparing dice_myo
+Experiment 2 vs. 3
+-------------
+t-statistic: 8.093893047766837
+p-value: 2.0746791111455328e-07
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 dice_myo and 3 dice_myo.
+
+Experiment 2 vs. 4
+-------------
+t-statistic: 4.46956146473948
+p-value: 0.00029624295103633996
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 dice_myo and 4 dice_myo.
+
+Experiment 3 vs. 4
+-------------
+t-statistic: -4.7814811526007714
+p-value: 0.0001493149090143139
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 3 dice_myo and 4 dice_myo.
+
+-----------------------------------------------------------------
+Comparing male
+Experiment 2 vs. 3
+-------------
+t-statistic: 9.984944538704205
+p-value: 9.140402334475098e-09
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 male and 3 male.
+
+Experiment 2 vs. 4
+-------------
+t-statistic: 6.16913995607161
+p-value: 7.985266031556456e-06
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 male and 4 male.
+
+Experiment 3 vs. 4
+-------------
+t-statistic: -3.9344139992614147
+p-value: 0.0009719508577071143
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 3 male and 4 male.
+
+-----------------------------------------------------------------
+Comparing male_lv
+Experiment 2 vs. 3
+-------------
+t-statistic: 7.374282437820922
+p-value: 7.661412422974347e-07
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 male_lv and 3 male_lv.
+
+Experiment 2 vs. 4
+-------------
+t-statistic: 5.707460588981296
+p-value: 2.0629542033240867e-05
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 male_lv and 4 male_lv.
+
+Experiment 3 vs. 4
+-------------
+t-statistic: -2.547349353345942
+p-value: 0.020211451699769744
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 3 male_lv and 4 male_lv.
+
+-----------------------------------------------------------------
+Comparing male_rv
+Experiment 2 vs. 3
+-------------
+t-statistic: 11.672833566985135
+p-value: 7.864825823997515e-10
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 male_rv and 3 male_rv.
+
+Experiment 2 vs. 4
+-------------
+t-statistic: 4.3859269365792
+p-value: 0.0003563876683530319
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 male_rv and 4 male_rv.
+
+Experiment 3 vs. 4
+-------------
+t-statistic: -2.743267173562653
+p-value: 0.013362868221240989
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 3 male_rv and 4 male_rv.
+
+-----------------------------------------------------------------
+Comparing male_myo
+Experiment 2 vs. 3
+-------------
+t-statistic: 7.920018490834129
+p-value: 2.826914775913769e-07
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 male_myo and 3 male_myo.
+
+Experiment 2 vs. 4
+-------------
+t-statistic: 5.385713609725908
+p-value: 4.060169318784431e-05
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 male_myo and 4 male_myo.
+
+Experiment 3 vs. 4
+-------------
+t-statistic: -4.600915307611963
+p-value: 0.00022180208879539397
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 3 male_myo and 4 male_myo.
+
+-----------------------------------------------------------------
+Comparing female
+Experiment 2 vs. 3
+-------------
+t-statistic: 9.68627554020755
+p-value: 1.4552749047935241e-08
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 female and 3 female.
+
+Experiment 2 vs. 4
+-------------
+t-statistic: 4.783280543062418
+p-value: 0.0001487292241928346
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 female and 4 female.
+
+Experiment 3 vs. 4
+-------------
+t-statistic: -4.863359910796157
+p-value: 0.00012489887779389082
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 3 female and 4 female.
+
+-----------------------------------------------------------------
+Comparing female_lv
+Experiment 2 vs. 3
+-------------
+t-statistic: 6.910909149739665
+p-value: 1.8433833911777306e-06
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 female_lv and 3 female_lv.
+
+Experiment 2 vs. 4
+-------------
+t-statistic: 3.9691037830310467
+p-value: 0.0008996616925781712
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 female_lv and 4 female_lv.
+
+Experiment 3 vs. 4
+-------------
+t-statistic: -3.2033178879608797
+p-value: 0.004926424090123378
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 3 female_lv and 4 female_lv.
+
+-----------------------------------------------------------------
+Comparing female_rv
+Experiment 2 vs. 3
+-------------
+t-statistic: 9.308611166988856
+p-value: 2.6585207924688173e-08
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 female_rv and 3 female_rv.
+
+Experiment 2 vs. 4
+-------------
+t-statistic: 3.430059284394538
+p-value: 0.00298587704565791
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 female_rv and 4 female_rv.
+
+Experiment 3 vs. 4
+-------------
+t-statistic: -3.5475611125311426
+p-value: 0.002300375717193519
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 3 female_rv and 4 female_rv.
+
+-----------------------------------------------------------------
+Comparing female_myo
+Experiment 2 vs. 3
+-------------
+t-statistic: 7.708918577127004
+p-value: 4.1377124355086146e-07
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 female_myo and 3 female_myo.
+
+Experiment 2 vs. 4
+-------------
+t-statistic: 3.6019836437800423
+p-value: 0.002038185377396965
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 female_myo and 4 female_myo.
+
+Experiment 3 vs. 4
+-------------
+t-statistic: -4.563442812295605
+p-value: 0.00024086157080592318
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 3 female_myo and 4 female_myo.
+
+-----------------------------------------------------------------
+Comparing white
+Experiment 2 vs. 3
+-------------
+t-statistic: 9.986129346057728
+p-value: 9.123734171142472e-09
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 white and 3 white.
+
+Experiment 2 vs. 4
+-------------
+t-statistic: 5.099393195182991
+p-value: 7.49087492441768e-05
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 white and 4 white.
+
+Experiment 3 vs. 4
+-------------
+t-statistic: -4.214169982862971
+p-value: 0.0005215427341669067
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 3 white and 4 white.
+
+-----------------------------------------------------------------
+Comparing white_rv
+Experiment 2 vs. 3
+-------------
+t-statistic: 9.9118356270434
+p-value: 1.0233124506506966e-08
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 white_rv and 3 white_rv.
+
+Experiment 2 vs. 4
+-------------
+t-statistic: 3.8836851203451053
+p-value: 0.0010882725432739898
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 white_rv and 4 white_rv.
+
+Experiment 3 vs. 4
+-------------
+t-statistic: -3.3254787745118124
+p-value: 0.003763477143689289
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 3 white_rv and 4 white_rv.
+
+-----------------------------------------------------------------
+Comparing white_lv
+Experiment 2 vs. 3
+-------------
+t-statistic: 8.344140272492888
+p-value: 1.3383238029671101e-07
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 white_lv and 3 white_lv.
+
+Experiment 2 vs. 4
+-------------
+t-statistic: 4.722850376667161
+p-value: 0.0001697397835198403
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 white_lv and 4 white_lv.
+
+Experiment 3 vs. 4
+-------------
+t-statistic: -2.8554433395735366
+p-value: 0.010507929370045905
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 3 white_lv and 4 white_lv.
+
+-----------------------------------------------------------------
+Comparing white_myo
+Experiment 2 vs. 3
+-------------
+t-statistic: 7.528673356483262
+p-value: 5.755201170827642e-07
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 white_myo and 3 white_myo.
+
+Experiment 2 vs. 4
+-------------
+t-statistic: 4.165107153647752
+p-value: 0.000581610024516562
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 white_myo and 4 white_myo.
+
+Experiment 3 vs. 4
+-------------
+t-statistic: -3.9269165734233367
+p-value: 0.0009883242302794327
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 3 white_myo and 4 white_myo.
+
+-----------------------------------------------------------------
+Comparing asian
+Experiment 2 vs. 3
+-------------
+t-statistic: 8.45460194171194
+p-value: 1.1056798696348492e-07
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 asian and 3 asian.
+
+Experiment 2 vs. 4
+-------------
+t-statistic: 3.960076702675067
+p-value: 0.0009179372443140392
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 asian and 4 asian.
+
+Experiment 3 vs. 4
+-------------
+t-statistic: -3.9943737591310313
+p-value: 0.0008504194741585012
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 3 asian and 4 asian.
+
+-----------------------------------------------------------------
+Comparing asian_rv
+Experiment 2 vs. 3
+-------------
+t-statistic: 8.060333506679324
+p-value: 2.2016620221727799e-07
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 asian_rv and 3 asian_rv.
+
+Experiment 2 vs. 4
+-------------
+t-statistic: 3.904993198733916
+p-value: 0.0010378045909561877
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 asian_rv and 4 asian_rv.
+
+Experiment 3 vs. 4
+-------------
+t-statistic: -2.3979194749515265
+p-value: 0.02754422210400904
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 3 asian_rv and 4 asian_rv.
+
+-----------------------------------------------------------------
+Comparing asian_lv
+Experiment 2 vs. 3
+-------------
+t-statistic: 6.089567631221991
+p-value: 9.386050019685816e-06
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 asian_lv and 3 asian_lv.
+
+Experiment 2 vs. 4
+-------------
+t-statistic: 2.9166304494957274
+p-value: 0.009208428258011608
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 asian_lv and 4 asian_lv.
+
+Experiment 3 vs. 4
+-------------
+t-statistic: -3.006165118655646
+p-value: 0.007583044672382232
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 3 asian_lv and 4 asian_lv.
+
+-----------------------------------------------------------------
+Comparing asian_myo
+Experiment 2 vs. 3
+-------------
+t-statistic: 7.790920427367915
+p-value: 3.566055865435538e-07
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 asian_myo and 3 asian_myo.
+
+Experiment 2 vs. 4
+-------------
+t-statistic: 2.97366605175837
+p-value: 0.0081379722407809
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 asian_myo and 4 asian_myo.
+
+Experiment 3 vs. 4
+-------------
+t-statistic: -4.525817577062562
+p-value: 0.00026167275074043457
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 3 asian_myo and 4 asian_myo.
+
+-----------------------------------------------------------------
+Comparing black
+Experiment 2 vs. 3
+-------------
+t-statistic: 2.972407291012083
+p-value: 0.008160239737478122
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 black and 3 black.
+
+Experiment 2 vs. 4
+-------------
+t-statistic: 1.5886562892751994
+p-value: 0.12954812024702392
+There is not sufficient evidence (p-value >= 0.05) to conclude a statistically significant difference in DICE similarity scores between experiment/group 2 black and 4 black.
+
+Experiment 3 vs. 4
+-------------
+t-statistic: -1.2753385266252948
+p-value: 0.21840445101597236
+There is not sufficient evidence (p-value >= 0.05) to conclude a statistically significant difference in DICE similarity scores between experiment/group 3 black and 4 black.
+
+-----------------------------------------------------------------
+Comparing black_rv
+Experiment 2 vs. 3
+-------------
+t-statistic: 2.0700295544834812
+p-value: 0.05311105512734051
+There is not sufficient evidence (p-value >= 0.05) to conclude a statistically significant difference in DICE similarity scores between experiment/group 2 black_rv and 3 black_rv.
+
+Experiment 2 vs. 4
+-------------
+t-statistic: 0.41425753335493265
+p-value: 0.6835802347735536
+There is not sufficient evidence (p-value >= 0.05) to conclude a statistically significant difference in DICE similarity scores between experiment/group 2 black_rv and 4 black_rv.
+
+Experiment 3 vs. 4
+-------------
+t-statistic: -0.9605601182957658
+p-value: 0.34949999776572127
+There is not sufficient evidence (p-value >= 0.05) to conclude a statistically significant difference in DICE similarity scores between experiment/group 3 black_rv and 4 black_rv.
+
+-----------------------------------------------------------------
+Comparing black_lv
+Experiment 2 vs. 3
+-------------
+t-statistic: 2.121779251315298
+p-value: 0.047994195309788164
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 black_lv and 3 black_lv.
+
+Experiment 2 vs. 4
+-------------
+t-statistic: 1.265248234311773
+p-value: 0.22191682800693086
+There is not sufficient evidence (p-value >= 0.05) to conclude a statistically significant difference in DICE similarity scores between experiment/group 2 black_lv and 4 black_lv.
+
+Experiment 3 vs. 4
+-------------
+t-statistic: -1.284122372798254
+p-value: 0.21538225371570638
+There is not sufficient evidence (p-value >= 0.05) to conclude a statistically significant difference in DICE similarity scores between experiment/group 3 black_lv and 4 black_lv.
+
+-----------------------------------------------------------------
+Comparing black_myo
+Experiment 2 vs. 3
+-------------
+t-statistic: 2.707316376251468
+p-value: 0.014425688249787233
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 black_myo and 3 black_myo.
+
+Experiment 2 vs. 4
+-------------
+t-statistic: 2.2554446089898375
+p-value: 0.036790456306950145
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 black_myo and 4 black_myo.
+
+Experiment 3 vs. 4
+-------------
+t-statistic: -0.6115060003883188
+p-value: 0.5485108055838257
+There is not sufficient evidence (p-value >= 0.05) to conclude a statistically significant difference in DICE similarity scores between experiment/group 3 black_myo and 4 black_myo.
+
+-----------------------------------------------------------------
+Comparing white_male
+Experiment 2 vs. 3
+-------------
+t-statistic: 10.433034460563643
+p-value: 4.633116066936948e-09
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 white_male and 3 white_male.
+
+Experiment 2 vs. 4
+-------------
+t-statistic: 6.4161654778465955
+p-value: 4.860667555638126e-06
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 white_male and 4 white_male.
+
+Experiment 3 vs. 4
+-------------
+t-statistic: -4.005734908034009
+p-value: 0.0008291708178761988
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 3 white_male and 4 white_male.
+
+-----------------------------------------------------------------
+Comparing asian_male
+Experiment 2 vs. 3
+-------------
+t-statistic: 7.319830193429548
+p-value: 8.481303186747808e-07
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 asian_male and 3 asian_male.
+
+Experiment 2 vs. 4
+-------------
+t-statistic: 4.669868950943021
+p-value: 0.00019063550724582494
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 asian_male and 4 asian_male.
+
+Experiment 3 vs. 4
+-------------
+t-statistic: -3.6164809578036095
+p-value: 0.0019734954486811907
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 3 asian_male and 4 asian_male.
+
+-----------------------------------------------------------------
+Comparing black_male
+Experiment 2 vs. 3
+-------------
+t-statistic: 5.546899547017998
+p-value: 2.887770391337158e-05
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 black_male and 3 black_male.
+
+Experiment 2 vs. 4
+-------------
+t-statistic: 2.7370836031851455
+p-value: 0.013540175032408508
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 black_male and 4 black_male.
+
+Experiment 3 vs. 4
+-------------
+t-statistic: -2.6901353088697073
+p-value: 0.01496170575771959
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 3 black_male and 4 black_male.
+
+-----------------------------------------------------------------
+Comparing white_female
+Experiment 2 vs. 3
+-------------
+t-statistic: 9.746432508165626
+p-value: 1.3240810125790391e-08
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 white_female and 3 white_female.
+
+Experiment 2 vs. 4
+-------------
+t-statistic: 4.789231701104085
+p-value: 0.00014680878110008344
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 white_female and 4 white_female.
+
+Experiment 3 vs. 4
+-------------
+t-statistic: -5.018667080914611
+p-value: 8.91668826224455e-05
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 3 white_female and 4 white_female.
+
+-----------------------------------------------------------------
+Comparing asian_female
+Experiment 2 vs. 3
+-------------
+t-statistic: 8.314427134902786
+p-value: 1.4092377851351178e-07
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 asian_female and 3 asian_female.
+
+Experiment 2 vs. 4
+-------------
+t-statistic: 4.329564851069104
+p-value: 0.0004037551625253394
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 asian_female and 4 asian_female.
+
+Experiment 3 vs. 4
+-------------
+t-statistic: -3.8763236528142504
+p-value: 0.0011062731407009592
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 3 asian_female and 4 asian_female.
+
+-----------------------------------------------------------------
+Comparing black_female
+Experiment 2 vs. 3
+-------------
+t-statistic: 7.759208571975725
+p-value: 3.776710016851113e-07
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 black_female and 3 black_female.
+
+Experiment 2 vs. 4
+-------------
+t-statistic: 3.587826845554082
+p-value: 0.0021033874197964645
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 black_female and 4 black_female.
+
+Experiment 3 vs. 4
+-------------
+t-statistic: -2.925455734378317
+p-value: 0.009034310482843142
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 3 black_female and 4 black_female.
+
+-----------------------------------------------------------------
+Comparing low_scores_prcnt
+Experiment 2 vs. 3
+-------------
+t-statistic: -6.748389406900875
+p-value: 2.5255143721900973e-06
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 low_scores_prcnt and 3 low_scores_prcnt.
+
+Experiment 2 vs. 4
+-------------
+t-statistic: -4.818577117710192
+p-value: 0.00013770167509148115
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 2 low_scores_prcnt and 4 low_scores_prcnt.
+
+Experiment 3 vs. 4
+-------------
+t-statistic: 2.715412557574723
+p-value: 0.014179509534794342
+There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group 3 low_scores_prcnt and 4 low_scores_prcnt.
+
+-----------------------------------------------------------------
