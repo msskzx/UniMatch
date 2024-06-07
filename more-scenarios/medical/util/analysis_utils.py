@@ -4,6 +4,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from util.classes import PRIMARY_DEMOGRAPHICS, EXPERIMENTS
 import re
+from util.classes import EXPERIMENTS, ETHNICITIES
+from scipy import stats
 
 
 one_palette = sns.color_palette("pastel")[0]
@@ -88,6 +90,92 @@ def prep_patients_df(og_df):
 
     return df
 
+def to_latex(df, caption='', longtable=True):
+    groups = [
+        ['dice_mean', 'dice_lv', 'dice_rv', 'dice_myo'],
+        ['male', 'male_lv', 'male_rv', 'male_myo'],
+        ['female', 'female_lv', 'female_rv', 'female_myo'],
+        ['white', 'white_rv', 'white_lv', 'white_myo'],
+        ['asian', 'asian_rv', 'asian_lv', 'asian_myo'],
+        ['black', 'black_rv', 'black_lv', 'black_myo'],
+        ['white_male', 'asian_male', 'black_male'],
+        ['white_female', 'asian_female', 'black_female'],
+    ]
+
+    for group in groups:
+        df_latex_cols = ['experiment'] + group
+        df_latex = df[df_latex_cols]
+        table = df_latex.to_latex(index=False, longtable=longtable, caption=caption)
+        print(table)
+
+def ttest(df, g1, g2, cls1, cls2):
+    g1_dice = df[df['experiment'] == g1][cls1]
+    g2_dice = df[df['experiment'] == g2][cls2]
+    t_statistic, p_value = stats.ttest_ind(g1_dice, g2_dice)
+
+    print("t-statistic:", t_statistic)
+    print("p-value:", p_value)
+
+    if p_value < 0.05:
+        print(f'There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group {g1} {cls1} and {g2} {cls2}.')
+    else:
+        print(f'There is not sufficient evidence (p-value >= 0.05) to conclude a statistically significant difference in DICE similarity scores between experiment/group {g1} {cls1} and {g2} {cls2}.')
+    print()
+
+
+def sex_ttest(df, cls=''):
+    for exp in EXPERIMENTS:
+        print(f'Experiment {exp}')
+        print('-------------')
+        ttest(df, exp, exp, 'male' + cls, 'female' + cls)
+
+
+def ethn_ttest(df, cls=''):
+    for exp in EXPERIMENTS:
+        print(f'Experiment {exp}')
+        print('-------------')
+        ttest(df, exp, exp, 'white' + cls, 'asian' + cls)
+        ttest(df, exp, exp, 'white' + cls, 'black' + cls)
+        ttest(df, exp, exp, 'asian' + cls, 'black' + cls)
+
+
+classes = [
+    'dice_mean', 'dice_lv', 'dice_rv', 'dice_myo', 
+    'male', 'male_lv', 'male_rv', 'male_myo',
+    'female', 'female_lv', 'female_rv', 'female_myo',
+    'white', 'white_rv', 'white_lv', 'white_myo',
+    'asian', 'asian_rv', 'asian_lv', 'asian_myo',
+    'black', 'black_rv', 'black_lv', 'black_myo',
+    'white_male', 'asian_male', 'black_male',
+    'white_female', 'asian_female', 'black_female',
+    'low_scores_prcnt'
+]
+
+
+def exps_ttest(df):
+    for cls in classes:
+        print(f'Comparing {cls}')
+        print('Experiment 2 vs. 3')
+        print('-------------')
+        ttest(df, 2, 3, cls, cls)
+
+        print('Experiment 2 vs. 4')
+        print('-------------')
+        ttest(df, 2, 4, cls, cls)
+        
+        print('Experiment 3 vs. 4')
+        print('-------------')
+        ttest(df, 3, 4, cls, cls)
+        print('-----------------------------------------------------------------')
+
+
+def sub_ttest(df):
+    for exp in EXPERIMENTS:
+        print(f'Experiment {exp}')
+        for ethn in ETHNICITIES:
+            print(f'{ethn}_male vs. {ethn}_female')
+            ttest(df, exp, exp, f'{ethn}_male', f'{ethn}_female')
+        print('-------------')
 
 def boxplot_sex_dice(df, cls='', g1='', g2=''):
     if not g1:
@@ -212,6 +300,13 @@ def get_group_results(df, cfg, plot=False):
 
     return sex_dice, ethn_dice
 
+
+def get_mean_std_table(df, cols, caption=''):
+    g_df = df.groupby('experiment')[cols].agg(['mean', 'std'])
+    g_df.reset_index(inplace=True)
+    table = g_df.to_latex(column_format='c'*len(g_df.columns), index=False, longtable=True, caption=caption)
+    print(table)
+    
 
 def get_dice(df, cfg, plot=False, stdout=False):
     dice = {
