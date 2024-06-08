@@ -399,3 +399,40 @@ def plot_sex_dist(df):
         axs[i].set_title(ETHNNICITY_CODING[k])
         i += 1
     plt.show
+
+
+def plot_sex_count(df):
+    counts = []
+
+    for k, v in ETHNNICITY_CODING.items():
+        cond = df['ethnicity'].astype(str).str.startswith(k)
+        ethnic_group_df = df[cond]
+        male = (ethnic_group_df['sex'] == 1).sum()
+        female = ethnic_group_df.shape[0] - male
+        counts.append(male)
+        counts.append(female)
+
+    data = {
+        'Ethnicity': ['White', 'White', 'Asian', 'Asian', 'Black', 'Black'],
+        'Sex': ['Male', 'Female', 'Male', 'Female', 'Male', 'Female'],
+        'Count': counts
+    }
+
+    df = pd.DataFrame(data)
+
+    sns.barplot(x='Ethnicity', y='Count', hue='Sex', data=df, palette=two_palette)
+    plt.title('Number of Males and Females per Ethnic Group')
+    plt.show()
+
+
+def plot_sex_dice_intersectional(df):
+    for exp in range(2, 5):
+        df_intr = df[df['experiment'] == exp]
+        df_intr = df_intr[['white_male', 'white_female', 'asian_male', 'asian_female', 'black_male', 'black_female']]
+        df_melted = df_intr.melt(var_name='Category', value_name='Dice')
+        df_melted['Sex'] = df_melted['Category'].apply(lambda x: 'Female' if 'female' in x else 'Male')
+        df_melted['Ethnicity'] = df_melted['Category'].apply(lambda x: x.split('_')[0].capitalize())
+
+        sns.boxplot(x='Sex', y='Dice', hue='Ethnicity', data=df_melted, palette=three_palette, width=0.1)
+        plt.title(f'Experiment {exp} - Males vs. Females per Ethnic Group', fontsize=11)
+        plt.show()

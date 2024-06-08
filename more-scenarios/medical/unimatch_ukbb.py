@@ -30,7 +30,13 @@ def main():
     cfg = yaml.load(open(args.config, "r"), Loader=yaml.Loader)
     method = 'unimatch'
     exp = 'unet'
-    save_path = f'exp/{cfg["dataset"]}/{method}/{exp}/{cfg["split"]}/seed{cfg["seed"]}/da'
+    save_path = f'exp/{cfg["dataset"]}/{method}/{exp}/{cfg["split"]}/seed{cfg["seed"]}'
+
+    # TODO get add da to config
+    da = False
+    if da:
+        save_path += '/da'
+
     port = int(f'83{cfg["split"]}')
     logger = init_log('global', logging.INFO)
     logger.propagate = 0
@@ -85,10 +91,12 @@ def main():
         crop_size=cfg['crop_size'],
         split=f'splits/{cfg["dataset"]}/{cfg["split"]}/seed{cfg["seed"]}/val.csv')
     
-    # Moving average of the current estimated label distribution
-    p_model = PMovingAverage('p_model', buf_size=128, crop_size=256)
-    # Known (or inferred) true labeled distribution
-    p_data = PData(trainset_u, crop_size=256)
+    # if using distribution alignment
+    if da:
+        # Moving average of the current estimated label distribution
+        p_model = PMovingAverage('p_model', buf_size=128, crop_size=256)
+        # Known (or inferred) true labeled distribution
+        p_data = PData(trainset_u, crop_size=256)
     
     trainsampler_l = torch.utils.data.distributed.DistributedSampler(trainset_l)
     trainloader_l = DataLoader(trainset_l, batch_size=cfg['batch_size'],
