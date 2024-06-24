@@ -1,10 +1,8 @@
 import pandas as pd
-from util.classes import ETHNNICITY_CODING
 import seaborn as sns
 import matplotlib.pyplot as plt
-from util.classes import PRIMARY_DEMOGRAPHICS, EXPERIMENTS
+from util.classes import PRIMARY_DEMOGRAPHICS, EXPERIMENTS, ETHNICITIES, ETHNNICITY_CODING
 import re
-from util.classes import EXPERIMENTS, ETHNICITIES
 from scipy import stats
 
 
@@ -339,25 +337,24 @@ def plot_dice(dice, palette, cfg):
     plt.show()
 
 
-def get_slices(df, cfg, plot=False, stdout=False):
-    thresh = 50.0
-    filtered_rows = df[df['dice_mean'] < thresh]
+def get_slices(df, cfg, threshold = 50.0, plot=False, stdout=False):
+    filtered_rows = df[df['dice_mean'] < threshold]
     
     if stdout:
-        print(f'Experiment {cfg["exp"]} - Number of slices with DICE < {thresh}%: {len(filtered_rows)}')
+        print(f'Experiment {cfg["exp"]} - Number of slices with DICE < {threshold}%: {len(filtered_rows)}')
 
     if plot:
-        plot_slices(filtered_rows, thresh, cfg)
+        plot_slices(filtered_rows, threshold, cfg)
     
     return len(filtered_rows) / len(df) * 100.0
 
 
-def plot_slices(df, thresh, cfg):
+def plot_slices(df, threshold, cfg):
     sns.kdeplot(df['slice_idx'], color=one_palette, fill=True)
     plt.xlim(0, df['slice_idx'].max())
     plt.xlabel('Slice Index')
-    plt.ylabel('Count')
-    plt.title(f'Experiment {cfg["exp"]} - Slice Index Distribution with DICE < {thresh}%')
+    plt.ylabel('Density')
+    plt.title(f'Experiment {cfg["exp"]} - Density Distribution for Slices with DICE < {threshold}%', fontsize=11)
     plt.show()
 
 
