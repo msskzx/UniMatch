@@ -18,24 +18,24 @@ from util.utils import AverageMeter, count_params, init_log, DiceLoss
 from util.dist_helper import setup_distributed
 from dataset.ukbb import UKBBDataset
 
-parser = argparse.ArgumentParser(description='Revisiting Weak-to-Strong Consistency in Semi-Supervised Semantic Segmentation')
-parser.add_argument('--config', type=str, required=True)
+parser = argparse.ArgumentParser(description='UniMatch on UKBB')
+parser.add_argument('--seed', type=str, required=True)
+parser.add_argument('--exp', type=str, required=True)
+parser.add_argument('--port', type=int, required=True)
 parser.add_argument('--local_rank', default=0, type=int)
-
 
 def main():
     args = parser.parse_args()
 
-    cfg = yaml.load(open(args.config, "r"), Loader=yaml.Loader)
-    method = 'unimatch'
-    exp = 'unet'
-    save_path = f'exp/{cfg["dataset"]}/{method}/{exp}/{cfg["split"]}/seed{cfg["seed"]}'
-    port = int(f'83{cfg["split"]}')
+    method='unimatch'
+    seg_model='unet'
+    cfg = yaml.load(open(f'configs/ukbb/train/exp{args.exp}/config.yaml', "r"), Loader=yaml.Loader)
+    save_path = f'exp/{cfg["dataset"]}/{method}/{seg_model}/exp{args.exp}/seed{args.seed}'
 
     logger = init_log('global', logging.INFO)
     logger.propagate = 0
 
-    rank, world_size = setup_distributed(port=port)
+    rank, world_size = setup_distributed(port=args.port)
 
     if rank == 0:
         all_args = {**cfg, **vars(args), 'ngpus': world_size}

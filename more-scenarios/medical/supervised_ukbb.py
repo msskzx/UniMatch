@@ -22,7 +22,7 @@ from util.dist_helper import setup_distributed
 from dataset.ukbb import UKBBDataset
 
 
-parser = argparse.ArgumentParser(description='Revisiting Weak-to-Strong Consistency in Semi-Supervised Semantic Segmentation')
+parser = argparse.ArgumentParser(description='UNet on UKBB')
 parser.add_argument('--seed', type=str, required=True)
 parser.add_argument('--exp', type=str, required=True)
 parser.add_argument('--port', type=int, required=True)
@@ -35,7 +35,7 @@ def main():
     method='supervised'
     seg_model='unet'
     cfg = yaml.load(open(f'configs/ukbb/train/exp{args.exp}/config.yaml', "r"), Loader=yaml.Loader)
-    save_path = f'exp/{cfg["dataset"]}/{method}/{seg_model}/{args.exp}/{args.seed}'
+    save_path = f'exp/{cfg["dataset"]}/{method}/{seg_model}/exp{args.exp}/seed{args.seed}'
 
     logger = init_log('global', logging.INFO)
     logger.propagate = 0
@@ -147,8 +147,8 @@ def main():
         dice_class = [0] * 3
         
         with torch.no_grad():
-            for img, mask in valloader:
-                img, mask = img.cuda(), mask.cuda()
+            for _, batch in enumerate(valloader):
+                img, mask = batch['img'].cuda(), batch['mask'].cuda()
 
                 h, w = img.shape[-2:]
                 img = F.interpolate(img, (cfg['crop_size'], cfg['crop_size']), mode='bilinear', align_corners=False)
