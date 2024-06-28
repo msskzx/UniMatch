@@ -14,7 +14,6 @@ from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 import yaml
 
-from dataset.acdc import ACDCDataset
 from model.unet import UNet
 from util.classes import CLASSES
 from util.utils import AverageMeter, count_params, init_log, DiceLoss
@@ -22,7 +21,7 @@ from util.dist_helper import setup_distributed
 from dataset.ukbb import UKBBDataset
 
 
-parser = argparse.ArgumentParser(description='UNet on UKBB')
+parser = argparse.ArgumentParser(description='Fully Supervised UNet on UKBB')
 parser.add_argument('--seed', type=str, required=True)
 parser.add_argument('--exp', type=str, required=True)
 parser.add_argument('--port', type=int, required=True)
@@ -116,7 +115,7 @@ def main():
 
         trainsampler.set_epoch(epoch)
 
-        for i, (img, mask) in enumerate(trainloader):
+        for i, (img, mask, ethn) in enumerate(trainloader):
 
             img, mask = img.cuda(), mask.cuda()
 
@@ -147,8 +146,8 @@ def main():
         dice_class = [0] * 3
         
         with torch.no_grad():
-            for _, batch in enumerate(valloader):
-                img, mask = batch['img'].cuda(), batch['mask'].cuda()
+            for _, (img, mask, ethn) in enumerate(valloader):
+                img, mask = img.cuda(), mask.cuda()
 
                 h, w = img.shape[-2:]
                 img = F.interpolate(img, (cfg['crop_size'], cfg['crop_size']), mode='bilinear', align_corners=False)

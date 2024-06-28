@@ -8,6 +8,7 @@ def edit_config_slurm(dataset, mode, exp, seed, cfg_file):
     """
     cfg_file: values in ['config', 'sex', 'ethn']
     """
+    # TODO do not create other configs and only change seed in slurm script
     cfg_path = f'configs/{dataset}/{mode}/exp{exp}/{cfg_file}.yaml'
 
     cfg = load(open(cfg_path, 'r'), Loader=Loader)
@@ -16,13 +17,6 @@ def edit_config_slurm(dataset, mode, exp, seed, cfg_file):
     # only in test configs
     if 'control' in cfg:
         cfg['control'] = cfg_file
-
-    cfg_out_dir = f'configs/{dataset}/{mode}/exp{exp}/seed{seed}'
-    cfg_out_path = os.path.join(cfg_out_dir, f'{cfg_file}.yaml')
-    if not os.path.exists(cfg_out_dir):
-        os.makedirs(cfg_out_dir)
-    with open(cfg_out_path, 'w') as file:
-        dump(cfg, file)
 
     # edit slurm_ukbb_train.sh or test
     script_path = f'scripts/slurm_{dataset}_{mode}.sh'

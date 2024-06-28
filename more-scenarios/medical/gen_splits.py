@@ -17,6 +17,7 @@ def generate_split(input_file, output_file, cfg=None, mode='train', seed=42, shu
     mode -- mode (train, val, test)
     shuffle -- shuffle (True, False)
     """
+    # TODO add sex, ethnicity
     df = pd.read_csv(input_file)
     data = {
         'eid': [],

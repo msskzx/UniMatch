@@ -134,7 +134,7 @@ def main():
         loader = zip(trainloader_l, trainloader_u, trainloader_u_mix)
 
         for i, ((img_x, mask_x),
-                (img_u_w, img_u_s1, img_u_s2, cutmix_box1, cutmix_box2),
+                (img_u_w, img_u_s1, img_u_s2, cutmix_box1, cutmix_box2, ethn),
                 (img_u_w_mix, img_u_s1_mix, img_u_s2_mix, _, _)) in enumerate(loader):
             
             img_x, mask_x = img_x.cuda(), mask_x.cuda()
@@ -227,8 +227,8 @@ def main():
         dice_class = [0] * 3
         
         with torch.no_grad():
-            for _, batch in enumerate(valloader):
-                img, mask = batch['img'].cuda(), batch['mask'].cuda()
+            for _, (img, mask, ethn) in enumerate(valloader):
+                img, mask = img.cuda(), mask.cuda()
 
                 h, w = img.shape[-2:]
                 img = F.interpolate(img, (cfg['crop_size'], cfg['crop_size']), mode='bilinear', align_corners=False)

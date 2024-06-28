@@ -5,3 +5,5 @@ more-scenarios/medical/outputs/out
 more-scenarios/medical/outputs/results/ukbb_pred_mask.png
 more-scenarios/medical/outputs/results/imgs
 more-scenarios/medical/ukbb
+train_mt.csv
+val_mt.csv

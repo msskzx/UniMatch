@@ -2,7 +2,7 @@ import torch
 import cv2
 from util.classes import MASK
 import pandas as pd
-
+from classes import ETHNNICITY_CODING
 
 def transform(in_img, normalize=False):
     """
@@ -39,13 +39,13 @@ def swap_classes(mask):
     mask[mask_rv] = MASK['rv']
     return mask
 
-def get_patient_ids_frames(split, mode):
+def get_patients_info(split, mode, mt=False):
     df = pd.read_csv(split)
     res = []
-    for idx, row in df.iterrows():
-        if mode in ['train', 'train_l', 'train_u']:
-            res.append((row['eid'], row['frame'], row['slice_idx']))
-        else:
-            res.append((row['eid'], row['frame']))
+    for _, row in df.iterrows():
+        res.append(row.to_dict())
 
     return res
+
+def convert_code_ethnicity(code):
+    return ETHNNICITY_CODING[code[0]]

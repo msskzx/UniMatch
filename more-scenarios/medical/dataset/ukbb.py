@@ -3,7 +3,7 @@ from torch.utils.data import Dataset
 import nibabel as nib
 import torch
 import numpy as np
-from util.dataset_utils import get_patient_ids_frames, transform, swap_classes
+from util.dataset_utils import get_patients_info, transform, swap_classes, convert_code_ethnicity
 import random
 from dataset.transform import random_rot_flip, random_rotate, blur, obtain_cutmix_box
 from scipy.ndimage.interpolation import zoom
@@ -13,21 +13,24 @@ from PIL import Image
 
 
 class UKBBDataset(Dataset):
-    def __init__(self, name, root_dir, mode, crop_size, split, p_unlabeled=None, p_labeled=None, nclass=4):
+    def __init__(self, name, root_dir, mode, crop_size, split, seg_nclass=4, classif_nclass=3, multi_task=False):
         """
         Arguments:
         str -- database name
         root_dir -- database path
         split -- split path
+        seg_nclass -- segmentation classes 
+        classif_nclass -- classification classes either 2 for sex or 3 for ethnicity
+        multi_task -- boolean indicating the use of multi task learning
         """
         self.name = name
         self.root_dir = root_dir
         self.mode = mode
         self.crop_size = crop_size
-        self.patient_ids_frames = get_patient_ids_frames(split, mode)
-        self.p_unlabeled = p_unlabeled
-        self.p_labeled = p_labeled
-        self.nclass = nclass
+        self.patients_info = get_patients_info(split, mode)
+        self.seg_nclass = seg_nclass
+        self.classif_nclass = classif_nclass
+        self.multi_task = multi_task
 
     def __getitem__(self, item):
         """
@@ -37,11 +40,11 @@ class UKBBDataset(Dataset):
         item -- item index
 
         return:
-        patient_id_frame -- tuple (id, frame) could contain slice as well
+        patient_info -- tuple (id, frame) could contain slice as well
         img -- img with shape (1, 10, 204, 208)
         mask -- same shape as img
         """
-        return self.get_patient_images(self.patient_ids_frames[item])
+        return self.get_patient_images(self.patients_info[item])
 
 
     def __len__(self):
@@ -50,15 +53,15 @@ class UKBBDataset(Dataset):
 
         return: length (int)
         """
-        return len(self.patient_ids_frames)
+        return len(self.patients_info)
 
 
-    def get_patient_images(self, patient_id_frame):
+    def get_patient_images(self, patient_info):
         """
         helper to get data element
         
         Arguments:
-        patient_id_frame -- tuple (id, frame) could contain slice as well
+        patient_info -- tuple (id, frame) could contain slice as well
 
         return:
         patient_id -- id
@@ -66,8 +69,8 @@ class UKBBDataset(Dataset):
         img -- img with shape (1, 10, 204, 208)
         mask -- same shape as img
         """
-        patient_id = str(patient_id_frame[0])
-        frame = str(patient_id_frame[1])
+        patient_id = str(patient_info['eid'])
+        frame = str(patient_info['frame'])
 
         # Load original images for the current patient
         image_path = os.path.join(self.root_dir, patient_id, f"{frame}.nii.gz")
@@ -84,17 +87,17 @@ class UKBBDataset(Dataset):
         mask = transform(in_mask, normalize=False)
         # swap classes to match acdc
         mask = swap_classes(mask)
-        
+
+        ethn = ''
+        if self.multi_task:
+            ethn = convert_code_ethnicity(patient_info['ethnicity'])
+
         if self.mode in ['val', 'test']:
-            return {
-                'patient_id': patient_id,
-                'frame': frame,
-                'img': img,
-                'mask': mask,
-            }
+            return img, mask, ethn
+            
         
         # TODO optimize this step because you load the whole 3D img and preprocess then return one slice
-        slice_idx = int(patient_id_frame[2])
+        slice_idx = int(patient_info[2])
         img = img[slice_idx]
         mask = mask[slice_idx]
     
@@ -108,7 +111,7 @@ class UKBBDataset(Dataset):
         mask = zoom(mask, (self.crop_size / x, self.crop_size / y), order=0)
 
         if self.mode == 'train_l':
-            return torch.from_numpy(img).unsqueeze(0).float(), torch.from_numpy(np.array(mask)).long()
+            return torch.from_numpy(img).unsqueeze(0).float(), torch.from_numpy(np.array(mask)).long(), ethn
 
         img = Image.fromarray((img * 255).astype(np.uint8))
         img_s1, img_s2 = deepcopy(img), deepcopy(img)
@@ -126,4 +129,4 @@ class UKBBDataset(Dataset):
         cutmix_box2 = obtain_cutmix_box(self.crop_size, p=0.5)
         img_s2 = torch.from_numpy(np.array(img_s2)).unsqueeze(0).float() / 255.0
 
-        return img, img_s1, img_s2, cutmix_box1, cutmix_box2
+        return img, img_s1, img_s2, cutmix_box1, cutmix_box2, ethn
