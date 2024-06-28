@@ -1,10 +1,6 @@
 from __future__ import division, print_function
-
-import numpy as np
 import torch
 import torch.nn as nn
-from torch.distributions.uniform import Uniform
-
 
 def kaiming_normal_init_weight(model):
     for m in model.modules():
@@ -160,7 +156,7 @@ class UNet(nn.Module):
                   'dropout': [0.05, 0.1, 0.2, 0.3, 0.5],
                   'class_num': class_num,
                   'bilinear': False,
-                  'acti_func': 'relu'}
+                }
 
         self.encoder = Encoder(params)
         self.decoder = Decoder(params)
