@@ -13,4 +13,5 @@ nclass: 4
 num_workers: 1
 seed: 47
 split: 18
-visualize: false
+visualize: False
+multi_task: True

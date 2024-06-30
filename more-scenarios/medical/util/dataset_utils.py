@@ -1,8 +1,7 @@
 import torch
 import cv2
-from util.classes import MASK
+from util.classes import MASK, ETHNNICITY_CODING
 import pandas as pd
-from classes import ETHNNICITY_CODING
 
 def transform(in_img, normalize=False):
     """
@@ -39,13 +38,10 @@ def swap_classes(mask):
     mask[mask_rv] = MASK['rv']
     return mask
 
-def get_patients_info(split, mode, mt=False):
+def get_patients_info(split, mode):
     df = pd.read_csv(split)
     res = []
     for _, row in df.iterrows():
         res.append(row.to_dict())
 
     return res
-
-def convert_code_ethnicity(code):
-    return ETHNNICITY_CODING[code[0]]

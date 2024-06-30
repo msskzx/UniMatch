@@ -3,7 +3,7 @@ from torch.utils.data import Dataset
 import nibabel as nib
 import torch
 import numpy as np
-from util.dataset_utils import get_patients_info, transform, swap_classes, convert_code_ethnicity
+from util.dataset_utils import get_patients_info, transform, swap_classes
 import random
 from dataset.transform import random_rot_flip, random_rotate, blur, obtain_cutmix_box
 from scipy.ndimage.interpolation import zoom
@@ -88,16 +88,17 @@ class UKBBDataset(Dataset):
         # swap classes to match acdc
         mask = swap_classes(mask)
 
-        ethn = ''
-        if self.multi_task:
-            ethn = convert_code_ethnicity(patient_info['ethnicity'])
+        label = 0
 
+        if self.multi_task:
+            label = int(patient_info['ethnicity'])
+
+        label = torch.tensor(label).long()
         if self.mode in ['val', 'test']:
-            return img, mask, ethn
+            return img, mask, label
             
-        
         # TODO optimize this step because you load the whole 3D img and preprocess then return one slice
-        slice_idx = int(patient_info[2])
+        slice_idx = int(patient_info['slice_idx'])
         img = img[slice_idx]
         mask = mask[slice_idx]
     
@@ -111,7 +112,7 @@ class UKBBDataset(Dataset):
         mask = zoom(mask, (self.crop_size / x, self.crop_size / y), order=0)
 
         if self.mode == 'train_l':
-            return torch.from_numpy(img).unsqueeze(0).float(), torch.from_numpy(np.array(mask)).long(), ethn
+            return torch.from_numpy(img).unsqueeze(0).float(), torch.from_numpy(np.array(mask)).long(), label
 
         img = Image.fromarray((img * 255).astype(np.uint8))
         img_s1, img_s2 = deepcopy(img), deepcopy(img)
@@ -129,4 +130,4 @@ class UKBBDataset(Dataset):
         cutmix_box2 = obtain_cutmix_box(self.crop_size, p=0.5)
         img_s2 = torch.from_numpy(np.array(img_s2)).unsqueeze(0).float() / 255.0
 
-        return img, img_s1, img_s2, cutmix_box1, cutmix_box2, ethn
+        return img, img_s1, img_s2, cutmix_box1, cutmix_box2, label

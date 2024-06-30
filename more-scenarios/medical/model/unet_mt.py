@@ -131,14 +131,14 @@ class Decoder(nn.Module):
         return output
 
 class UNetMultiTask(nn.Module):
-    def __init__(self, in_chns, num_classif_cls, num_seg_cls):
+    def __init__(self, in_chns, seg_nclass=4, classif_nclass=3):
         super(UNetMultiTask, self).__init__()
 
         params = {
             'in_chns': in_chns,
             'feature_chns': [16, 32, 64, 128, 256],
             'dropout': [0.05, 0.1, 0.2, 0.3, 0.5],
-            'class_num': num_seg_cls,
+            'class_num': seg_nclass,
             'bilinear': False
         }
         self.encoder = Encoder(params)
@@ -150,7 +150,7 @@ class UNetMultiTask(nn.Module):
             nn.Flatten(),
             nn.Linear(params['feature_chns'][-1], 512),
             nn.ReLU(inplace=True),
-            nn.Linear(512, num_classif_cls)
+            nn.Linear(512, classif_nclass)
         )
 
     def forward(self, x):
@@ -158,84 +158,3 @@ class UNetMultiTask(nn.Module):
         segmentation_output = self.decoder(features)
         classification_output = self.classification_head(features[-1])
         return segmentation_output, classification_output
-
-# Example dataset class
-class ExampleDataset(Dataset):
-    def __init__(self, images, masks, labels):
-        self.images = images
-        self.masks = masks
-        self.labels = labels
-    
-    def __len__(self):
-        return len(self.images)
-    
-    def __getitem__(self, idx):
-        image = self.images[idx]
-        mask = self.masks[idx]
-        label = self.labels[idx]
-        return image, mask, label
-
-
-def dice_score(pred, target, threshold=0.5):
-    pred = (pred > threshold).float()
-    intersection = (pred * target).sum()
-    return (2. * intersection) / (pred.sum() + target.sum() + 1e-8)
-
-
-# Assume images, masks, and labels are preloaded tensors
-images = torch.randn(100, 3, 256, 256)
-masks = torch.randint(0, 2, (100, 1, 256, 256))
-labels = torch.randint(0, 10, (100,))
-
-dataset = ExampleDataset(images, masks, labels)
-dataloader = DataLoader(dataset, batch_size=4, shuffle=True)
-
-# Model, loss functions, and optimizer
-model = UNetMultiTask(in_chns=3, num_classes=10, num_segmentation_classes=1)
-criterion_segmentation = nn.BCEWithLogitsLoss()  # Assuming binary segmentation
-criterion_classification = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=0.001)
-
-# Training loop
-num_epochs = 20
-
-for epoch in range(num_epochs):
-    model.train()
-    running_loss = 0.0
-    total_dice = 0.0
-    correct_classifications = 0
-    total_samples = 0
-    
-    for batch in dataloader:
-        images, masks, labels = batch
-        masks = masks.float()  # Ensure masks are of type Float
-
-        optimizer.zero_grad()
-        
-        # Forward pass
-        segmentation_output, classification_output = model(images)
-        
-        # Compute losses
-        loss_segmentation = criterion_segmentation(segmentation_output, masks)
-        loss_classification = criterion_classification(classification_output, labels)
-        loss = loss_segmentation + loss_classification
-        
-        # Backward pass and optimization
-        loss.backward()
-        optimizer.step()
-        
-        running_loss += loss.item()
-        
-        # Calculate metrics
-        total_dice += dice_score(segmentation_output, masks).item()
-        _, predicted_classes = torch.max(classification_output, 1)
-        correct_classifications += (predicted_classes == labels).sum().item()
-        total_samples += labels.size(0)
-    
-    epoch_loss = running_loss / len(dataloader)
-    average_dice = total_dice / len(dataloader)
-    classification_accuracy = correct_classifications / total_samples
-    
-    print(f"Epoch {epoch+1}/{num_epochs}, Loss: {epoch_loss:.4f}, Dice Score: {average_dice:.4f}, Classification Accuracy: {classification_accuracy:.4f}")
-
-print("Training completed.")

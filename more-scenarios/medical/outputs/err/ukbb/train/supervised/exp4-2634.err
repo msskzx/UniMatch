@@ -1,0 +1,50 @@
+[2024-06-29 14:50:51,410][    INFO] {'batch_size': 12,
+ 'conf_thresh': 0.95,
+ 'crop_size': 256,
+ 'ctrl': 'age sex ethnicity',
+ 'data_desc': 'UKBB Train Data - 182 Patients - 18 Labeled, Rest Unlabeled',
+ 'data_root': '/vol/aimspace/projects/ukbb/data/cardiac/cardiac_segmentations/subjects',
+ 'dataset': 'ukbb',
+ 'epochs': 200,
+ 'exp': '4',
+ 'local_rank': 0,
+ 'lr': 0.01,
+ 'mode': 'train',
+ 'model_desc': 'Unimatch Unet 18 Training on UKBB',
+ 'multi_task': True,
+ 'nclass': 4,
+ 'ngpus': 1,
+ 'num_workers': 1,
+ 'port': 8318,
+ 'seed': '42',
+ 'split': 18,
+ 'visualize': False}
+
+[2024-06-29 14:50:51,466][    INFO] Total params: 1.9M
+
+[2024-06-29 14:50:52,452][    INFO] ************ Load from checkpoint at epoch 24
+
+[2024-06-29 14:50:52,452][    INFO] ===========> Epoch: 25, LR: 0.00887, Previous best: 84.20
+[2024-06-29 14:50:55,174][    INFO] Iters: 0, Total loss: 1.513
+[2024-06-29 14:50:55,793][    INFO] Iters: 4, Total loss: 1.976
+[2024-06-29 14:50:56,872][    INFO] Iters: 8, Total loss: 1.545
+[2024-06-29 14:50:57,887][    INFO] Iters: 12, Total loss: 1.209
+[2024-06-29 14:50:58,925][    INFO] Iters: 16, Total loss: 1.020
+[2024-06-29 14:50:59,980][    INFO] Iters: 20, Total loss: 0.904
+[2024-06-29 14:51:01,033][    INFO] Iters: 24, Total loss: 0.824
+[2024-06-29 14:51:02,375][    INFO] Iters: 28, Total loss: 0.767
+[2024-06-29 14:51:05,525][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 75.34
+[2024-06-29 14:51:05,526][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 77.40
+[2024-06-29 14:51:05,526][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 83.31
+[2024-06-29 14:51:05,526][    INFO] ***** Evaluation ***** >>>> MeanDice: 78.68
+
+[2024-06-29 14:51:05,526][    INFO] ***** Evaluation ***** >>>> Classifications Accuracy: 3.0
+
+[2024-06-29 14:51:05,741][    INFO] ===========> Epoch: 26, LR: 0.00882, Previous best: 84.20
+[2024-06-29 14:51:06,235][    INFO] Iters: 0, Total loss: 0.395
+[2024-06-29 14:51:07,113][    INFO] Iters: 4, Total loss: 0.400
+[2024-06-29 14:51:08,105][    INFO] Iters: 8, Total loss: 0.399
+[2024-06-29 14:51:09,146][    INFO] Iters: 12, Total loss: 0.403
+[2024-06-29 14:51:10,190][    INFO] Iters: 16, Total loss: 0.404
+[2024-06-29 14:51:11,239][    INFO] Iters: 20, Total loss: 0.403
+slurmstepd-apollo: error: *** JOB 2634 ON apollo CANCELLED AT 2024-06-29T14:51:12 ***

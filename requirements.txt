@@ -1,3 +1,5 @@
+torch
+torchvision
 pyyaml>=5.4.0
 easydict
 TensorBoardX

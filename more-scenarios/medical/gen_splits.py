@@ -18,6 +18,7 @@ def generate_split(input_file, output_file, cfg=None, mode='train', seed=42, shu
     shuffle -- shuffle (True, False)
     """
     # TODO add sex, ethnicity
+    # TODO use slices in range [3, 7]
     df = pd.read_csv(input_file)
     data = {
         'eid': [],

@@ -15,6 +15,7 @@ from torch.utils.tensorboard import SummaryWriter
 import yaml
 
 from model.unet import UNet
+from model.unet_mt import UNetMultiTask
 from util.classes import CLASSES
 from util.utils import AverageMeter, count_params, init_log, DiceLoss
 from util.dist_helper import setup_distributed
@@ -36,6 +37,9 @@ def main():
     cfg = yaml.load(open(f'configs/ukbb/train/exp{args.exp}/config.yaml', "r"), Loader=yaml.Loader)
     save_path = f'exp/{cfg["dataset"]}/{method}/{seg_model}/exp{args.exp}/seed{args.seed}'
 
+    if cfg['multi_task'] == True:
+        save_path += '/multi_task'
+
     logger = init_log('global', logging.INFO)
     logger.propagate = 0
 
@@ -52,7 +56,12 @@ def main():
     cudnn.enabled = True
     cudnn.benchmark = True
 
-    model = UNet(in_chns=1, class_num=cfg['nclass'])
+
+    if cfg['multi_task'] == False:
+        model = UNet(in_chns=1, class_num=cfg['nclass'])
+    else:
+        model = UNetMultiTask(in_chns=1, seg_nclass=cfg['nclass'], classif_nclass=3)
+
     if rank == 0:
         logger.info('Total params: {:.1f}M\n'.format(count_params(model)))
 
@@ -61,18 +70,28 @@ def main():
     local_rank = int(os.environ["LOCAL_RANK"])
     model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model)
     model.cuda(local_rank)
-    model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[local_rank], broadcast_buffers=False,
-                                                      output_device=local_rank, find_unused_parameters=False)
+    model = torch.nn.parallel.DistributedDataParallel(
+        model, device_ids=[local_rank], broadcast_buffers=False,
+        output_device=local_rank, find_unused_parameters=False
+    )
 
     criterion_ce = nn.CrossEntropyLoss()
     criterion_dice = DiceLoss(n_classes=cfg['nclass'])
+
+    train_file = 'labeled'
+    val_file = 'val'
+
+    if cfg['multi_task'] == True:
+        train_file += '_mt'
+        val_file += '_mt'
     
     trainset = UKBBDataset(
         name=cfg['dataset'],
         root_dir=cfg['data_root'],
         mode='train_l',
         crop_size=cfg['crop_size'],
-        split=f'splits/{cfg["dataset"]}/exp{args.exp}/{cfg["split"]}/seed{args.seed}/train.csv'
+        split=f'splits/{cfg["dataset"]}/exp{args.exp}/{cfg["split"]}/seed{args.seed}/{train_file}.csv',
+        multi_task=cfg['multi_task']
     )
     
     valset = UKBBDataset(
@@ -80,7 +99,8 @@ def main():
         root_dir=cfg['data_root'],
         mode='val',
         crop_size=cfg['crop_size'],
-        split=f'splits/{cfg["dataset"]}/exp{args.exp}/{cfg["split"]}/seed{args.seed}/val.csv'
+        split=f'splits/{cfg["dataset"]}/exp{args.exp}/{cfg["split"]}/seed{args.seed}/{val_file}.csv',
+        multi_task=cfg['multi_task']
     )
 
     trainsampler = torch.utils.data.distributed.DistributedSampler(trainset)
@@ -115,13 +135,16 @@ def main():
 
         trainsampler.set_epoch(epoch)
 
-        for i, (img, mask, ethn) in enumerate(trainloader):
+        for i, (img, mask, label) in enumerate(trainloader):
 
-            img, mask = img.cuda(), mask.cuda()
+            img, mask, label = img.cuda(), mask.cuda(), label.cuda()
 
-            pred = model(img)
-
-            loss = (criterion_ce(pred, mask) + criterion_dice(pred.softmax(dim=1), mask.unsqueeze(1).float())) / 2.0
+            if cfg['multi_task']:
+                pred, classif_pred = model(img)
+                loss = (criterion_ce(pred, mask) + criterion_dice(pred.softmax(dim=1), mask.unsqueeze(1).float()) + criterion_ce(classif_pred, label)) / 3.0
+            else:
+                pred = model(img)
+                loss = (criterion_ce(pred, mask) + criterion_dice(pred.softmax(dim=1), mask.unsqueeze(1).float())) / 2.0
             
             torch.distributed.barrier()
 
@@ -144,17 +167,22 @@ def main():
 
         model.eval()
         dice_class = [0] * 3
+        correct_classif = 0
+        total_samples = 0
         
         with torch.no_grad():
-            for _, (img, mask, ethn) in enumerate(valloader):
-                img, mask = img.cuda(), mask.cuda()
+            for _, (img, mask, label) in enumerate(valloader):
+                img, mask, label = img.cuda(), mask.cuda(), label.cuda()
 
                 h, w = img.shape[-2:]
                 img = F.interpolate(img, (cfg['crop_size'], cfg['crop_size']), mode='bilinear', align_corners=False)
 
                 img = img.permute(1, 0, 2, 3)
                 
-                pred = model(img)
+                if cfg['multi_task']:
+                    pred, classif_pred = model(img)
+                else:
+                    pred = model(img)
                 
                 pred = F.interpolate(pred, (h, w), mode='bilinear', align_corners=False)
                 pred = pred.argmax(dim=1)
@@ -166,15 +194,28 @@ def main():
                     inter = ((pred == cls) * (mask == cls)).sum().item()
                     union = (pred == cls).sum().item() + (mask == cls).sum().item()
                     dice_class[cls-1] += (2.0 * inter + epsilon) / (union + epsilon) * 100.0
+                
+                if cfg['multi_task']:
+                    _, mx_classif_pred = torch.max(classif_pred, 1)
+                    correct_classif += (mx_classif_pred == label).sum().item()
+                    total_samples += label.size(0)
+
 
         dice_class = [dice / len(valloader) for dice in dice_class]
         mean_dice = sum(dice_class) / len(dice_class)
+
+        if cfg['multi_task']:
+            classif_acc = correct_classif / total_samples
         
         if rank == 0:
             for (cls_idx, dice) in enumerate(dice_class):
                 logger.info('***** Evaluation ***** >>>> Class [{:} {:}] Dice: '
                             '{:.2f}'.format(cls_idx, CLASSES[cfg['dataset']][cls_idx], dice))
-            logger.info('***** Evaluation ***** >>>> MeanDice: {:.2f}\n'.format(mean_dice))
+            logger.info(f'***** Evaluation ***** >>>> MeanDice: {mean_dice:.2f}\n')
+        
+            if cfg['multi_task']:
+                logger.info(f'***** Evaluation ***** >>>> Classifications Accuracy: {classif_acc}\n')
+
             
             writer.add_scalar('eval/MeanDice', mean_dice, epoch)
             for i, dice in enumerate(dice_class):
