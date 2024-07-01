@@ -10,7 +10,7 @@ model: unimatch unet
 model_desc: Unimatch Unet 18 Pretrained on UKBB
 nclass: 4
 num_workers: 1
-seed: 47
+seed: 42
 split: 18
 test_set: 108
 train_set: 182

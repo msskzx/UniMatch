@@ -27,7 +27,7 @@ class UKBBDataset(Dataset):
         self.root_dir = root_dir
         self.mode = mode
         self.crop_size = crop_size
-        self.patients_info = get_patients_info(split, mode)
+        self.patients_info = get_patients_info(split)
         self.seg_nclass = seg_nclass
         self.classif_nclass = classif_nclass
         self.multi_task = multi_task
@@ -94,10 +94,9 @@ class UKBBDataset(Dataset):
             label = int(patient_info['ethnicity'])
 
         label = torch.tensor(label).long()
-        if self.mode in ['val', 'test']:
+        if self.mode in ['val', 'test'] and not self.multi_task:
             return img, mask, label
             
-        # TODO optimize this step because you load the whole 3D img and preprocess then return one slice
         slice_idx = int(patient_info['slice_idx'])
         img = img[slice_idx]
         mask = mask[slice_idx]
@@ -111,7 +110,7 @@ class UKBBDataset(Dataset):
         img = zoom(img, (self.crop_size / x, self.crop_size / y), order=0)
         mask = zoom(mask, (self.crop_size / x, self.crop_size / y), order=0)
 
-        if self.mode == 'train_l':
+        if self.mode == 'train_l' or (self.multi_task and self.mode in ['val', 'test']):
             return torch.from_numpy(img).unsqueeze(0).float(), torch.from_numpy(np.array(mask)).long(), label
 
         img = Image.fromarray((img * 255).astype(np.uint8))

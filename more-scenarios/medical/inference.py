@@ -10,23 +10,33 @@ from util.inference_utils import eval_model
 import argparse
 import pprint
 import os
+from model.unet_mt import UNetMultiTask
 
 
-parser = argparse.ArgumentParser(description='Revisiting Weak-to-Strong Consistency in Semi-Supervised Semantic Segmentation')
+parser = argparse.ArgumentParser(description='Infereing using the pretrained models')
 parser.add_argument('--config', type=str, required=True)
+parser.add_argument('--seed', type=str, required=True)
+parser.add_argument('--exp', type=str, required=True)
 
 
 def main():
     args = parser.parse_args()
-    cfg = yaml.load(open(args.config, "r"), Loader=yaml.Loader)
+
+    cfg = yaml.load(open(f'configs/ukbb/test/exp{args.exp}/{args.config}.yaml', "r"), Loader=yaml.Loader)
 
     logger = init_log('global', logging.INFO)
     logger.propagate = 0
 
+    model_path = f'exp/{cfg["dataset"]}/unimatch/unet/{cfg["split"]}/seed{cfg["seed"]}'
+    results_path = f'outputs/results/csv/{cfg["dataset"]}/exp{cfg["exp"]}/seed{cfg["seed"]}'
+    if cfg['multi_task'] == True:
+        model_path += '/multi_task'
+        results_path += '/multi_task'
+
     cfg.update({
-        'model_path': f'exp/{cfg["dataset"]}/unimatch/unet/{cfg["split"]}/seed{cfg["seed"]}/best.pth',
-        'results_path': f'outputs/results/csv/{cfg["dataset"]}/exp{cfg["exp"]}/seed{cfg["seed"]}/{cfg["control"]}.csv',
-        'pred_mask_path': f'outputs/results/imgs/{cfg["dataset"]}/unimatch_{cfg["dataset"]}_{cfg["split"]}_seed{cfg["seed"]}_pred_mask_',
+        'model_path': f'{model_path}/best.pth',
+        'results_path': f'{results_path}/{cfg["control"]}.csv',
+        'pred_mask_path': f'outputs/results/imgs/{cfg["dataset"]}/{args.method}/{args.exp}/{cfg["split"]}/seed{cfg["seed"]}',
         'test_split_path': f'splits/{cfg["dataset"]}/{cfg["mode"]}/{cfg["control"]}.csv',
     })
 
@@ -34,7 +44,11 @@ def main():
 
     checkpoint = torch.load(cfg['model_path'])
     checkpoint = {k.replace('module.', ''): v for k, v in checkpoint['model'].items()}
-    model = UNet(in_chns=1, class_num=4)
+    if cfg['multi_task'] == False:
+        model = UNet(in_chns=1, class_num=4)
+    else:
+        model = UNetMultiTask(in_chns=1, seg_nclass=cfg['nclass'], classif_nclass=3)
+
     model.load_state_dict(checkpoint)
 
     if cfg['dataset'] == 'ukbb':

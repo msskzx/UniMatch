@@ -38,7 +38,7 @@ def swap_classes(mask):
     mask[mask_rv] = MASK['rv']
     return mask
 
-def get_patients_info(split, mode):
+def get_patients_info(split):
     df = pd.read_csv(split)
     res = []
     for _, row in df.iterrows():

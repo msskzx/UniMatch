@@ -3,7 +3,8 @@ from util.classes import FRAME, ETHNNICITY_CODING, ETHNNICITY_CODING_REVERSED, E
 import nibabel as nib
 import pandas as pd
 import os
-from util.analysis_utils import prep_patients_df
+import util.analysis_utils as nls
+
  
 
 def generate_split(input_file, output_file, cfg=None, mode='train', seed=42, shuffle=True):
@@ -18,7 +19,7 @@ def generate_split(input_file, output_file, cfg=None, mode='train', seed=42, shu
     shuffle -- shuffle (True, False)
     """
     # TODO add sex, ethnicity
-    # TODO use slices in range [3, 7]
+    # TODO use slices in range [3, 5]
     df = pd.read_csv(input_file)
     data = {
         'eid': [],
@@ -29,6 +30,8 @@ def generate_split(input_file, output_file, cfg=None, mode='train', seed=42, shu
 
     for _, row in df.iterrows():  
         for _, frame in FRAME.items():
+            # TODO add slice idx for all modes if multi task
+            # TODO choose slices in range [3, 6] if multi task
             if mode == 'train':
                 image_path = os.path.join(cfg['data_root'], str(int(row['eid'])), f"{frame}.nii.gz")
                 in_img = nib.load(image_path).get_fdata()[:]
@@ -42,15 +45,15 @@ def generate_split(input_file, output_file, cfg=None, mode='train', seed=42, shu
                 data['frame'].append(frame)
 
 
-    res_df = pd.DataFrame(data=data)
+    df = pd.DataFrame(data=data)
 
     if shuffle:
         df = df.sample(frac=1, random_state=42)
     
     if mode == 'train':
-        split_un_labeled(res_df, cfg, seed=seed)
+        split_un_labeled(df, cfg, seed=seed)
 
-    res_df.to_csv(output_file, index=False)
+    df.to_csv(output_file, index=False)
 
 
 def split_un_labeled(df, cfg, seed=42, frac=0.1):
@@ -232,7 +235,7 @@ def gen_baseline_splits_csv():
     og_df = pd.read_csv('/vol/aimspace/projects/ukbb/data/tabular/ukb668815_imaging.csv')
 
     # prep
-    all_patients_df = prep_patients_df(og_df)
+    all_patients_df = nls.prep_patients_df(og_df)
 
     # data with short axis images available
     all_sa_df = pd.read_csv('splits/ukbb/all.csv')
@@ -365,6 +368,39 @@ def main(seed=43):
         cfg = load(open(f'configs/{dataset}/{mode}/exp{exp}/config.yaml', 'r'), Loader=Loader)
         generate_split(input_file=f'{dataset}/exp{exp}/seed{seed}/train.csv', output_file=f'splits/{dataset}/{split}/seed{seed}/train.csv', mode='train', cfg=cfg, seed=seed, shuffle=True)
         generate_split(input_file=f'{dataset}/exp{exp}/seed{seed}/val.csv', output_file=f'splits/{dataset}/{split}/seed{seed}/val.csv', mode='val', seed=seed, shuffle=True)
+
+
+def add_sex_ethn(exp=4, split=18, seed=42, lw=3, hi=6):
+    """
+    add class label to data so it would be used in the pipeline
+    choose the slices in range [3, 6] so we have meaningful images when provide a label
+    to avoid training the model on 2 black images with small circle and one time we say this is label1 and the other label2
+    """
+    og_df = pd.read_csv('/vol/aimspace/projects/ukbb/data/tabular/ukb668815_imaging.csv')
+    patients_df = nls.prep_patients_df(og_df)
+    label_mapping = {'1': 0, '3': 1, '4': 2}
+
+    for file in ['train', 'labeled']:
+        df = pd.read_csv(f'splits/ukbb/exp{exp}/{split}/seed{seed}/{file}.csv')
+        df = pd.merge(df, patients_df, how='inner', on='eid')
+        df['sex'] = df['sex'].astype(int)
+        df['ethnicity'] = df['ethnicity'].astype(str)
+        df['ethnicity'] = df['ethnicity'].str[0].map(label_mapping)
+        df['ethnicity'] = df['ethnicity'].astype(int)
+        df = df[(df['slice_idx'] <= hi) & (df['slice_idx'] >= lw)]
+        df.to_csv(f'splits/ukbb/exp{exp}/{split}/seed{seed}/{file}_mt.csv', index=False)
+
+    # TODO add test as well
+    df_slices = pd.DataFrame({'slice_idx': [x for x in range(lw, hi + 1)]})
+    for file in ['val']:
+        df = pd.read_csv(f'splits/ukbb/exp{exp}/{split}/seed{seed}/{file}.csv')
+        df = pd.merge(df, patients_df, how='inner', on='eid')
+        df['sex'] = df['sex'].astype(int)
+        df['ethnicity'] = df['ethnicity'].astype(str)
+        df['ethnicity'] = df['ethnicity'].str[0].map(label_mapping)
+        df['ethnicity'] = df['ethnicity'].astype(int)
+        df = df.merge(df_slices, how='cross')
+        df.to_csv(f'splits/ukbb/exp{exp}/{split}/seed{seed}/{file}_mt.csv', index=False)
 
 
 if __name__ == '__main__':

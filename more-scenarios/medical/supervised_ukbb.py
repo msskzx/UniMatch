@@ -6,7 +6,6 @@ import pprint
 import torch
 import numpy as np
 from torch import nn
-import torch.distributed as dist
 import torch.backends.cudnn as cudnn
 import torch.nn.functional as F
 from torch.optim import SGD
@@ -78,7 +77,7 @@ def main():
     criterion_ce = nn.CrossEntropyLoss()
     criterion_dice = DiceLoss(n_classes=cfg['nclass'])
 
-    train_file = 'labeled'
+    train_file = 'train'
     val_file = 'val'
 
     if cfg['multi_task'] == True:
@@ -205,16 +204,16 @@ def main():
         mean_dice = sum(dice_class) / len(dice_class)
 
         if cfg['multi_task']:
-            classif_acc = correct_classif / total_samples
+            classif_acc = correct_classif / total_samples * 100.0
         
         if rank == 0:
             for (cls_idx, dice) in enumerate(dice_class):
                 logger.info('***** Evaluation ***** >>>> Class [{:} {:}] Dice: '
                             '{:.2f}'.format(cls_idx, CLASSES[cfg['dataset']][cls_idx], dice))
-            logger.info(f'***** Evaluation ***** >>>> MeanDice: {mean_dice:.2f}\n')
+            logger.info(f'***** Evaluation ***** >>>> MeanDice: {mean_dice:.2f}')
         
             if cfg['multi_task']:
-                logger.info(f'***** Evaluation ***** >>>> Classifications Accuracy: {classif_acc}\n')
+                logger.info(f'***** Evaluation ***** >>>> Classifications Accuracy: {classif_acc}')
 
             
             writer.add_scalar('eval/MeanDice', mean_dice, epoch)
