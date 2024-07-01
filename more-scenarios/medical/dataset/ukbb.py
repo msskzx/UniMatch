@@ -94,8 +94,12 @@ class UKBBDataset(Dataset):
             label = int(patient_info['ethnicity'])
 
         label = torch.tensor(label).long()
-        if self.mode in ['val', 'test'] and not self.multi_task:
-            return img, mask, label
+        if not self.multi_task:
+            if self.mode == 'val':
+                return img, mask, label
+            if self.mode == 'test':
+                return img, mask, label, patient_id, frame, slice_idx
+
             
         slice_idx = int(patient_info['slice_idx'])
         img = img[slice_idx]
@@ -111,6 +115,8 @@ class UKBBDataset(Dataset):
         mask = zoom(mask, (self.crop_size / x, self.crop_size / y), order=0)
 
         if self.mode == 'train_l' or (self.multi_task and self.mode in ['val', 'test']):
+            if self.mode == 'test':
+                return torch.from_numpy(img).unsqueeze(0).float(), torch.from_numpy(np.array(mask)).long(), label, patient_id, frame, slice_idx
             return torch.from_numpy(img).unsqueeze(0).float(), torch.from_numpy(np.array(mask)).long(), label
 
         img = Image.fromarray((img * 255).astype(np.uint8))

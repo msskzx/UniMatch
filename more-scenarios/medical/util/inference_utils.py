@@ -5,6 +5,7 @@ import pandas as pd
 from util.classes import CLASSES, MASK
 import torch.nn.functional as F
 
+
 def compute_dice(pred, mask, num_classes=4, epsilon=1e-9):
     num_slices = pred.shape[0]
     dice_class = np.zeros((num_slices, num_classes - 1))
@@ -50,10 +51,9 @@ def init_scores_df():
     return pd.DataFrame(columns=['patient_id', 'frame', 'slice_idx', 'dice_mean', 'dice_rv', 'dice_myo', 'dice_lv'])
 
 
-def save_scores(scores_df, dice_class, dice_mean, patient_id, frame, logger, cfg):
+def save_scores(scores_df, dice_class, dice_mean, patient_id, frame, logger, cfg, given_slice_idx=None):
     for slice_idx, dice_scores_slice in enumerate(dice_class):
         for cls_idx, dice_slice_cls in enumerate(dice_scores_slice):
-            # TODO add patient_id, frame, slice_id
             logger.info('***** Evaluation ***** >>>> Class [{:} {:}] Dice: '
                             '{:.2f}'.format(cls_idx, CLASSES[cfg['dataset']][cls_idx], dice_slice_cls))
         logger.info('***** Evaluation ***** >>>> MeanDice: {:.2f}\n'.format(dice_mean[slice_idx]))
@@ -61,7 +61,7 @@ def save_scores(scores_df, dice_class, dice_mean, patient_id, frame, logger, cfg
         scores_df.loc[len(scores_df)] = {
                 'patient_id': patient_id,
                 'frame': frame,
-                'slice_idx': slice_idx,
+                'slice_idx': given_slice_idx if cfg['multi_task'] else slice_idx,
                 'dice_mean': dice_mean[slice_idx],
                 'dice_rv': dice_class[slice_idx][MASK['rv']-1],
                 'dice_myo': dice_class[slice_idx][MASK['myo']-1],
@@ -76,10 +76,8 @@ def eval_model(model, dataloader, cfg, logger, visualize=False):
     scores_df = init_scores_df()
 
     with torch.no_grad():
-        for _, batch in enumerate(dataloader):
-            img, mask = batch['img'].cuda(), batch['mask'].cuda()
-            patient_id = batch['patient_id'][0]
-            frame = batch['frame'][0]
+        for _, (img, mask, label, patient_id, frame, slice_idx) in enumerate(dataloader):
+            img, mask, label = img.cuda(), mask.cuda(), label.cuda()
 
             # a batch of number slices in the img
             og_img = img
@@ -97,13 +95,15 @@ def eval_model(model, dataloader, cfg, logger, visualize=False):
             # adjust shape to compute dice
             mask = mask.squeeze()
             og_img = og_img.squeeze()
+
             dice_class, dice_mean = compute_dice(pred, mask)
-            
+
+            # log and save results
+            scores_df = save_scores(scores_df, dice_class, dice_mean, patient_id, frame, logger, cfg, given_slice_idx=slice_idx)
+        
             # save og_img, mask, pred
             if visualize:
                 save_pred_mask(og_img, mask, pred, patient_id, frame, cfg)
             
-            # log and save results
-            scores_df = save_scores(scores_df, dice_class, dice_mean, patient_id, frame, logger, cfg)
             
     return scores_df

@@ -14,15 +14,16 @@ from model.unet_mt import UNetMultiTask
 
 
 parser = argparse.ArgumentParser(description='Infereing using the pretrained models')
-parser.add_argument('--config', type=str, required=True)
+parser.add_argument('--control', type=str, required=True)
 parser.add_argument('--seed', type=str, required=True)
 parser.add_argument('--exp', type=str, required=True)
+parser.add_argument('--method', type=str, required=True)
 
 
 def main():
     args = parser.parse_args()
 
-    cfg = yaml.load(open(f'configs/ukbb/test/exp{args.exp}/{args.config}.yaml', "r"), Loader=yaml.Loader)
+    cfg = yaml.load(open(f'configs/ukbb/test/exp{args.exp}/{args.control}.yaml', "r"), Loader=yaml.Loader)
 
     logger = init_log('global', logging.INFO)
     logger.propagate = 0
@@ -68,8 +69,7 @@ def main():
     scores_df = eval_model(model, test_loader, cfg, logger, visualize=cfg['visualize'])
 
     dir_res = os.path.dirname(cfg['results_path'])
-    if not os.path.exists(dir_res):
-        os.makedirs(dir_res)
+    os.makedirs(dir_res, exist_ok=True)
     scores_df.to_csv(cfg['results_path'], index=False)
 
 
