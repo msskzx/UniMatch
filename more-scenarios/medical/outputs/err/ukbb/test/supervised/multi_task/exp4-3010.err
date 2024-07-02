@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/vol/aimspace/users/khattab/UniMatch/more-scenarios/medical/inference.py", line 77, in <module>
+    main()
+  File "/vol/aimspace/users/khattab/UniMatch/more-scenarios/medical/inference.py", line 26, in main
+    cfg = yaml.load(open(f'configs/ukbb/test/exp{args.exp}/{args.control}.yaml', "r"), Loader=yaml.Loader)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'configs/ukbb/test/exp/ethn.yaml'

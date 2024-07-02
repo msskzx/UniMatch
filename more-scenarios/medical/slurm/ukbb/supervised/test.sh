@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=exp4
-#SBATCH --output=outputs/out/ukbb/supervised/unet/multi_task/exp4-%A.out  # Standard output  %A adds the job id
-#SBATCH --error=outputs/err/ukbb/test/supervised/unet/multi_task/exp4-%A.err  # Standard error 
+#SBATCH --output=outputs/out/ukbb/supervised/multi_task/exp4-%A.out  # Standard output  %A adds the job id
+#SBATCH --error=outputs/err/ukbb/test/supervised/multi_task/exp4-%A.err  # Standard error 
 #SBATCH --time=0-01:00:00  # Limit time (format: days-hours:minutes:seconds)
 #SBATCH --gres=gpu:1  # Number of GPUs if needed
 #SBATCH --cpus-per-task=16  # Number of CPUs (limit 24 per GPU)
@@ -15,10 +15,10 @@ conda deactivate # If env is loaded, conda won't activate the environment.
 conda activate unimatch # If this does not work, try 'source activate ptl'
 
 now=$(date +"%Y%m%d_%H%M%S")
-exp_num='4'
+exp='4'
 seed='42'
 control='ethn'
 method='supervised'
-job=exp${exp_num}_$control
+job=exp${exp}_$control
 
 python -u inference.py --control=$control --seed=$seed --exp=$exp --method=$method

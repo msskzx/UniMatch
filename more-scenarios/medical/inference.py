@@ -28,16 +28,17 @@ def main():
     logger = init_log('global', logging.INFO)
     logger.propagate = 0
 
-    model_path = f'exp/{cfg["dataset"]}/unimatch/unet/{cfg["split"]}/seed{cfg["seed"]}'
-    results_path = f'outputs/results/csv/{cfg["dataset"]}/exp{cfg["exp"]}/seed{cfg["seed"]}'
+    model_path = f'exp/{cfg["dataset"]}/{args.method}/unet/exp{args.exp}/seed{args.seed}'
+    results_path = f'outputs/results/csv/{cfg["dataset"]}/{args.method}/unet/exp{args.exp}/seed{args.seed}'
     if cfg['multi_task'] == True:
         model_path += '/multi_task'
         results_path += '/multi_task'
 
+    # TODO test split path, test split _mt (add missing fields)
     cfg.update({
         'model_path': f'{model_path}/best.pth',
         'results_path': f'{results_path}/{cfg["control"]}.csv',
-        'pred_mask_path': f'outputs/results/imgs/{cfg["dataset"]}/{args.method}/{args.exp}/{cfg["split"]}/seed{cfg["seed"]}',
+        'pred_mask_path': f'outputs/results/imgs/{cfg["dataset"]}/{args.method}/{args.exp}/{cfg["split"]}/seed{args.seed}',
         'test_split_path': f'splits/{cfg["dataset"]}/{cfg["mode"]}/{cfg["control"]}.csv',
     })
 
@@ -45,10 +46,15 @@ def main():
 
     checkpoint = torch.load(cfg['model_path'])
     checkpoint = {k.replace('module.', ''): v for k, v in checkpoint['model'].items()}
+
+    # fully supervised or semi-supervised
     if cfg['multi_task'] == False:
+        # TODO train again
         model = UNet(in_chns=1, class_num=4)
     else:
         model = UNetMultiTask(in_chns=1, seg_nclass=cfg['nclass'], classif_nclass=3)
+    
+    # TODO incorporate the label
 
     model.load_state_dict(checkpoint)
 

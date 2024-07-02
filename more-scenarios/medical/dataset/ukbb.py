@@ -71,6 +71,8 @@ class UKBBDataset(Dataset):
         """
         patient_id = str(patient_info['eid'])
         frame = str(patient_info['frame'])
+        # TODO check if this works in train, val
+        slice_idx = int(patient_info['slice_idx'])
 
         # Load original images for the current patient
         image_path = os.path.join(self.root_dir, patient_id, f"{frame}.nii.gz")
@@ -101,7 +103,6 @@ class UKBBDataset(Dataset):
                 return img, mask, label, patient_id, frame, slice_idx
 
             
-        slice_idx = int(patient_info['slice_idx'])
         img = img[slice_idx]
         mask = mask[slice_idx]
     
