@@ -86,7 +86,7 @@ class Encoder(nn.Module):
         self.params = params
         self.in_chns = self.params['in_chns']
         self.ft_chns = self.params['feature_chns']
-        self.n_class = self.params['class_num']
+        self.n_class = self.params['nclass']
         self.bilinear = self.params['bilinear']
         self.dropout = self.params['dropout']
         assert (len(self.ft_chns) == 5)
@@ -116,7 +116,7 @@ class Decoder(nn.Module):
         self.params = params
         self.in_chns = self.params['in_chns']
         self.ft_chns = self.params['feature_chns']
-        self.n_class = self.params['class_num']
+        self.n_class = self.params['nclass']
         self.bilinear = self.params['bilinear']
         assert (len(self.ft_chns) == 5)
 
@@ -148,13 +148,13 @@ class Decoder(nn.Module):
 
 
 class UNet(nn.Module):
-    def __init__(self, in_chns, class_num):
+    def __init__(self, in_chns, nclass):
         super(UNet, self).__init__()
 
         params = {'in_chns': in_chns,
                   'feature_chns': [16, 32, 64, 128, 256],
                   'dropout': [0.05, 0.1, 0.2, 0.3, 0.5],
-                  'class_num': class_num,
+                  'nclass': nclass,
                   'bilinear': False,
                 }
 

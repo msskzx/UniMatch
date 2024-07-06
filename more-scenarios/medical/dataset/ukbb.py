@@ -13,24 +13,20 @@ from PIL import Image
 
 
 class UKBBDataset(Dataset):
-    def __init__(self, name, root_dir, mode, crop_size, split, seg_nclass=4, classif_nclass=3, multi_task=False):
+    def __init__(self, name, root_dir, mode, crop_size, split, task='seg_only'):
         """
         Arguments:
         str -- database name
         root_dir -- database path
         split -- split path
-        seg_nclass -- segmentation classes 
-        classif_nclass -- classification classes either 2 for sex or 3 for ethnicity
-        multi_task -- boolean indicating the use of multi task learning
+        task -- task
         """
         self.name = name
         self.root_dir = root_dir
         self.mode = mode
         self.crop_size = crop_size
         self.patients_info = get_patients_info(split)
-        self.seg_nclass = seg_nclass
-        self.classif_nclass = classif_nclass
-        self.multi_task = multi_task
+        self.task = task
 
     def __getitem__(self, item):
         """
@@ -71,8 +67,6 @@ class UKBBDataset(Dataset):
         """
         patient_id = str(patient_info['eid'])
         frame = str(patient_info['frame'])
-        # TODO check if this works in train, val
-        slice_idx = int(patient_info['slice_idx'])
 
         # Load original images for the current patient
         image_path = os.path.join(self.root_dir, patient_id, f"{frame}.nii.gz")
@@ -91,18 +85,21 @@ class UKBBDataset(Dataset):
         mask = swap_classes(mask)
 
         label = 0
+        slice_idx = 0
 
-        if self.multi_task:
-            label = int(patient_info['ethnicity'])
-
-        label = torch.tensor(label).long()
-        if not self.multi_task:
+        if self.task == 'seg_only':
+            label = torch.tensor(label).long()
             if self.mode == 'val':
                 return img, mask, label
             if self.mode == 'test':
                 return img, mask, label, patient_id, frame, slice_idx
+        
 
-            
+        slice_idx = int(patient_info['slice_idx'])
+        if self.task != 'seg_only':
+            # only this task does not have label
+            label = int(patient_info['ethnicity'])
+        label = torch.tensor(label).long()
         img = img[slice_idx]
         mask = mask[slice_idx]
     
@@ -115,7 +112,7 @@ class UKBBDataset(Dataset):
         img = zoom(img, (self.crop_size / x, self.crop_size / y), order=0)
         mask = zoom(mask, (self.crop_size / x, self.crop_size / y), order=0)
 
-        if self.mode == 'train_l' or (self.multi_task and self.mode in ['val', 'test']):
+        if self.mode == 'train_l' or (self.task != 'seg_only' and self.mode in ['val', 'test']):
             if self.mode == 'test':
                 return torch.from_numpy(img).unsqueeze(0).float(), torch.from_numpy(np.array(mask)).long(), label, patient_id, frame, slice_idx
             return torch.from_numpy(img).unsqueeze(0).float(), torch.from_numpy(np.array(mask)).long(), label

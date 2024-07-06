@@ -1,16 +1,18 @@
-from dataset.acdc import ACDCDataset
-from dataset.ukbb import UKBBDataset
 import torch
 from torch.utils.data import DataLoader
-from model.unet import UNet
 import logging
-from util.utils import init_log
 import yaml
-from util.inference_utils import eval_model
 import argparse
 import pprint
 import os
-from model.unet_mt import UNetMultiTask
+
+from util.utils import init_log
+from util.inference_utils import eval_model
+from dataset.acdc import ACDCDataset
+from dataset.ukbb import UKBBDataset
+from model.unet import UNet
+from model.unet_multi_task import UNetMultiTask
+from model.unet_multi_modal import UNetMultiModal
 
 
 parser = argparse.ArgumentParser(description='Infereing using the pretrained models')
@@ -30,7 +32,7 @@ def main():
 
     model_path = f'exp/{cfg["dataset"]}/{args.method}/unet/exp{args.exp}/seed{args.seed}'
     results_path = f'outputs/results/csv/{cfg["dataset"]}/{args.method}/unet/exp{args.exp}/seed{args.seed}'
-    if cfg['multi_task'] == True:
+    if cfg['task'] == 'multi_task':
         model_path += '/multi_task'
         results_path += '/multi_task'
 
@@ -48,11 +50,13 @@ def main():
     checkpoint = {k.replace('module.', ''): v for k, v in checkpoint['model'].items()}
 
     # fully supervised or semi-supervised
-    if cfg['multi_task'] == False:
-        # TODO train again
-        model = UNet(in_chns=1, class_num=4)
-    else:
+    if cfg['task'] == 'multi_task':
         model = UNetMultiTask(in_chns=1, seg_nclass=cfg['nclass'], classif_nclass=3)
+    elif cfg['task'] == 'multi_modal':
+        model = UNetMultiModal(in_chns=1, seg_nclass=cfg['nclass'], classif_nclass=3)
+    else:
+        model = UNet(in_chns=1, class_num=4)
+
     
     # TODO incorporate the label
 

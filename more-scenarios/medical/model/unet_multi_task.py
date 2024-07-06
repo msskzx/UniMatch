@@ -81,7 +81,7 @@ class Encoder(nn.Module):
         self.params = params
         self.in_chns = self.params['in_chns']
         self.ft_chns = self.params['feature_chns']
-        self.n_class = self.params['class_num']
+        self.n_class = self.params['nclass']
         self.bilinear = self.params['bilinear']
         self.dropout = self.params['dropout']
         assert (len(self.ft_chns) == 5)
@@ -105,7 +105,7 @@ class Decoder(nn.Module):
         self.params = params
         self.in_chns = self.params['in_chns']
         self.ft_chns = self.params['feature_chns']
-        self.n_class = self.params['class_num']
+        self.n_class = self.params['nclass']
         self.bilinear = self.params['bilinear']
         assert (len(self.ft_chns) == 5)
 
@@ -131,14 +131,14 @@ class Decoder(nn.Module):
         return output
 
 class UNetMultiTask(nn.Module):
-    def __init__(self, in_chns, seg_nclass=4, classif_nclass=3):
+    def __init__(self, in_chns, nclass=4, nclass_classif=3):
         super(UNetMultiTask, self).__init__()
 
         params = {
             'in_chns': in_chns,
             'feature_chns': [16, 32, 64, 128, 256],
             'dropout': [0.05, 0.1, 0.2, 0.3, 0.5],
-            'class_num': seg_nclass,
+            'nclass': nclass,
             'bilinear': False
         }
         self.encoder = Encoder(params)
@@ -150,7 +150,7 @@ class UNetMultiTask(nn.Module):
             nn.Flatten(),
             nn.Linear(params['feature_chns'][-1], 512),
             nn.ReLU(inplace=True),
-            nn.Linear(512, classif_nclass)
+            nn.Linear(512, nclass_classif)
         )
 
     def forward(self, x):

@@ -71,7 +71,7 @@ class Encoder(nn.Module):
         self.params = params
         self.in_chns = self.params['in_chns']
         self.ft_chns = self.params['feature_chns']
-        self.n_class = self.params['class_num']
+        self.n_class = self.params['nclass']
         self.bilinear = self.params['bilinear']
         self.dropout = self.params['dropout']
         assert (len(self.ft_chns) == 5)
@@ -95,7 +95,7 @@ class Decoder(nn.Module):
         self.params = params
         self.in_chns = self.params['in_chns']
         self.ft_chns = self.params['feature_chns']
-        self.n_class = self.params['class_num']
+        self.n_class = self.params['nclass']
         self.bilinear = self.params['bilinear']
         assert (len(self.ft_chns) == 5)
         self.up1 = UpBlock(self.ft_chns[4], self.ft_chns[3], self.ft_chns[3], dropout_p=0.0)
@@ -118,33 +118,18 @@ class Decoder(nn.Module):
         return output
 
 class UNetMultiModal(nn.Module):
-    def __init__(self, in_chns, nclass, ):
+    def __init__(self, in_chns, nclass):
         super(UNetMultiModal, self).__init__()
         
         params = {'in_chns': in_chns,
                   'feature_chns': [16, 32, 64, 128, 256],
                   'dropout': [0.05, 0.1, 0.2, 0.3, 0.5],
-                  'class_num': class_num,
+                  'nclass': nclass,
                   'bilinear': False}
         self.encoder = Encoder(params)
         self.decoder = Decoder(params)
 
     def forward(self, img, label_embedding=None):
-        if label_embedding is not None:
-            # Forward pass through U-Net
-            features = self.encoder(img)
-            
-            # Expand label embedding to match the spatial dimensions of the bottleneck feature map
-            label_embedding = label_embedding.view(label_embedding.size(0), label_embedding.size(1), 1, 1)
-            label_embedding = label_embedding.expand(-1, -1, features[-1].size(2), features[-1].size(3))
-            
-            # Incorporate label embedding into the bottleneck feature map
-            features[-1] = torch.cat((features[-1], label_embedding), dim=1)
-            
-            output = self.decoder(features)
-        else:
-            output = self.decoder(self.encoder(img))
-        
         # Forward pass through U-Net
         features = self.encoder(img)
         
@@ -152,14 +137,8 @@ class UNetMultiModal(nn.Module):
         label_embedding = label_embedding.view(label_embedding.size(0), label_embedding.size(1), 1, 1)
         label_embedding = label_embedding.expand(-1, -1, features[-1].size(2), features[-1].size(3))
         
-        # Incorporate label embedding into the bottleneck feature map
+        # Incorporate label embedding into the image features
         features[-1] = torch.cat((features[-1], label_embedding), dim=1)
         
         output = self.decoder(features)
         return output
-
-# Example of using the model
-# model = UNetMultiModal(in_chns=3, class_num=1)
-# img = torch.randn(1, 3, 256, 256)
-# label_text = ["white"]
-# output = model(img, label_text)

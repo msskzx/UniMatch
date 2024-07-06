@@ -2,24 +2,23 @@ import argparse
 import logging
 import os
 import pprint
-
+import yaml
 import torch
-import numpy as np
 from torch import nn
 import torch.backends.cudnn as cudnn
 import torch.nn.functional as F
 from torch.optim import SGD
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
-import yaml
+from transformers import BertModel, BertTokenizer
 
-from model.unet import UNet
-from model.unet_mt import UNetMultiTask
 from util.classes import CLASSES
 from util.utils import AverageMeter, count_params, init_log, DiceLoss
 from util.dist_helper import setup_distributed
 from dataset.ukbb import UKBBDataset
-from transformers import BertModel, BertTokenizer
+from model.unet import UNet
+from model.unet_multi_task import UNetMultiTask
+from model.unet_multi_modal import UNetMultiModal
 
 
 parser = argparse.ArgumentParser(description='Fully Supervised UNet on UKBB')
@@ -37,8 +36,10 @@ def main():
     cfg = yaml.load(open(f'configs/ukbb/train/exp{args.exp}/config.yaml', "r"), Loader=yaml.Loader)
     save_path = f'exp/{cfg["dataset"]}/{method}/{seg_model}/exp{args.exp}/seed{args.seed}'
 
-    if cfg['multi_task'] == True:
+    if cfg['task'] == 'multi_task':
         save_path += '/multi_task'
+    elif cfg['task'] == 'multi_modal':
+        save_path += '/multi_modal'
 
     logger = init_log('global', logging.INFO)
     logger.propagate = 0
@@ -57,15 +58,15 @@ def main():
     cudnn.benchmark = True
 
     if cfg['task'] == 'multi_task':
-        model = UNetMultiTask(in_chns=1, nclass=cfg['nclass'], classif_nclass=cfg['classif_nclass'])
+        model = UNetMultiTask(in_chns=1, nclass=cfg['nclass'], nclass_classif=cfg['nclass_classif'])
     elif cfg['task'] == 'multi_modal':
         model = UNetMultiModal(in_chns=1, nclass=cfg['nclass'])
-        bert_model_name='bert-base-uncased'
-        bert_model = BertModel.from_pretrained(bert_model_name)
-        tokenizer = BertTokenizer.from_pretrained(bert_model_name)
 
         # Convert label text to BERT embeddings
         labels = ['white', 'asian', 'black']
+        bert_model_name='bert-base-uncased'
+        bert_model = BertModel.from_pretrained(bert_model_name)
+        tokenizer = BertTokenizer.from_pretrained(bert_model_name)
         
         label_embeddings = {}
         for label in labels:
@@ -76,7 +77,7 @@ def main():
             label_embedding = outputs.last_hidden_state.mean(dim=1).squeeze()
             label_embeddings[label] = label_embedding
     else:
-        model = UNetMultiTask(in_chns=1, seg_nclass=cfg['nclass'], classif_nclass=3)
+        model = UNet(in_chns=1, nclass=cfg['nclass'])
 
     if rank == 0:
         logger.info('Total params: {:.1f}M\n'.format(count_params(model)))
@@ -97,7 +98,7 @@ def main():
     train_file = 'train'
     val_file = 'val'
 
-    if cfg['multi_task'] == True:
+    if cfg['task'] == 'multi_task':
         train_file += '_mt'
         val_file += '_mt'
     
@@ -107,7 +108,7 @@ def main():
         mode='train_l',
         crop_size=cfg['crop_size'],
         split=f'splits/{cfg["dataset"]}/exp{args.exp}/{cfg["split"]}/seed{args.seed}/{train_file}.csv',
-        multi_task=cfg['multi_task']
+        multi_task=cfg['task']
     )
     
     valset = UKBBDataset(
@@ -116,7 +117,7 @@ def main():
         mode='val',
         crop_size=cfg['crop_size'],
         split=f'splits/{cfg["dataset"]}/exp{args.exp}/{cfg["split"]}/seed{args.seed}/{val_file}.csv',
-        multi_task=cfg['multi_task']
+        multi_task=cfg['task']
     )
 
     trainsampler = torch.utils.data.distributed.DistributedSampler(trainset)
@@ -155,7 +156,7 @@ def main():
 
             img, mask, label = img.cuda(), mask.cuda(), label.cuda()
 
-            if cfg['multi_task']:
+            if cfg['task'] == 'multi_task':
                 pred, classif_pred = model(img)
                 loss = (criterion_ce(pred, mask) + criterion_dice(pred.softmax(dim=1), mask.unsqueeze(1).float()) + criterion_ce(classif_pred, label)) / 3.0
             elif cfg['task'] == 'multi_modal':
@@ -199,7 +200,7 @@ def main():
 
                 img = img.permute(1, 0, 2, 3)
                 
-                if cfg['multi_task']:
+                if cfg['task'] == 'multi_task':
                     pred, classif_pred = model(img)
                 elif cfg['task'] == 'multi_modal':
                     label_embedding = torch.stack([label_embeddings[x] for x in label]).cuda()
@@ -218,7 +219,7 @@ def main():
                     union = (pred == cls).sum().item() + (mask == cls).sum().item()
                     dice_class[cls-1] += (2.0 * inter + epsilon) / (union + epsilon) * 100.0
                 
-                if cfg['multi_task']:
+                if cfg['task'] == 'multi_task':
                     _, mx_classif_pred = torch.max(classif_pred, 1)
                     correct_classif += (mx_classif_pred == label).sum().item()
                     total_samples += label.size(0)
@@ -227,17 +228,20 @@ def main():
         dice_class = [dice / len(valloader) for dice in dice_class]
         mean_dice = sum(dice_class) / len(dice_class)
 
-        if cfg['multi_task']:
+        if cfg['task'] == 'multi_task':
             classif_acc = correct_classif / total_samples * 100.0
         
         if rank == 0:
             for (cls_idx, dice) in enumerate(dice_class):
                 logger.info('***** Evaluation ***** >>>> Class [{:} {:}] Dice: '
                             '{:.2f}'.format(cls_idx, CLASSES[cfg['dataset']][cls_idx], dice))
-            logger.info(f'***** Evaluation ***** >>>> MeanDice: {mean_dice:.2f}')
-        
-            if cfg['multi_task']:
-                logger.info(f'***** Evaluation ***** >>>> Classifications Accuracy: {classif_acc}')
+
+            ev_str = f'***** Evaluation ***** >>>> MeanDice: {mean_dice:.2f}'
+            if cfg['task'] == 'multi_task':
+                logger.info(ev_str)
+                logger.info(f'***** Evaluation ***** >>>> Classifications Accuracy: {classif_acc}\n')
+            else:
+                logger.info(ev_str + '\n')
 
             
             writer.add_scalar('eval/MeanDice', mean_dice, epoch)
