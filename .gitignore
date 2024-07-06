@@ -8,3 +8,5 @@ more-scenarios/medical/ukbb
 train_mt.csv
 val_mt.csv
 labeled_mt.csv
+sex_mt.csv
+ethn_mt.csv

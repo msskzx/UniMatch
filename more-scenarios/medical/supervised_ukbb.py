@@ -36,10 +36,8 @@ def main():
     cfg = yaml.load(open(f'configs/ukbb/train/exp{args.exp}/config.yaml', "r"), Loader=yaml.Loader)
     save_path = f'exp/{cfg["dataset"]}/{method}/{seg_model}/exp{args.exp}/seed{args.seed}'
 
-    if cfg['task'] == 'multi_task':
-        save_path += '/multi_task'
-    elif cfg['task'] == 'multi_modal':
-        save_path += '/multi_modal'
+    if cfg['task'] in ['multi_task', 'multi_modal', 'seg_only_mid_slices']:
+        save_path += cfg['task']
 
     logger = init_log('global', logging.INFO)
     logger.propagate = 0
@@ -154,7 +152,7 @@ def main():
 
         for i, (img, mask, label) in enumerate(trainloader):
 
-            img, mask, label = img.cuda(), mask.cuda(), label.cuda()
+            img, mask = img.cuda(), mask.cuda()
 
             if cfg['task'] == 'multi_task':
                 pred, classif_pred = model(img)
@@ -193,7 +191,7 @@ def main():
         
         with torch.no_grad():
             for _, (img, mask, label) in enumerate(valloader):
-                img, mask, label = img.cuda(), mask.cuda(), label.cuda()
+                img, mask = img.cuda(), mask.cuda()
 
                 h, w = img.shape[-2:]
                 img = F.interpolate(img, (cfg['crop_size'], cfg['crop_size']), mode='bilinear', align_corners=False)

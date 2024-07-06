@@ -389,8 +389,7 @@ def add_sex_ethn(exp=4, split=18, seed=42, lw=3, hi=6):
         df['ethnicity'] = df['ethnicity'].astype(int)
         df = df[(df['slice_idx'] <= hi) & (df['slice_idx'] >= lw)]
         df.to_csv(f'splits/ukbb/exp{exp}/{split}/seed{seed}/{file}_mt.csv', index=False)
-
-    # TODO add test as well
+    
     df_slices = pd.DataFrame({'slice_idx': [x for x in range(lw, hi + 1)]})
     for file in ['val']:
         df = pd.read_csv(f'splits/ukbb/exp{exp}/{split}/seed{seed}/{file}.csv')
@@ -401,6 +400,16 @@ def add_sex_ethn(exp=4, split=18, seed=42, lw=3, hi=6):
         df['ethnicity'] = df['ethnicity'].astype(int)
         df = df.merge(df_slices, how='cross')
         df.to_csv(f'splits/ukbb/exp{exp}/{split}/seed{seed}/{file}_mt.csv', index=False)
+
+    for file in ['sex', 'ethn']:
+        df = pd.read_csv(f'splits/ukbb/test/{file}.csv')
+        df = pd.merge(df, patients_df, how='inner', on='eid')
+        df['sex'] = df['sex'].astype(int)
+        df['ethnicity'] = df['ethnicity'].astype(str)
+        df['ethnicity'] = df['ethnicity'].str[0].map(label_mapping)
+        df['ethnicity'] = df['ethnicity'].astype(int)
+        df = df.merge(df_slices, how='cross')
+        df.to_csv(f'splits/ukbb/test/{file}_mt.csv', index=False)
 
 
 if __name__ == '__main__':

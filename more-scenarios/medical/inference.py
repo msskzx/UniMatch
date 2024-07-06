@@ -5,6 +5,7 @@ import yaml
 import argparse
 import pprint
 import os
+from transformers import BertModel, BertTokenizer
 
 from util.utils import init_log
 from util.inference_utils import eval_model
@@ -25,23 +26,24 @@ parser.add_argument('--method', type=str, required=True)
 def main():
     args = parser.parse_args()
 
-    cfg = yaml.load(open(f'configs/ukbb/test/exp{args.exp}/{args.control}.yaml', "r"), Loader=yaml.Loader)
+    cfg = yaml.load(open(f'configs/{cfg["dataset"]}/test/exp{args.exp}/{args.control}.yaml', "r"), Loader=yaml.Loader)
 
     logger = init_log('global', logging.INFO)
     logger.propagate = 0
 
-    model_path = f'exp/{cfg["dataset"]}/{args.method}/unet/exp{args.exp}/seed{args.seed}'
-    results_path = f'outputs/results/csv/{cfg["dataset"]}/{args.method}/unet/exp{args.exp}/seed{args.seed}'
-    if cfg['task'] == 'multi_task':
-        model_path += '/multi_task'
-        results_path += '/multi_task'
+    model_path = f'exp/{cfg["dataset"]}/{args.method}/{cfg["seg_model"]}/exp{args.exp}/seed{args.seed}'
+    results_path = f'outputs/results/csv/{cfg["dataset"]}/{args.method}/{cfg["seg_model"]}/exp{args.exp}/seed{args.seed}'
+    test_split_file = cfg['control']
+    if cfg['task'] in ['multi_task', 'multi_modal', 'seg_only_mid_slices']:
+        model_path += cfg['task']
+        results_path += cfg['task']
+        test_split_file += '_mt'
 
-    # TODO test split path, test split _mt (add missing fields)
     cfg.update({
         'model_path': f'{model_path}/best.pth',
         'results_path': f'{results_path}/{cfg["control"]}.csv',
         'pred_mask_path': f'outputs/results/imgs/{cfg["dataset"]}/{args.method}/{args.exp}/{cfg["split"]}/seed{args.seed}',
-        'test_split_path': f'splits/{cfg["dataset"]}/{cfg["mode"]}/{cfg["control"]}.csv',
+        'test_split_path': f'splits/{cfg["dataset"]}/{cfg["mode"]}/{test_split_file}.csv',
     })
 
     logger.info('{}\n'.format(pprint.pformat({**cfg, **vars(args)})))
@@ -49,11 +51,25 @@ def main():
     checkpoint = torch.load(cfg['model_path'])
     checkpoint = {k.replace('module.', ''): v for k, v in checkpoint['model'].items()}
 
-    # fully supervised or semi-supervised
     if cfg['task'] == 'multi_task':
-        model = UNetMultiTask(in_chns=1, seg_nclass=cfg['nclass'], classif_nclass=3)
+        model = UNetMultiTask(in_chns=1, seg_nclass=cfg['nclass'], nclass_classif=cfg['nclass_classif'])
     elif cfg['task'] == 'multi_modal':
-        model = UNetMultiModal(in_chns=1, seg_nclass=cfg['nclass'], classif_nclass=3)
+        model = UNetMultiModal(in_chns=1, seg_nclass=cfg['nclass'], nclass_classif=cfg['nclass_classif'])
+
+        # Convert label text to BERT embeddings
+        labels = ['white', 'asian', 'black']
+        bert_model_name='bert-base-uncased'
+        bert_model = BertModel.from_pretrained(bert_model_name)
+        tokenizer = BertTokenizer.from_pretrained(bert_model_name)
+        
+        label_embeddings = {}
+        for label in labels:
+            inputs = tokenizer(label, return_tensors='pt', padding=True, truncation=True)
+            with torch.no_grad():
+                outputs = bert_model(**inputs)
+
+            label_embedding = outputs.last_hidden_state.mean(dim=1).squeeze()
+            label_embeddings[label] = label_embedding
     else:
         model = UNet(in_chns=1, class_num=4)
 
@@ -76,7 +92,7 @@ def main():
 
     test_loader = DataLoader(test_dataset, batch_size=cfg['batch_size'], pin_memory=True, num_workers=cfg['num_workers'], drop_last=False)
     
-    scores_df = eval_model(model, test_loader, cfg, logger, visualize=cfg['visualize'])
+    scores_df = eval_model(model, test_loader, cfg, logger, label_embeddings=label_embeddings, visualize=cfg['visualize'])
 
     dir_res = os.path.dirname(cfg['results_path'])
     os.makedirs(dir_res, exist_ok=True)

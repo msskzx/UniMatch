@@ -70,7 +70,7 @@ def save_scores(scores_df, dice_class, dice_mean, patient_id, frame, logger, cfg
     return scores_df
 
 
-def eval_model(model, dataloader, cfg, logger, visualize=False):
+def eval_model(model, dataloader, cfg, logger, label_embeddings=None, visualize=False):
     model.eval()
     model = model.cuda()
     scores_df = init_scores_df()
@@ -87,7 +87,13 @@ def eval_model(model, dataloader, cfg, logger, visualize=False):
             h, w = img.shape[-2:]
             img = F.interpolate(img, (cfg['crop_size'], cfg['crop_size']), mode='bilinear', align_corners=False)
 
-            pred = model(img)
+            if cfg['task'] == 'multi_task':
+                    pred, classif_pred = model(img)
+            elif cfg['task'] == 'multi_modal':
+                label_embedding = torch.stack([label_embeddings[x] for x in label]).cuda()
+                pred = model(img, label_embedding)
+            else:
+                pred = model(img)
             
             pred = F.interpolate(pred, (h, w), mode='bilinear', align_corners=False)
             pred = pred.argmax(dim=1)
@@ -98,12 +104,18 @@ def eval_model(model, dataloader, cfg, logger, visualize=False):
 
             dice_class, dice_mean = compute_dice(pred, mask)
 
+            if cfg['task'] == 'multi_task':
+                # TODO calculate
+                _, mx_classif_pred = torch.max(classif_pred, 1)
+                correct_classif += (mx_classif_pred == label).sum().item()
+                total_samples += label.size(0)
+
             # log and save results
+            # TODO add classification accuracy, 
             scores_df = save_scores(scores_df, dice_class, dice_mean, patient_id, frame, logger, cfg, given_slice_idx=slice_idx)
         
             # save og_img, mask, pred
             if visualize:
                 save_pred_mask(og_img, mask, pred, patient_id, frame, cfg)
-            
             
     return scores_df
