@@ -1,7 +1,6 @@
 from __future__ import division, print_function
 import torch
 import torch.nn as nn
-from transformers import BertModel, BertTokenizer
 
 def kaiming_normal_init_weight(model):
     for m in model.modules():
@@ -119,10 +118,9 @@ class Decoder(nn.Module):
         return output
 
 class UNetMultiModal(nn.Module):
-    def __init__(self, in_chns, class_num, bert_model_name='bert-base-uncased'):
+    def __init__(self, in_chns, nclass, ):
         super(UNetMultiModal, self).__init__()
-        self.bert_model = BertModel.from_pretrained(bert_model_name)
-        self.tokenizer = BertTokenizer.from_pretrained(bert_model_name)
+        
         params = {'in_chns': in_chns,
                   'feature_chns': [16, 32, 64, 128, 256],
                   'dropout': [0.05, 0.1, 0.2, 0.3, 0.5],
@@ -131,12 +129,21 @@ class UNetMultiModal(nn.Module):
         self.encoder = Encoder(params)
         self.decoder = Decoder(params)
 
-    def forward(self, img, label_text):
-        # Convert label text to BERT embeddings
-        inputs = self.tokenizer(label_text, return_tensors='pt', padding=True, truncation=True)
-        with torch.no_grad():
-            outputs = self.bert_model(**inputs)
-        label_embedding = outputs.last_hidden_state.mean(dim=1)
+    def forward(self, img, label_embedding=None):
+        if label_embedding is not None:
+            # Forward pass through U-Net
+            features = self.encoder(img)
+            
+            # Expand label embedding to match the spatial dimensions of the bottleneck feature map
+            label_embedding = label_embedding.view(label_embedding.size(0), label_embedding.size(1), 1, 1)
+            label_embedding = label_embedding.expand(-1, -1, features[-1].size(2), features[-1].size(3))
+            
+            # Incorporate label embedding into the bottleneck feature map
+            features[-1] = torch.cat((features[-1], label_embedding), dim=1)
+            
+            output = self.decoder(features)
+        else:
+            output = self.decoder(self.encoder(img))
         
         # Forward pass through U-Net
         features = self.encoder(img)

@@ -19,6 +19,7 @@ from util.classes import CLASSES
 from util.utils import AverageMeter, count_params, init_log, DiceLoss
 from util.dist_helper import setup_distributed
 from dataset.ukbb import UKBBDataset
+from transformers import BertModel, BertTokenizer
 
 
 parser = argparse.ArgumentParser(description='Fully Supervised UNet on UKBB')
@@ -55,9 +56,25 @@ def main():
     cudnn.enabled = True
     cudnn.benchmark = True
 
+    if cfg['task'] == 'multi_task':
+        model = UNetMultiTask(in_chns=1, nclass=cfg['nclass'], classif_nclass=cfg['classif_nclass'])
+    elif cfg['task'] == 'multi_modal':
+        model = UNetMultiModal(in_chns=1, nclass=cfg['nclass'])
+        bert_model_name='bert-base-uncased'
+        bert_model = BertModel.from_pretrained(bert_model_name)
+        tokenizer = BertTokenizer.from_pretrained(bert_model_name)
 
-    if cfg['multi_task'] == False:
-        model = UNet(in_chns=1, class_num=cfg['nclass'])
+        # Convert label text to BERT embeddings
+        labels = ['white', 'asian', 'black']
+        
+        label_embeddings = {}
+        for label in labels:
+            inputs = tokenizer(label, return_tensors='pt', padding=True, truncation=True)
+            with torch.no_grad():
+                outputs = bert_model(**inputs)
+
+            label_embedding = outputs.last_hidden_state.mean(dim=1).squeeze()
+            label_embeddings[label] = label_embedding
     else:
         model = UNetMultiTask(in_chns=1, seg_nclass=cfg['nclass'], classif_nclass=3)
 
@@ -141,6 +158,10 @@ def main():
             if cfg['multi_task']:
                 pred, classif_pred = model(img)
                 loss = (criterion_ce(pred, mask) + criterion_dice(pred.softmax(dim=1), mask.unsqueeze(1).float()) + criterion_ce(classif_pred, label)) / 3.0
+            elif cfg['task'] == 'multi_modal':
+                label_embedding = torch.stack([label_embeddings[x] for x in label]).cuda()
+                pred = model(img, label_embedding)
+                loss = (criterion_ce(pred, mask) + criterion_dice(pred.softmax(dim=1), mask.unsqueeze(1).float())) / 2.0
             else:
                 pred = model(img)
                 loss = (criterion_ce(pred, mask) + criterion_dice(pred.softmax(dim=1), mask.unsqueeze(1).float())) / 2.0
@@ -180,6 +201,9 @@ def main():
                 
                 if cfg['multi_task']:
                     pred, classif_pred = model(img)
+                elif cfg['task'] == 'multi_modal':
+                    label_embedding = torch.stack([label_embeddings[x] for x in label]).cuda()
+                    pred = model(img, label_embedding)
                 else:
                     pred = model(img)
                 
