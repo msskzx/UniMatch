@@ -61,7 +61,7 @@ def save_scores(scores_df, dice_class, dice_mean, patient_id, frame, logger, cfg
         scores_df.loc[len(scores_df)] = {
                 'patient_id': patient_id,
                 'frame': frame,
-                'slice_idx': given_slice_idx if cfg['multi_task'] else slice_idx,
+                'slice_idx': given_slice_idx if cfg['task'] != 'seg_only' else slice_idx,
                 'dice_mean': dice_mean[slice_idx],
                 'dice_rv': dice_class[slice_idx][MASK['rv']-1],
                 'dice_myo': dice_class[slice_idx][MASK['myo']-1],
@@ -77,7 +77,7 @@ def eval_model(model, dataloader, cfg, logger, label_embeddings=None, visualize=
 
     with torch.no_grad():
         for _, (img, mask, label, patient_id, frame, slice_idx) in enumerate(dataloader):
-            img, mask, label = img.cuda(), mask.cuda(), label.cuda()
+            img, mask = img.cuda(), mask.cuda()
 
             # a batch of number slices in the img
             og_img = img
@@ -105,6 +105,7 @@ def eval_model(model, dataloader, cfg, logger, label_embeddings=None, visualize=
             dice_class, dice_mean = compute_dice(pred, mask)
 
             if cfg['task'] == 'multi_task':
+                label = label.cuda()
                 # TODO calculate
                 _, mx_classif_pred = torch.max(classif_pred, 1)
                 correct_classif += (mx_classif_pred == label).sum().item()

@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=unet_exp4
-#SBATCH --output=outputs/out/ukbb/supervised/multi_modal/exp4-%A.out  # Standard output  %A adds the job id
-#SBATCH --error=outputs/err/ukbb/train/supervised/multi_modal/exp4-%A.err  # Standard error 
+#SBATCH --output=outputs/out/ukbb/supervised/multi_task/exp4-%A.out  # Standard output  %A adds the job id
+#SBATCH --error=outputs/err/ukbb/train/supervised/multi_task/exp4-%A.err  # Standard error 
 #SBATCH --time=0-01:00:00  # Limit time (format: days-hours:minutes:seconds)
 #SBATCH --gres=gpu:1  # Number of GPUs if needed
 #SBATCH --cpus-per-task=16  # Number of CPUs (limit 24 per GPU)
@@ -18,6 +18,6 @@ now=$(date +"%Y%m%d_%H%M%S")
 exp='4'
 seed='42'
 job=unet_exp$exp
-port=8318
+port=8319
 
 python -u supervised_ukbb.py --seed=$seed --exp=$exp --port=$port

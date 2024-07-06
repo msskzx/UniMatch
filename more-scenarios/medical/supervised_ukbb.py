@@ -64,7 +64,6 @@ def main():
 
         model = UNetMultiModal(in_chns=1, nclass=cfg['nclass'], bert_embedding_dim=bert_embedding_dim)
 
-        
         label_embeddings = {}
         for label in labels:
             inputs = tokenizer(label, return_tensors='pt', padding=True, truncation=True)

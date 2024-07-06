@@ -12,5 +12,5 @@ split: 18
 seed: 42
 visualize: False
 nclass_classif: 3
-task: multi_modal
+task: multi_task
 epochs: 50

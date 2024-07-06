@@ -50,14 +50,15 @@ def main():
     if cfg['task'] == 'multi_task':
         model = UNetMultiTask(in_chns=1, nclass=cfg['nclass'], nclass_classif=cfg['nclass_classif'])
     elif cfg['task'] == 'multi_modal':
-        model = UNetMultiModal(in_chns=1, nclass=cfg['nclass'])
-
         # Convert label text to BERT embeddings
         labels = ['white', 'asian', 'black']
         bert_model_name='bert-base-uncased'
         bert_model = BertModel.from_pretrained(bert_model_name)
         tokenizer = BertTokenizer.from_pretrained(bert_model_name)
-        
+        bert_embedding_dim = bert_model.config.hidden_size
+
+        model = UNetMultiModal(in_chns=1, nclass=cfg['nclass'], bert_embedding_dim=bert_embedding_dim)
+
         label_embeddings = {}
         for label in labels:
             inputs = tokenizer(label, return_tensors='pt', padding=True, truncation=True)
@@ -70,20 +71,18 @@ def main():
         model = UNet(in_chns=1, class_num=4)
 
     
-    # TODO incorporate the label
-
     model.load_state_dict(checkpoint)
 
     if cfg['dataset'] == 'ukbb':
-        # UKBB
         test_dataset = UKBBDataset(
         name=cfg['dataset'],
         root_dir=cfg['data_root'],
         mode=cfg['mode'],
         crop_size=cfg['crop_size'],
-        split=cfg['test_split_path'])
+        split=cfg['test_split_path'],
+        task=cfg['task']
+        )
     else:
-        # ACDC
         test_dataset = ACDCDataset(cfg['dataset'], cfg['data_root'], cfg['mode'])
 
     test_loader = DataLoader(test_dataset, batch_size=cfg['batch_size'], pin_memory=True, num_workers=cfg['num_workers'], drop_last=False)
