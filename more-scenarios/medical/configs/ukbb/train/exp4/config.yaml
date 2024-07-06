@@ -13,4 +13,4 @@ seed: 42
 visualize: False
 nclass_classif: 3
 task: multi_modal
-epochs: 75
+epochs: 50

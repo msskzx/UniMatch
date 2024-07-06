@@ -11,3 +11,4 @@ seed: 42
 split: 18
 visualize: False
 task: multi_modal
+seg_model: 'unet'

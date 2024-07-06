@@ -19,6 +19,7 @@ exp='4'
 seed='42'
 control='ethn'
 method='supervised'
+dataset='ukbb'
 job=exp${exp}_$control
 
-python -u inference.py --control=$control --seed=$seed --exp=$exp --method=$method
+python -u inference.py --control=$control --seed=$seed --exp=$exp --method=$method --dataset=$dataset

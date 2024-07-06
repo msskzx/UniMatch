@@ -21,28 +21,24 @@ parser.add_argument('--control', type=str, required=True)
 parser.add_argument('--seed', type=str, required=True)
 parser.add_argument('--exp', type=str, required=True)
 parser.add_argument('--method', type=str, required=True)
+parser.add_argument('--dataset', type=str, required=True)
 
 
 def main():
     args = parser.parse_args()
-
-    cfg = yaml.load(open(f'configs/{cfg["dataset"]}/test/exp{args.exp}/{args.control}.yaml', "r"), Loader=yaml.Loader)
+    cfg = yaml.load(open(f'configs/{args.dataset}/test/exp{args.exp}/{args.control}.yaml', "r"), Loader=yaml.Loader)
 
     logger = init_log('global', logging.INFO)
     logger.propagate = 0
 
-    model_path = f'exp/{cfg["dataset"]}/{args.method}/{cfg["seg_model"]}/exp{args.exp}/seed{args.seed}'
-    results_path = f'outputs/results/csv/{cfg["dataset"]}/{args.method}/{cfg["seg_model"]}/exp{args.exp}/seed{args.seed}'
     test_split_file = cfg['control']
     if cfg['task'] in ['multi_task', 'multi_modal', 'seg_only_mid_slices']:
-        model_path += cfg['task']
-        results_path += cfg['task']
         test_split_file += '_mt'
 
     cfg.update({
-        'model_path': f'{model_path}/best.pth',
-        'results_path': f'{results_path}/{cfg["control"]}.csv',
-        'pred_mask_path': f'outputs/results/imgs/{cfg["dataset"]}/{args.method}/{args.exp}/{cfg["split"]}/seed{args.seed}',
+        'model_path': f'exp/{cfg["dataset"]}/{args.method}/{cfg["seg_model"]}/exp{args.exp}/seed{args.seed}/{cfg["task"]}/best.pth',
+        'results_path': f'outputs/results/csv/{cfg["dataset"]}/{args.method}/{cfg["seg_model"]}/exp{args.exp}/seed{args.seed}/{cfg["task"]}/{cfg["control"]}.csv',
+        'pred_mask_path': f'outputs/results/imgs/{cfg["dataset"]}/{args.method}/{args.exp}/{cfg["split"]}/seed{args.seed}/',
         'test_split_path': f'splits/{cfg["dataset"]}/{cfg["mode"]}/{test_split_file}.csv',
     })
 
@@ -52,9 +48,9 @@ def main():
     checkpoint = {k.replace('module.', ''): v for k, v in checkpoint['model'].items()}
 
     if cfg['task'] == 'multi_task':
-        model = UNetMultiTask(in_chns=1, seg_nclass=cfg['nclass'], nclass_classif=cfg['nclass_classif'])
+        model = UNetMultiTask(in_chns=1, nclass=cfg['nclass'], nclass_classif=cfg['nclass_classif'])
     elif cfg['task'] == 'multi_modal':
-        model = UNetMultiModal(in_chns=1, seg_nclass=cfg['nclass'], nclass_classif=cfg['nclass_classif'])
+        model = UNetMultiModal(in_chns=1, nclass=cfg['nclass'])
 
         # Convert label text to BERT embeddings
         labels = ['white', 'asian', 'black']

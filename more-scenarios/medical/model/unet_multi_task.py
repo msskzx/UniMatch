@@ -154,6 +154,7 @@ class UNetMultiTask(nn.Module):
         )
 
     def forward(self, x):
+        # TODO add fp
         features = self.encoder(x)
         segmentation_output = self.decoder(features)
         classification_output = self.classification_head(features[-1])

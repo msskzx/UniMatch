@@ -34,10 +34,7 @@ def main():
     method='supervised'
     seg_model='unet'
     cfg = yaml.load(open(f'configs/ukbb/train/exp{args.exp}/config.yaml', "r"), Loader=yaml.Loader)
-    save_path = f'exp/{cfg["dataset"]}/{method}/{seg_model}/exp{args.exp}/seed{args.seed}'
-
-    if cfg['task'] in ['multi_task', 'multi_modal', 'seg_only_mid_slices']:
-        save_path += cfg['task']
+    save_path = f'exp/{cfg["dataset"]}/{method}/{seg_model}/exp{args.exp}/seed{args.seed}/{cfg["task"]}'
 
     logger = init_log('global', logging.INFO)
     logger.propagate = 0
@@ -58,13 +55,15 @@ def main():
     if cfg['task'] == 'multi_task':
         model = UNetMultiTask(in_chns=1, nclass=cfg['nclass'], nclass_classif=cfg['nclass_classif'])
     elif cfg['task'] == 'multi_modal':
-        model = UNetMultiModal(in_chns=1, nclass=cfg['nclass'])
-
         # Convert label text to BERT embeddings
         labels = ['white', 'asian', 'black']
         bert_model_name='bert-base-uncased'
         bert_model = BertModel.from_pretrained(bert_model_name)
         tokenizer = BertTokenizer.from_pretrained(bert_model_name)
+        bert_embedding_dim = bert_model.config.hidden_size
+
+        model = UNetMultiModal(in_chns=1, nclass=cfg['nclass'], bert_embedding_dim=bert_embedding_dim)
+
         
         label_embeddings = {}
         for label in labels:
@@ -96,7 +95,7 @@ def main():
     train_file = 'train'
     val_file = 'val'
 
-    if cfg['task'] == 'multi_task':
+    if cfg['task'] in ['multi_task', 'multi_modal', 'seg_only_mid_slices']:
         train_file += '_mt'
         val_file += '_mt'
     
@@ -106,7 +105,7 @@ def main():
         mode='train_l',
         crop_size=cfg['crop_size'],
         split=f'splits/{cfg["dataset"]}/exp{args.exp}/{cfg["split"]}/seed{args.seed}/{train_file}.csv',
-        multi_task=cfg['task']
+        task=cfg['task']
     )
     
     valset = UKBBDataset(
@@ -115,7 +114,7 @@ def main():
         mode='val',
         crop_size=cfg['crop_size'],
         split=f'splits/{cfg["dataset"]}/exp{args.exp}/{cfg["split"]}/seed{args.seed}/{val_file}.csv',
-        multi_task=cfg['task']
+        task=cfg['task']
     )
 
     trainsampler = torch.utils.data.distributed.DistributedSampler(trainset)
@@ -155,6 +154,7 @@ def main():
             img, mask = img.cuda(), mask.cuda()
 
             if cfg['task'] == 'multi_task':
+                label = label.cuda()
                 pred, classif_pred = model(img)
                 loss = (criterion_ce(pred, mask) + criterion_dice(pred.softmax(dim=1), mask.unsqueeze(1).float()) + criterion_ce(classif_pred, label)) / 3.0
             elif cfg['task'] == 'multi_modal':

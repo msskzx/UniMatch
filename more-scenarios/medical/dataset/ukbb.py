@@ -96,10 +96,13 @@ class UKBBDataset(Dataset):
         
 
         slice_idx = int(patient_info['slice_idx'])
-        if self.task != 'seg_only':
-            # only this task does not have label
-            label = int(patient_info['ethnicity'])
-        label = torch.tensor(label).long()
+        if self.task == 'multi_task':
+            # int
+            label = torch.tensor(int(patient_info['ethnicity'])).long()
+        if self.task == 'multi_modal':
+            # word
+            label = ['white', 'asian', 'black'][int(patient_info['ethnicity'])]
+
         img = img[slice_idx]
         mask = mask[slice_idx]
     
