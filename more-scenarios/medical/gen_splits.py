@@ -412,5 +412,28 @@ def add_sex_ethn(exp=4, split=18, seed=42, lw=3, hi=6):
         df.to_csv(f'splits/ukbb/test/{file}_mt.csv', index=False)
 
 
+def tmp():
+    exp = 4
+    split = 18
+    seed = 42
+    label_mapping = {'1': 0, '3': 1, '4': 2}
+    og_df = pd.read_csv('/vol/aimspace/projects/ukbb/data/tabular/ukb668815_imaging.csv')
+    patients_df = nls.prep_patients_df(og_df)
+    #for file in ['train', 'labeled', 'val']:
+    for file in ['labeled']:
+
+        df = pd.read_csv(f'splits/ukbb/exp{exp}/{split}/seed{seed}/{file}.csv')
+        df = pd.merge(df, patients_df, how='inner', on='eid')
+
+        df['sex'] = df['sex'].astype(int)
+        df['ethnicity'] = df['ethnicity'].astype(str)
+
+        for index, row in df.iterrows():
+            df.at[index, 'ethnicity'] = label_mapping[row['ethnicity'][0]]
+        
+        df['ethnicity'] = df['ethnicity'].astype(int)
+
+        df.to_csv(f'splits/ukbb/exp{exp}/{split}/seed{seed}/{file}_mt.csv', index=False)
+
 if __name__ == '__main__':
     main()

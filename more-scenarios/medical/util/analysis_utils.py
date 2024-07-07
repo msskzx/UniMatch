@@ -24,9 +24,6 @@ def get_all_results(df, cfg):
 
     res = {
         'experiment': [cfg['exp']],
-        'model': [cfg['model']],
-        'train_set': [cfg['train_set']],
-        'test_set': [cfg['test_set']],
         'dice_mean': [dice['dice_mean']],
         'dice_lv': [dice['dice_lv']],
         'dice_rv': [dice['dice_rv']],
