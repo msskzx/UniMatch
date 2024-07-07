@@ -103,6 +103,9 @@ class UKBBDataset(Dataset):
             # word
             label = ['white', 'asian', 'black'][int(patient_info['ethnicity'])]
         
+        if slice_idx >= len(img) - 1:
+            print(len(img), patient_id, frame, slice_idx, label)
+            slice_idx = len(img)//2
         img = img[slice_idx]
         mask = mask[slice_idx]
 

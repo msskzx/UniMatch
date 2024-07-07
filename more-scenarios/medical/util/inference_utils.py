@@ -101,16 +101,8 @@ def eval_model(model, dataloader, cfg, logger, label_embeddings=None, visualize=
             pred = pred.argmax(dim=1)
 
             # adjust shape to compute dice
-            print('og_img', og_img.size())
-            print('pred', pred.size())
-            print('mask', mask.size())
-
             mask = mask.squeeze(0)
             og_img = og_img.squeeze(0)
-
-            print('og_img', og_img.size())
-            print('pred', pred.size())
-            print('mask', mask.size())
 
             dice_class, dice_mean = compute_dice(pred, mask)
 
