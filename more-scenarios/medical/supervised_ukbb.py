@@ -199,6 +199,10 @@ def main():
                 
                 if cfg['task'] == 'multi_task':
                     pred, classif_pred = model(img)
+                    label = label.cuda()
+                    _, mx_classif_pred = torch.max(classif_pred, 1)
+                    correct_classif += (mx_classif_pred == label).sum().item()
+                    total_samples += label.size(0)
                 elif cfg['task'] == 'multi_modal':
                     label_embedding = torch.stack([label_embeddings[x] for x in label]).cuda()
                     pred = model(img, label_embedding)
@@ -216,12 +220,6 @@ def main():
                     union = (pred == cls).sum().item() + (mask == cls).sum().item()
                     dice_class[cls-1] += (2.0 * inter + epsilon) / (union + epsilon) * 100.0
                 
-                if cfg['task'] == 'multi_task':
-                    _, mx_classif_pred = torch.max(classif_pred, 1)
-                    correct_classif += (mx_classif_pred == label).sum().item()
-                    total_samples += label.size(0)
-
-
         dice_class = [dice / len(valloader) for dice in dice_class]
         mean_dice = sum(dice_class) / len(dice_class)
 

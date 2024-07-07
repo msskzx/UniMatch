@@ -9,8 +9,7 @@ mode: train
 nclass: 4
 num_workers: 1
 split: 18
-seed: 42
 visualize: False
 nclass_classif: 3
-task: multi_task
+task: multi_modal # options: ['seg_only', 'multi_task', 'multi_modal', 'seg_only_mid_slices']
 epochs: 50

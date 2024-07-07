@@ -16,8 +16,8 @@ conda activate unimatch # If this does not work, try 'source activate ptl'
 
 now=$(date +"%Y%m%d_%H%M%S")
 exp='4'
-seed='42'
+seed='83'
 job=unet_exp$exp
-port=8319
+port='8083'
 
 python -u supervised_ukbb.py --seed=$seed --exp=$exp --port=$port

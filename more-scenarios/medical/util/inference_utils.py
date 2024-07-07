@@ -53,7 +53,7 @@ def init_scores_df():
     return pd.DataFrame(columns=['patient_id', 'frame', 'slice_idx', 'dice_mean', 'dice_rv', 'dice_myo', 'dice_lv'])
 
 
-def save_scores(scores_df, dice_class, dice_mean, patient_id, frame, logger, cfg, given_slice_idx=None):
+def save_scores(scores_df, dice_class, dice_mean, patient_id, frame, logger, cfg, given_slice_idx=None, correct=None):
     for slice_idx, dice_scores_slice in enumerate(dice_class):
         for cls_idx, dice_slice_cls in enumerate(dice_scores_slice):
             logger.info('***** Evaluation ***** >>>> Class [{:} {:}] Dice: '
@@ -61,13 +61,15 @@ def save_scores(scores_df, dice_class, dice_mean, patient_id, frame, logger, cfg
         logger.info('***** Evaluation ***** >>>> MeanDice: {:.2f}\n'.format(dice_mean[slice_idx]))
         
         scores_df.loc[len(scores_df)] = {
-                'patient_id': patient_id[0],
-                'frame': frame[0],
-                'slice_idx': given_slice_idx.item() if given_slice_idx else slice_idx,
-                'dice_mean': dice_mean[slice_idx],
-                'dice_rv': dice_class[slice_idx][MASK['rv']-1],
-                'dice_myo': dice_class[slice_idx][MASK['myo']-1],
-                'dice_lv': dice_class[slice_idx][MASK['lv']-1]}
+            'patient_id': patient_id[0],
+            'frame': frame[0],
+            'slice_idx': given_slice_idx.item() if given_slice_idx else slice_idx,
+            'dice_mean': dice_mean[slice_idx],
+            'dice_rv': dice_class[slice_idx][MASK['rv']-1],
+            'dice_myo': dice_class[slice_idx][MASK['myo']-1],
+            'dice_lv': dice_class[slice_idx][MASK['lv']-1],
+            'correct_classification': correct,
+        }
     
     return scores_df
 
@@ -89,8 +91,11 @@ def eval_model(model, dataloader, cfg, logger, label_embeddings=None, visualize=
             h, w = img.shape[-2:]
             img = F.interpolate(img, (cfg['crop_size'], cfg['crop_size']), mode='bilinear', align_corners=False)
 
+            correct = None
             if cfg['task'] == 'multi_task':
-                    pred, classif_pred = model(img)
+                pred, classif_pred = model(img)
+                predicted_labels = classif_pred.argmax(dim=1)
+                correct = (predicted_labels == label.cuda()).sum().item()
             elif cfg['task'] == 'multi_modal':
                 label_embedding = torch.stack([label_embeddings[x] for x in label]).cuda()
                 pred = model(img, label_embedding)
@@ -106,16 +111,8 @@ def eval_model(model, dataloader, cfg, logger, label_embeddings=None, visualize=
 
             dice_class, dice_mean = compute_dice(pred, mask)
 
-            if cfg['task'] == 'multi_task':
-                label = label.cuda()
-                # TODO calculate
-                _, mx_classif_pred = torch.max(classif_pred, 1)
-                correct_classif += (mx_classif_pred == label).sum().item()
-                total_samples += label.size(0)
-
             # log and save results
-            # TODO add classification accuracy, 
-            scores_df = save_scores(scores_df, dice_class, dice_mean, patient_id, frame, logger, cfg, given_slice_idx=slice_idx)
+            scores_df = save_scores(scores_df, dice_class, dice_mean, patient_id, frame, logger, cfg, given_slice_idx=slice_idx, correct=correct)
         
             # save og_img, mask, pred
             if visualize:
