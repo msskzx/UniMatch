@@ -1,0 +1,26 @@
+[2024-07-07 14:54:01,982][    INFO] {'batch_size': 1,
+ 'control': 'ethn',
+ 'crop_size': 256,
+ 'data_root': '/vol/aimspace/projects/ukbb/data/cardiac/cardiac_segmentations/subjects',
+ 'dataset': 'ukbb',
+ 'exp': '4',
+ 'method': 'supervised',
+ 'mode': 'test',
+ 'model_path': 'exp/ukbb/supervised/unet/exp4/seed42/multi_modal/best.pth',
+ 'nclass': 4,
+ 'nclass_classif': 3,
+ 'num_workers': 1,
+ 'pred_mask_path': 'outputs/results/imgs//ukbb/supervised/unet/exp4/seed42/multi_modal/',
+ 'results_path': 'outputs/results/csv/ukbb/supervised/unet/exp4/seed42/multi_modal/ethn.csv',
+ 'seed': '42',
+ 'seg_model': 'unet',
+ 'split': 18,
+ 'task': 'multi_modal',
+ 'test_split_path': 'splits/ukbb/test/test_mt.csv',
+ 'visualize': True}
+
+[2024-07-07 14:54:04,924][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 95.93
+[2024-07-07 14:54:04,924][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 89.21
+[2024-07-07 14:54:04,924][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 98.07
+[2024-07-07 14:54:04,924][    INFO] ***** Evaluation ***** >>>> MeanDice: 94.41
+

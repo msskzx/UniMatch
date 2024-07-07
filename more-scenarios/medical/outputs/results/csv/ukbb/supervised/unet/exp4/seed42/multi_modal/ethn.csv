@@ -1,0 +1,2 @@
+patient_id,frame,slice_idx,dice_mean,dice_rv,dice_myo,dice_lv
+3468761,sa_ED,3,94.40718409253397,95.93495934959681,89.2116182572838,98.0749746707213

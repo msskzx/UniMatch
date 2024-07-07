@@ -38,9 +38,11 @@ def main():
     cfg.update({
         'model_path': f'exp/{cfg["dataset"]}/{args.method}/{cfg["seg_model"]}/exp{args.exp}/seed{args.seed}/{cfg["task"]}/best.pth',
         'results_path': f'outputs/results/csv/{cfg["dataset"]}/{args.method}/{cfg["seg_model"]}/exp{args.exp}/seed{args.seed}/{cfg["task"]}/{cfg["control"]}.csv',
-        'pred_mask_path': f'outputs/results/imgs/{cfg["dataset"]}/{args.method}/{args.exp}/{cfg["split"]}/seed{args.seed}/',
+        'pred_mask_path': f'outputs/results/imgs//{cfg["dataset"]}/{args.method}/{cfg["seg_model"]}/exp{args.exp}/seed{args.seed}/{cfg["task"]}/',
         'test_split_path': f'splits/{cfg["dataset"]}/{cfg["mode"]}/{test_split_file}.csv',
     })
+
+    os.makedirs(f'outputs/results/imgs//{cfg["dataset"]}/{args.method}/{cfg["seg_model"]}/exp{args.exp}/seed{args.seed}/{cfg["task"]}/', exist_ok=True)
 
     logger.info('{}\n'.format(pprint.pformat({**cfg, **vars(args)})))
 

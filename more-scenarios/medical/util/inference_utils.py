@@ -35,7 +35,7 @@ def class_to_intensity(img):
     return np.vectorize(lambda x: class_to_intensity[x])(img)
 
 
-def save_pred_mask(og_img, og_mask, og_pred, patient_id, frame, cfg):
+def save_pred_mask(og_img, og_mask, og_pred, patient_id, frame, cfg, given_slice_idx=None):
     for slice_idx in range(og_img.shape[0]):
         img = og_img[slice_idx].cpu().numpy()
         img = (img - img.min()) / (img.max() - img.min()) * 255
@@ -44,7 +44,9 @@ def save_pred_mask(og_img, og_mask, og_pred, patient_id, frame, cfg):
 
         # Concatenate the img, gt mask, and prediction horizontally
         concat_img = np.concatenate((img, mask, pred), axis=1)
-        cv2.imwrite(f"{cfg['pred_mask_path']}{patient_id}_{frame}_{slice_idx}.png", concat_img)
+        if given_slice_idx:
+            slice_idx = given_slice_idx.item()
+        cv2.imwrite(f"{cfg['pred_mask_path']}{patient_id[0]}_{frame[0]}_{slice_idx}.png", concat_img)
 
 
 def init_scores_df():
@@ -57,11 +59,11 @@ def save_scores(scores_df, dice_class, dice_mean, patient_id, frame, logger, cfg
             logger.info('***** Evaluation ***** >>>> Class [{:} {:}] Dice: '
                             '{:.2f}'.format(cls_idx, CLASSES[cfg['dataset']][cls_idx], dice_slice_cls))
         logger.info('***** Evaluation ***** >>>> MeanDice: {:.2f}\n'.format(dice_mean[slice_idx]))
-
+        
         scores_df.loc[len(scores_df)] = {
-                'patient_id': patient_id,
-                'frame': frame,
-                'slice_idx': given_slice_idx if cfg['task'] != 'seg_only' else slice_idx,
+                'patient_id': patient_id[0],
+                'frame': frame[0],
+                'slice_idx': given_slice_idx.item() if given_slice_idx else slice_idx,
                 'dice_mean': dice_mean[slice_idx],
                 'dice_rv': dice_class[slice_idx][MASK['rv']-1],
                 'dice_myo': dice_class[slice_idx][MASK['myo']-1],
@@ -99,8 +101,16 @@ def eval_model(model, dataloader, cfg, logger, label_embeddings=None, visualize=
             pred = pred.argmax(dim=1)
 
             # adjust shape to compute dice
-            mask = mask.squeeze()
-            og_img = og_img.squeeze()
+            print('og_img', og_img.size())
+            print('pred', pred.size())
+            print('mask', mask.size())
+
+            mask = mask.squeeze(0)
+            og_img = og_img.squeeze(0)
+
+            print('og_img', og_img.size())
+            print('pred', pred.size())
+            print('mask', mask.size())
 
             dice_class, dice_mean = compute_dice(pred, mask)
 
@@ -117,6 +127,6 @@ def eval_model(model, dataloader, cfg, logger, label_embeddings=None, visualize=
         
             # save og_img, mask, pred
             if visualize:
-                save_pred_mask(og_img, mask, pred, patient_id, frame, cfg)
+                save_pred_mask(og_img, mask, pred, patient_id, frame, cfg, given_slice_idx=slice_idx)
             
     return scores_df

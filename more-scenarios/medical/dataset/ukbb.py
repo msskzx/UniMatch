@@ -102,9 +102,15 @@ class UKBBDataset(Dataset):
         if self.task == 'multi_modal':
             # word
             label = ['white', 'asian', 'black'][int(patient_info['ethnicity'])]
-
+        
         img = img[slice_idx]
         mask = mask[slice_idx]
+
+        if self.task != 'seg_only':
+            if self.mode == 'test':
+                return img.unsqueeze(0).float(), mask.unsqueeze(0).long(), label, patient_id, frame, slice_idx
+            if self.mode == 'val':
+                return img.unsqueeze(0).float(), mask.unsqueeze(0).long(), label
     
         if random.random() > 0.5:
             img, mask = random_rot_flip(img, mask)
@@ -115,9 +121,7 @@ class UKBBDataset(Dataset):
         img = zoom(img, (self.crop_size / x, self.crop_size / y), order=0)
         mask = zoom(mask, (self.crop_size / x, self.crop_size / y), order=0)
 
-        if self.mode == 'train_l' or (self.task != 'seg_only' and self.mode in ['val', 'test']):
-            if self.mode == 'test':
-                return torch.from_numpy(img).unsqueeze(0).float(), torch.from_numpy(np.array(mask)).long(), label, patient_id, frame, slice_idx
+        if self.mode == 'train_l':
             return torch.from_numpy(img).unsqueeze(0).float(), torch.from_numpy(np.array(mask)).long(), label
 
         img = Image.fromarray((img * 255).astype(np.uint8))
