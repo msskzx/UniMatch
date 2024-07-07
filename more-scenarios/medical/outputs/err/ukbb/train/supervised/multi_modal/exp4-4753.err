@@ -1,0 +1,774 @@
+/var/lib/slurm-llnl/slurmd/job04753/slurm_script: line 12: module: command not found
+[2024-07-07 22:23:34,939][    INFO] {'batch_size': 12,
+ 'conf_thresh': 0.95,
+ 'crop_size': 256,
+ 'data_root': '/vol/aimspace/projects/ukbb/data/cardiac/cardiac_segmentations/subjects',
+ 'dataset': 'ukbb',
+ 'epochs': 50,
+ 'exp': '4',
+ 'local_rank': 0,
+ 'lr': 0.01,
+ 'mode': 'train',
+ 'nclass': 4,
+ 'nclass_classif': 3,
+ 'ngpus': 1,
+ 'num_workers': 1,
+ 'port': 8073,
+ 'seed': '73',
+ 'seg_model': 'unet',
+ 'split': 18,
+ 'task': 'multi_modal',
+ 'visualize': False}
+
+[2024-07-07 22:23:41,209][    INFO] Total params: 2.0M
+
+[2024-07-07 22:23:41,764][    INFO] ===========> Epoch: 0, LR: 0.01000, Previous best: 0.00
+[2024-07-07 22:23:45,849][    INFO] Iters: 0, Total loss: 1.084
+[2024-07-07 22:23:54,478][    INFO] Iters: 15, Total loss: 0.635
+[2024-07-07 22:24:04,787][    INFO] Iters: 30, Total loss: 0.526
+[2024-07-07 22:24:14,327][    INFO] Iters: 45, Total loss: 0.481
+[2024-07-07 22:24:23,343][    INFO] Iters: 60, Total loss: 0.451
+[2024-07-07 22:24:28,983][    INFO] Iters: 75, Total loss: 0.426
+[2024-07-07 22:24:35,578][    INFO] Iters: 90, Total loss: 0.405
+[2024-07-07 22:24:40,562][    INFO] Iters: 105, Total loss: 0.388
+[2024-07-07 22:24:44,469][    INFO] Iters: 120, Total loss: 0.371
+[2024-07-07 22:24:50,372][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 7.82
+[2024-07-07 22:24:50,372][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 0.38
+[2024-07-07 22:24:50,372][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 2.15
+[2024-07-07 22:24:50,372][    INFO] ***** Evaluation ***** >>>> MeanDice: 3.45
+
+[2024-07-07 22:24:50,489][    INFO] ===========> Epoch: 1, LR: 0.00982, Previous best: 3.45
+[2024-07-07 22:24:50,952][    INFO] Iters: 0, Total loss: 0.215
+[2024-07-07 22:24:55,514][    INFO] Iters: 15, Total loss: 0.221
+[2024-07-07 22:24:59,507][    INFO] Iters: 30, Total loss: 0.209
+[2024-07-07 22:25:05,609][    INFO] Iters: 45, Total loss: 0.196
+[2024-07-07 22:25:11,318][    INFO] Iters: 60, Total loss: 0.183
+[2024-07-07 22:25:16,656][    INFO] Iters: 75, Total loss: 0.170
+[2024-07-07 22:25:23,689][    INFO] Iters: 90, Total loss: 0.160
+[2024-07-07 22:25:27,723][    INFO] Iters: 105, Total loss: 0.151
+[2024-07-07 22:25:34,998][    INFO] Iters: 120, Total loss: 0.141
+[2024-07-07 22:25:40,877][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 58.02
+[2024-07-07 22:25:40,877][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 62.07
+[2024-07-07 22:25:40,877][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 80.04
+[2024-07-07 22:25:40,877][    INFO] ***** Evaluation ***** >>>> MeanDice: 66.71
+
+[2024-07-07 22:25:41,028][    INFO] ===========> Epoch: 2, LR: 0.00964, Previous best: 66.71
+[2024-07-07 22:25:41,445][    INFO] Iters: 0, Total loss: 0.092
+[2024-07-07 22:25:46,109][    INFO] Iters: 15, Total loss: 0.073
+[2024-07-07 22:25:50,419][    INFO] Iters: 30, Total loss: 0.073
+[2024-07-07 22:25:54,431][    INFO] Iters: 45, Total loss: 0.072
+[2024-07-07 22:25:58,708][    INFO] Iters: 60, Total loss: 0.071
+[2024-07-07 22:26:03,082][    INFO] Iters: 75, Total loss: 0.069
+[2024-07-07 22:26:09,274][    INFO] Iters: 90, Total loss: 0.067
+[2024-07-07 22:26:13,051][    INFO] Iters: 105, Total loss: 0.066
+[2024-07-07 22:26:20,008][    INFO] Iters: 120, Total loss: 0.065
+[2024-07-07 22:26:27,345][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 66.54
+[2024-07-07 22:26:27,345][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 77.47
+[2024-07-07 22:26:27,345][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 89.63
+[2024-07-07 22:26:27,345][    INFO] ***** Evaluation ***** >>>> MeanDice: 77.88
+
+[2024-07-07 22:26:27,513][    INFO] ===========> Epoch: 3, LR: 0.00946, Previous best: 77.88
+[2024-07-07 22:26:27,963][    INFO] Iters: 0, Total loss: 0.046
+[2024-07-07 22:26:36,144][    INFO] Iters: 15, Total loss: 0.057
+[2024-07-07 22:26:42,506][    INFO] Iters: 30, Total loss: 0.052
+[2024-07-07 22:26:48,068][    INFO] Iters: 45, Total loss: 0.052
+[2024-07-07 22:26:54,652][    INFO] Iters: 60, Total loss: 0.050
+[2024-07-07 22:26:59,673][    INFO] Iters: 75, Total loss: 0.051
+[2024-07-07 22:27:04,546][    INFO] Iters: 90, Total loss: 0.050
+[2024-07-07 22:27:12,507][    INFO] Iters: 105, Total loss: 0.050
+[2024-07-07 22:27:17,890][    INFO] Iters: 120, Total loss: 0.050
+[2024-07-07 22:27:25,890][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 78.61
+[2024-07-07 22:27:25,890][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 81.14
+[2024-07-07 22:27:25,890][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 94.34
+[2024-07-07 22:27:25,890][    INFO] ***** Evaluation ***** >>>> MeanDice: 84.70
+
+[2024-07-07 22:27:26,792][    INFO] ===========> Epoch: 4, LR: 0.00928, Previous best: 84.70
+[2024-07-07 22:27:27,361][    INFO] Iters: 0, Total loss: 0.038
+[2024-07-07 22:27:33,467][    INFO] Iters: 15, Total loss: 0.047
+[2024-07-07 22:27:39,982][    INFO] Iters: 30, Total loss: 0.047
+[2024-07-07 22:27:46,148][    INFO] Iters: 45, Total loss: 0.046
+[2024-07-07 22:27:50,336][    INFO] Iters: 60, Total loss: 0.046
+[2024-07-07 22:27:55,396][    INFO] Iters: 75, Total loss: 0.046
+[2024-07-07 22:28:01,098][    INFO] Iters: 90, Total loss: 0.045
+[2024-07-07 22:28:05,564][    INFO] Iters: 105, Total loss: 0.045
+[2024-07-07 22:28:10,902][    INFO] Iters: 120, Total loss: 0.045
+[2024-07-07 22:28:17,806][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 84.35
+[2024-07-07 22:28:17,806][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 84.23
+[2024-07-07 22:28:17,806][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 94.49
+[2024-07-07 22:28:17,807][    INFO] ***** Evaluation ***** >>>> MeanDice: 87.69
+
+[2024-07-07 22:28:17,955][    INFO] ===========> Epoch: 5, LR: 0.00910, Previous best: 87.69
+[2024-07-07 22:28:18,419][    INFO] Iters: 0, Total loss: 0.030
+[2024-07-07 22:28:22,933][    INFO] Iters: 15, Total loss: 0.039
+[2024-07-07 22:28:31,195][    INFO] Iters: 30, Total loss: 0.039
+[2024-07-07 22:28:39,037][    INFO] Iters: 45, Total loss: 0.039
+[2024-07-07 22:28:44,099][    INFO] Iters: 60, Total loss: 0.039
+[2024-07-07 22:28:49,083][    INFO] Iters: 75, Total loss: 0.039
+[2024-07-07 22:28:53,975][    INFO] Iters: 90, Total loss: 0.039
+[2024-07-07 22:29:00,607][    INFO] Iters: 105, Total loss: 0.039
+[2024-07-07 22:29:08,309][    INFO] Iters: 120, Total loss: 0.040
+[2024-07-07 22:29:16,530][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 86.09
+[2024-07-07 22:29:16,531][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 84.37
+[2024-07-07 22:29:16,531][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 93.49
+[2024-07-07 22:29:16,531][    INFO] ***** Evaluation ***** >>>> MeanDice: 87.99
+
+[2024-07-07 22:29:16,814][    INFO] ===========> Epoch: 6, LR: 0.00891, Previous best: 87.99
+[2024-07-07 22:29:17,290][    INFO] Iters: 0, Total loss: 0.032
+[2024-07-07 22:29:21,847][    INFO] Iters: 15, Total loss: 0.041
+[2024-07-07 22:29:29,526][    INFO] Iters: 30, Total loss: 0.040
+[2024-07-07 22:29:34,779][    INFO] Iters: 45, Total loss: 0.040
+[2024-07-07 22:29:41,714][    INFO] Iters: 60, Total loss: 0.040
+[2024-07-07 22:29:47,178][    INFO] Iters: 75, Total loss: 0.040
+[2024-07-07 22:29:51,683][    INFO] Iters: 90, Total loss: 0.039
+[2024-07-07 22:29:57,328][    INFO] Iters: 105, Total loss: 0.038
+[2024-07-07 22:30:03,865][    INFO] Iters: 120, Total loss: 0.038
+[2024-07-07 22:30:11,028][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 85.70
+[2024-07-07 22:30:11,028][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 87.05
+[2024-07-07 22:30:11,028][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 95.24
+[2024-07-07 22:30:11,028][    INFO] ***** Evaluation ***** >>>> MeanDice: 89.33
+
+[2024-07-07 22:30:11,177][    INFO] ===========> Epoch: 7, LR: 0.00873, Previous best: 89.33
+[2024-07-07 22:30:11,577][    INFO] Iters: 0, Total loss: 0.038
+[2024-07-07 22:30:19,253][    INFO] Iters: 15, Total loss: 0.035
+[2024-07-07 22:30:24,579][    INFO] Iters: 30, Total loss: 0.036
+[2024-07-07 22:30:31,019][    INFO] Iters: 45, Total loss: 0.035
+[2024-07-07 22:30:36,090][    INFO] Iters: 60, Total loss: 0.035
+[2024-07-07 22:30:45,259][    INFO] Iters: 75, Total loss: 0.036
+[2024-07-07 22:30:50,974][    INFO] Iters: 90, Total loss: 0.035
+[2024-07-07 22:30:57,325][    INFO] Iters: 105, Total loss: 0.035
+[2024-07-07 22:31:03,563][    INFO] Iters: 120, Total loss: 0.035
+[2024-07-07 22:31:09,490][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 84.92
+[2024-07-07 22:31:09,490][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 88.65
+[2024-07-07 22:31:09,490][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 95.13
+[2024-07-07 22:31:09,490][    INFO] ***** Evaluation ***** >>>> MeanDice: 89.57
+
+[2024-07-07 22:31:09,657][    INFO] ===========> Epoch: 8, LR: 0.00855, Previous best: 89.57
+[2024-07-07 22:31:10,113][    INFO] Iters: 0, Total loss: 0.037
+[2024-07-07 22:31:14,818][    INFO] Iters: 15, Total loss: 0.032
+[2024-07-07 22:31:20,830][    INFO] Iters: 30, Total loss: 0.033
+[2024-07-07 22:31:27,066][    INFO] Iters: 45, Total loss: 0.033
+[2024-07-07 22:31:33,560][    INFO] Iters: 60, Total loss: 0.033
+[2024-07-07 22:31:38,133][    INFO] Iters: 75, Total loss: 0.033
+[2024-07-07 22:31:43,259][    INFO] Iters: 90, Total loss: 0.034
+[2024-07-07 22:31:47,343][    INFO] Iters: 105, Total loss: 0.033
+[2024-07-07 22:31:58,971][    INFO] Iters: 120, Total loss: 0.034
+[2024-07-07 22:32:04,512][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 88.19
+[2024-07-07 22:32:04,512][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 87.32
+[2024-07-07 22:32:04,512][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 95.71
+[2024-07-07 22:32:04,512][    INFO] ***** Evaluation ***** >>>> MeanDice: 90.41
+
+[2024-07-07 22:32:04,769][    INFO] ===========> Epoch: 9, LR: 0.00837, Previous best: 90.41
+[2024-07-07 22:32:05,484][    INFO] Iters: 0, Total loss: 0.030
+[2024-07-07 22:32:14,444][    INFO] Iters: 15, Total loss: 0.030
+[2024-07-07 22:32:19,964][    INFO] Iters: 30, Total loss: 0.031
+[2024-07-07 22:32:27,608][    INFO] Iters: 45, Total loss: 0.032
+[2024-07-07 22:32:32,446][    INFO] Iters: 60, Total loss: 0.032
+[2024-07-07 22:32:40,110][    INFO] Iters: 75, Total loss: 0.032
+[2024-07-07 22:32:44,904][    INFO] Iters: 90, Total loss: 0.032
+[2024-07-07 22:32:49,556][    INFO] Iters: 105, Total loss: 0.032
+[2024-07-07 22:32:55,905][    INFO] Iters: 120, Total loss: 0.032
+[2024-07-07 22:33:01,870][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 87.45
+[2024-07-07 22:33:01,870][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 85.59
+[2024-07-07 22:33:01,870][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 94.94
+[2024-07-07 22:33:01,870][    INFO] ***** Evaluation ***** >>>> MeanDice: 89.33
+
+[2024-07-07 22:33:01,967][    INFO] ===========> Epoch: 10, LR: 0.00818, Previous best: 90.41
+[2024-07-07 22:33:04,888][    INFO] Iters: 0, Total loss: 0.032
+[2024-07-07 22:33:11,151][    INFO] Iters: 15, Total loss: 0.031
+[2024-07-07 22:33:17,831][    INFO] Iters: 30, Total loss: 0.032
+[2024-07-07 22:33:24,464][    INFO] Iters: 45, Total loss: 0.031
+[2024-07-07 22:33:30,915][    INFO] Iters: 60, Total loss: 0.031
+[2024-07-07 22:33:35,212][    INFO] Iters: 75, Total loss: 0.031
+[2024-07-07 22:33:40,327][    INFO] Iters: 90, Total loss: 0.031
+[2024-07-07 22:33:45,043][    INFO] Iters: 105, Total loss: 0.031
+[2024-07-07 22:33:50,448][    INFO] Iters: 120, Total loss: 0.031
+[2024-07-07 22:33:55,593][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 88.24
+[2024-07-07 22:33:55,593][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 85.54
+[2024-07-07 22:33:55,593][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 95.45
+[2024-07-07 22:33:55,593][    INFO] ***** Evaluation ***** >>>> MeanDice: 89.74
+
+[2024-07-07 22:33:55,707][    INFO] ===========> Epoch: 11, LR: 0.00800, Previous best: 90.41
+[2024-07-07 22:33:56,173][    INFO] Iters: 0, Total loss: 0.024
+[2024-07-07 22:34:01,322][    INFO] Iters: 15, Total loss: 0.029
+[2024-07-07 22:34:06,068][    INFO] Iters: 30, Total loss: 0.030
+[2024-07-07 22:34:11,075][    INFO] Iters: 45, Total loss: 0.030
+[2024-07-07 22:34:16,966][    INFO] Iters: 60, Total loss: 0.029
+[2024-07-07 22:34:21,669][    INFO] Iters: 75, Total loss: 0.029
+[2024-07-07 22:34:29,960][    INFO] Iters: 90, Total loss: 0.029
+[2024-07-07 22:34:35,456][    INFO] Iters: 105, Total loss: 0.029
+[2024-07-07 22:34:43,073][    INFO] Iters: 120, Total loss: 0.029
+[2024-07-07 22:34:49,639][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 88.75
+[2024-07-07 22:34:49,639][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 90.33
+[2024-07-07 22:34:49,639][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.23
+[2024-07-07 22:34:49,639][    INFO] ***** Evaluation ***** >>>> MeanDice: 91.77
+
+[2024-07-07 22:34:49,765][    INFO] ===========> Epoch: 12, LR: 0.00781, Previous best: 91.77
+[2024-07-07 22:34:50,214][    INFO] Iters: 0, Total loss: 0.034
+[2024-07-07 22:34:55,443][    INFO] Iters: 15, Total loss: 0.029
+[2024-07-07 22:35:00,942][    INFO] Iters: 30, Total loss: 0.029
+[2024-07-07 22:35:06,827][    INFO] Iters: 45, Total loss: 0.030
+[2024-07-07 22:35:11,640][    INFO] Iters: 60, Total loss: 0.030
+[2024-07-07 22:35:18,441][    INFO] Iters: 75, Total loss: 0.029
+[2024-07-07 22:35:23,658][    INFO] Iters: 90, Total loss: 0.029
+[2024-07-07 22:35:30,953][    INFO] Iters: 105, Total loss: 0.029
+[2024-07-07 22:35:37,779][    INFO] Iters: 120, Total loss: 0.029
+[2024-07-07 22:35:42,856][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 89.18
+[2024-07-07 22:35:42,856][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 88.11
+[2024-07-07 22:35:42,856][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 95.72
+[2024-07-07 22:35:42,856][    INFO] ***** Evaluation ***** >>>> MeanDice: 91.00
+
+[2024-07-07 22:35:42,917][    INFO] ===========> Epoch: 13, LR: 0.00763, Previous best: 91.77
+[2024-07-07 22:35:43,389][    INFO] Iters: 0, Total loss: 0.041
+[2024-07-07 22:35:51,056][    INFO] Iters: 15, Total loss: 0.029
+[2024-07-07 22:35:56,059][    INFO] Iters: 30, Total loss: 0.030
+[2024-07-07 22:36:01,470][    INFO] Iters: 45, Total loss: 0.030
+[2024-07-07 22:36:06,945][    INFO] Iters: 60, Total loss: 0.030
+[2024-07-07 22:36:13,190][    INFO] Iters: 75, Total loss: 0.029
+[2024-07-07 22:36:17,453][    INFO] Iters: 90, Total loss: 0.029
+[2024-07-07 22:36:25,681][    INFO] Iters: 105, Total loss: 0.029
+[2024-07-07 22:36:30,549][    INFO] Iters: 120, Total loss: 0.029
+[2024-07-07 22:36:37,119][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 89.40
+[2024-07-07 22:36:37,119][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 88.88
+[2024-07-07 22:36:37,119][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.21
+[2024-07-07 22:36:37,119][    INFO] ***** Evaluation ***** >>>> MeanDice: 91.50
+
+[2024-07-07 22:36:37,189][    INFO] ===========> Epoch: 14, LR: 0.00744, Previous best: 91.77
+[2024-07-07 22:36:37,626][    INFO] Iters: 0, Total loss: 0.029
+[2024-07-07 22:36:41,522][    INFO] Iters: 15, Total loss: 0.026
+[2024-07-07 22:36:46,365][    INFO] Iters: 30, Total loss: 0.026
+[2024-07-07 22:36:51,980][    INFO] Iters: 45, Total loss: 0.027
+[2024-07-07 22:36:56,043][    INFO] Iters: 60, Total loss: 0.027
+[2024-07-07 22:37:01,753][    INFO] Iters: 75, Total loss: 0.027
+[2024-07-07 22:37:06,353][    INFO] Iters: 90, Total loss: 0.027
+[2024-07-07 22:37:12,105][    INFO] Iters: 105, Total loss: 0.028
+[2024-07-07 22:37:17,781][    INFO] Iters: 120, Total loss: 0.028
+[2024-07-07 22:37:25,804][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 89.56
+[2024-07-07 22:37:25,804][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 89.38
+[2024-07-07 22:37:25,804][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 95.99
+[2024-07-07 22:37:25,804][    INFO] ***** Evaluation ***** >>>> MeanDice: 91.65
+
+[2024-07-07 22:37:25,864][    INFO] ===========> Epoch: 15, LR: 0.00726, Previous best: 91.77
+[2024-07-07 22:37:26,296][    INFO] Iters: 0, Total loss: 0.024
+[2024-07-07 22:37:30,588][    INFO] Iters: 15, Total loss: 0.027
+[2024-07-07 22:37:37,697][    INFO] Iters: 30, Total loss: 0.027
+[2024-07-07 22:37:41,792][    INFO] Iters: 45, Total loss: 0.027
+[2024-07-07 22:37:47,091][    INFO] Iters: 60, Total loss: 0.027
+[2024-07-07 22:37:51,639][    INFO] Iters: 75, Total loss: 0.026
+[2024-07-07 22:37:57,342][    INFO] Iters: 90, Total loss: 0.027
+[2024-07-07 22:38:02,221][    INFO] Iters: 105, Total loss: 0.026
+[2024-07-07 22:38:06,133][    INFO] Iters: 120, Total loss: 0.026
+[2024-07-07 22:38:11,221][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 89.92
+[2024-07-07 22:38:11,222][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 89.36
+[2024-07-07 22:38:11,222][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 95.74
+[2024-07-07 22:38:11,222][    INFO] ***** Evaluation ***** >>>> MeanDice: 91.67
+
+[2024-07-07 22:38:11,285][    INFO] ===========> Epoch: 16, LR: 0.00707, Previous best: 91.77
+[2024-07-07 22:38:11,733][    INFO] Iters: 0, Total loss: 0.026
+[2024-07-07 22:38:16,094][    INFO] Iters: 15, Total loss: 0.025
+[2024-07-07 22:38:20,239][    INFO] Iters: 30, Total loss: 0.025
+[2024-07-07 22:38:24,623][    INFO] Iters: 45, Total loss: 0.025
+[2024-07-07 22:38:30,197][    INFO] Iters: 60, Total loss: 0.025
+[2024-07-07 22:38:34,126][    INFO] Iters: 75, Total loss: 0.025
+[2024-07-07 22:38:37,996][    INFO] Iters: 90, Total loss: 0.026
+[2024-07-07 22:38:42,307][    INFO] Iters: 105, Total loss: 0.026
+[2024-07-07 22:38:46,738][    INFO] Iters: 120, Total loss: 0.026
+[2024-07-07 22:38:51,655][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 90.65
+[2024-07-07 22:38:51,655][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 90.34
+[2024-07-07 22:38:51,655][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 95.86
+[2024-07-07 22:38:51,655][    INFO] ***** Evaluation ***** >>>> MeanDice: 92.28
+
+[2024-07-07 22:38:51,794][    INFO] ===========> Epoch: 17, LR: 0.00688, Previous best: 92.28
+[2024-07-07 22:38:52,223][    INFO] Iters: 0, Total loss: 0.021
+[2024-07-07 22:38:57,454][    INFO] Iters: 15, Total loss: 0.025
+[2024-07-07 22:39:01,698][    INFO] Iters: 30, Total loss: 0.026
+[2024-07-07 22:39:09,253][    INFO] Iters: 45, Total loss: 0.026
+[2024-07-07 22:39:13,626][    INFO] Iters: 60, Total loss: 0.026
+[2024-07-07 22:39:20,032][    INFO] Iters: 75, Total loss: 0.026
+[2024-07-07 22:39:26,115][    INFO] Iters: 90, Total loss: 0.026
+[2024-07-07 22:39:30,854][    INFO] Iters: 105, Total loss: 0.026
+[2024-07-07 22:39:36,325][    INFO] Iters: 120, Total loss: 0.026
+[2024-07-07 22:39:42,498][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 89.49
+[2024-07-07 22:39:42,498][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 88.72
+[2024-07-07 22:39:42,498][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 95.83
+[2024-07-07 22:39:42,498][    INFO] ***** Evaluation ***** >>>> MeanDice: 91.35
+
+[2024-07-07 22:39:42,594][    INFO] ===========> Epoch: 18, LR: 0.00669, Previous best: 92.28
+[2024-07-07 22:39:43,000][    INFO] Iters: 0, Total loss: 0.026
+[2024-07-07 22:39:49,664][    INFO] Iters: 15, Total loss: 0.026
+[2024-07-07 22:39:53,928][    INFO] Iters: 30, Total loss: 0.026
+[2024-07-07 22:39:59,558][    INFO] Iters: 45, Total loss: 0.026
+[2024-07-07 22:40:03,544][    INFO] Iters: 60, Total loss: 0.026
+[2024-07-07 22:40:08,574][    INFO] Iters: 75, Total loss: 0.026
+[2024-07-07 22:40:13,341][    INFO] Iters: 90, Total loss: 0.026
+[2024-07-07 22:40:18,220][    INFO] Iters: 105, Total loss: 0.026
+[2024-07-07 22:40:22,797][    INFO] Iters: 120, Total loss: 0.026
+[2024-07-07 22:40:29,301][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 89.80
+[2024-07-07 22:40:29,301][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 88.24
+[2024-07-07 22:40:29,301][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.31
+[2024-07-07 22:40:29,301][    INFO] ***** Evaluation ***** >>>> MeanDice: 91.45
+
+[2024-07-07 22:40:29,463][    INFO] ===========> Epoch: 19, LR: 0.00651, Previous best: 92.28
+[2024-07-07 22:40:30,687][    INFO] Iters: 0, Total loss: 0.024
+[2024-07-07 22:40:35,224][    INFO] Iters: 15, Total loss: 0.024
+[2024-07-07 22:40:39,975][    INFO] Iters: 30, Total loss: 0.025
+[2024-07-07 22:40:44,446][    INFO] Iters: 45, Total loss: 0.026
+[2024-07-07 22:40:48,816][    INFO] Iters: 60, Total loss: 0.026
+[2024-07-07 22:40:52,853][    INFO] Iters: 75, Total loss: 0.025
+[2024-07-07 22:40:57,135][    INFO] Iters: 90, Total loss: 0.026
+[2024-07-07 22:41:01,046][    INFO] Iters: 105, Total loss: 0.025
+[2024-07-07 22:41:07,043][    INFO] Iters: 120, Total loss: 0.025
+[2024-07-07 22:41:12,661][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 90.58
+[2024-07-07 22:41:12,661][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 88.98
+[2024-07-07 22:41:12,661][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.40
+[2024-07-07 22:41:12,661][    INFO] ***** Evaluation ***** >>>> MeanDice: 91.99
+
+[2024-07-07 22:41:12,762][    INFO] ===========> Epoch: 20, LR: 0.00632, Previous best: 92.28
+[2024-07-07 22:41:13,317][    INFO] Iters: 0, Total loss: 0.025
+[2024-07-07 22:41:18,338][    INFO] Iters: 15, Total loss: 0.024
+[2024-07-07 22:41:22,678][    INFO] Iters: 30, Total loss: 0.024
+[2024-07-07 22:41:27,779][    INFO] Iters: 45, Total loss: 0.024
+[2024-07-07 22:41:31,996][    INFO] Iters: 60, Total loss: 0.025
+[2024-07-07 22:41:36,201][    INFO] Iters: 75, Total loss: 0.025
+[2024-07-07 22:41:40,271][    INFO] Iters: 90, Total loss: 0.025
+[2024-07-07 22:41:44,087][    INFO] Iters: 105, Total loss: 0.025
+[2024-07-07 22:41:47,977][    INFO] Iters: 120, Total loss: 0.024
+[2024-07-07 22:41:53,114][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 90.22
+[2024-07-07 22:41:53,114][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 90.77
+[2024-07-07 22:41:53,114][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.07
+[2024-07-07 22:41:53,114][    INFO] ***** Evaluation ***** >>>> MeanDice: 92.35
+
+[2024-07-07 22:41:53,295][    INFO] ===========> Epoch: 21, LR: 0.00613, Previous best: 92.35
+[2024-07-07 22:41:53,738][    INFO] Iters: 0, Total loss: 0.022
+[2024-07-07 22:41:57,972][    INFO] Iters: 15, Total loss: 0.024
+[2024-07-07 22:42:03,541][    INFO] Iters: 30, Total loss: 0.024
+[2024-07-07 22:42:07,629][    INFO] Iters: 45, Total loss: 0.026
+[2024-07-07 22:42:12,119][    INFO] Iters: 60, Total loss: 0.025
+[2024-07-07 22:42:16,406][    INFO] Iters: 75, Total loss: 0.025
+[2024-07-07 22:42:20,497][    INFO] Iters: 90, Total loss: 0.025
+[2024-07-07 22:42:25,666][    INFO] Iters: 105, Total loss: 0.025
+[2024-07-07 22:42:29,677][    INFO] Iters: 120, Total loss: 0.025
+[2024-07-07 22:42:34,621][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 90.30
+[2024-07-07 22:42:34,621][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 89.79
+[2024-07-07 22:42:34,621][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.07
+[2024-07-07 22:42:34,621][    INFO] ***** Evaluation ***** >>>> MeanDice: 92.05
+
+[2024-07-07 22:42:34,689][    INFO] ===========> Epoch: 22, LR: 0.00594, Previous best: 92.35
+[2024-07-07 22:42:35,148][    INFO] Iters: 0, Total loss: 0.022
+[2024-07-07 22:42:39,618][    INFO] Iters: 15, Total loss: 0.023
+[2024-07-07 22:42:43,570][    INFO] Iters: 30, Total loss: 0.024
+[2024-07-07 22:42:47,776][    INFO] Iters: 45, Total loss: 0.024
+[2024-07-07 22:42:52,180][    INFO] Iters: 60, Total loss: 0.024
+[2024-07-07 22:42:56,291][    INFO] Iters: 75, Total loss: 0.024
+[2024-07-07 22:43:00,432][    INFO] Iters: 90, Total loss: 0.024
+[2024-07-07 22:43:04,918][    INFO] Iters: 105, Total loss: 0.024
+[2024-07-07 22:43:10,182][    INFO] Iters: 120, Total loss: 0.024
+[2024-07-07 22:43:15,112][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 90.71
+[2024-07-07 22:43:15,112][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 89.35
+[2024-07-07 22:43:15,112][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.04
+[2024-07-07 22:43:15,112][    INFO] ***** Evaluation ***** >>>> MeanDice: 92.04
+
+[2024-07-07 22:43:15,208][    INFO] ===========> Epoch: 23, LR: 0.00574, Previous best: 92.35
+[2024-07-07 22:43:15,617][    INFO] Iters: 0, Total loss: 0.027
+[2024-07-07 22:43:20,703][    INFO] Iters: 15, Total loss: 0.024
+[2024-07-07 22:43:24,729][    INFO] Iters: 30, Total loss: 0.024
+[2024-07-07 22:43:28,889][    INFO] Iters: 45, Total loss: 0.024
+[2024-07-07 22:43:32,655][    INFO] Iters: 60, Total loss: 0.024
+[2024-07-07 22:43:36,435][    INFO] Iters: 75, Total loss: 0.024
+[2024-07-07 22:43:40,169][    INFO] Iters: 90, Total loss: 0.024
+[2024-07-07 22:43:44,093][    INFO] Iters: 105, Total loss: 0.024
+[2024-07-07 22:43:47,911][    INFO] Iters: 120, Total loss: 0.024
+[2024-07-07 22:43:54,389][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 90.60
+[2024-07-07 22:43:54,389][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 89.60
+[2024-07-07 22:43:54,389][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.51
+[2024-07-07 22:43:54,389][    INFO] ***** Evaluation ***** >>>> MeanDice: 92.24
+
+[2024-07-07 22:43:54,486][    INFO] ===========> Epoch: 24, LR: 0.00555, Previous best: 92.35
+[2024-07-07 22:43:54,923][    INFO] Iters: 0, Total loss: 0.019
+[2024-07-07 22:43:59,184][    INFO] Iters: 15, Total loss: 0.023
+[2024-07-07 22:44:05,457][    INFO] Iters: 30, Total loss: 0.023
+[2024-07-07 22:44:09,490][    INFO] Iters: 45, Total loss: 0.023
+[2024-07-07 22:44:13,654][    INFO] Iters: 60, Total loss: 0.023
+[2024-07-07 22:44:17,577][    INFO] Iters: 75, Total loss: 0.024
+[2024-07-07 22:44:21,637][    INFO] Iters: 90, Total loss: 0.024
+[2024-07-07 22:44:25,540][    INFO] Iters: 105, Total loss: 0.024
+[2024-07-07 22:44:29,479][    INFO] Iters: 120, Total loss: 0.024
+[2024-07-07 22:44:34,454][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 90.06
+[2024-07-07 22:44:34,455][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 88.47
+[2024-07-07 22:44:34,455][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 95.68
+[2024-07-07 22:44:34,455][    INFO] ***** Evaluation ***** >>>> MeanDice: 91.40
+
+[2024-07-07 22:44:34,552][    INFO] ===========> Epoch: 25, LR: 0.00536, Previous best: 92.35
+[2024-07-07 22:44:35,009][    INFO] Iters: 0, Total loss: 0.020
+[2024-07-07 22:44:39,660][    INFO] Iters: 15, Total loss: 0.023
+[2024-07-07 22:44:44,298][    INFO] Iters: 30, Total loss: 0.024
+[2024-07-07 22:44:49,940][    INFO] Iters: 45, Total loss: 0.024
+[2024-07-07 22:44:55,030][    INFO] Iters: 60, Total loss: 0.023
+[2024-07-07 22:45:02,804][    INFO] Iters: 75, Total loss: 0.024
+[2024-07-07 22:45:06,949][    INFO] Iters: 90, Total loss: 0.023
+[2024-07-07 22:45:15,162][    INFO] Iters: 105, Total loss: 0.023
+[2024-07-07 22:45:19,468][    INFO] Iters: 120, Total loss: 0.023
+[2024-07-07 22:45:25,759][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 90.29
+[2024-07-07 22:45:25,759][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 88.95
+[2024-07-07 22:45:25,759][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.30
+[2024-07-07 22:45:25,759][    INFO] ***** Evaluation ***** >>>> MeanDice: 91.85
+
+[2024-07-07 22:45:25,818][    INFO] ===========> Epoch: 26, LR: 0.00517, Previous best: 92.35
+[2024-07-07 22:45:26,467][    INFO] Iters: 0, Total loss: 0.019
+[2024-07-07 22:45:31,701][    INFO] Iters: 15, Total loss: 0.024
+[2024-07-07 22:45:36,426][    INFO] Iters: 30, Total loss: 0.023
+[2024-07-07 22:45:40,876][    INFO] Iters: 45, Total loss: 0.023
+[2024-07-07 22:45:46,088][    INFO] Iters: 60, Total loss: 0.023
+[2024-07-07 22:45:52,171][    INFO] Iters: 75, Total loss: 0.023
+[2024-07-07 22:45:57,273][    INFO] Iters: 90, Total loss: 0.023
+[2024-07-07 22:46:01,600][    INFO] Iters: 105, Total loss: 0.023
+[2024-07-07 22:46:05,664][    INFO] Iters: 120, Total loss: 0.023
+[2024-07-07 22:46:12,543][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 91.19
+[2024-07-07 22:46:12,543][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 89.88
+[2024-07-07 22:46:12,543][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.21
+[2024-07-07 22:46:12,543][    INFO] ***** Evaluation ***** >>>> MeanDice: 92.43
+
+[2024-07-07 22:46:12,673][    INFO] ===========> Epoch: 27, LR: 0.00497, Previous best: 92.43
+[2024-07-07 22:46:13,165][    INFO] Iters: 0, Total loss: 0.020
+[2024-07-07 22:46:18,122][    INFO] Iters: 15, Total loss: 0.023
+[2024-07-07 22:46:24,017][    INFO] Iters: 30, Total loss: 0.023
+[2024-07-07 22:46:28,167][    INFO] Iters: 45, Total loss: 0.023
+[2024-07-07 22:46:33,120][    INFO] Iters: 60, Total loss: 0.023
+[2024-07-07 22:46:37,662][    INFO] Iters: 75, Total loss: 0.022
+[2024-07-07 22:46:41,977][    INFO] Iters: 90, Total loss: 0.023
+[2024-07-07 22:46:46,621][    INFO] Iters: 105, Total loss: 0.023
+[2024-07-07 22:46:53,509][    INFO] Iters: 120, Total loss: 0.023
+[2024-07-07 22:47:01,333][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 91.35
+[2024-07-07 22:47:01,333][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 90.86
+[2024-07-07 22:47:01,333][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.36
+[2024-07-07 22:47:01,333][    INFO] ***** Evaluation ***** >>>> MeanDice: 92.86
+
+[2024-07-07 22:47:01,533][    INFO] ===========> Epoch: 28, LR: 0.00478, Previous best: 92.86
+[2024-07-07 22:47:02,258][    INFO] Iters: 0, Total loss: 0.020
+[2024-07-07 22:47:07,904][    INFO] Iters: 15, Total loss: 0.022
+[2024-07-07 22:47:12,635][    INFO] Iters: 30, Total loss: 0.023
+[2024-07-07 22:47:17,680][    INFO] Iters: 45, Total loss: 0.023
+[2024-07-07 22:47:22,005][    INFO] Iters: 60, Total loss: 0.023
+[2024-07-07 22:47:26,659][    INFO] Iters: 75, Total loss: 0.023
+[2024-07-07 22:47:30,877][    INFO] Iters: 90, Total loss: 0.023
+[2024-07-07 22:47:34,927][    INFO] Iters: 105, Total loss: 0.023
+[2024-07-07 22:47:39,826][    INFO] Iters: 120, Total loss: 0.023
+[2024-07-07 22:47:46,561][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 90.11
+[2024-07-07 22:47:46,562][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 90.07
+[2024-07-07 22:47:46,562][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.09
+[2024-07-07 22:47:46,562][    INFO] ***** Evaluation ***** >>>> MeanDice: 92.09
+
+[2024-07-07 22:47:46,622][    INFO] ===========> Epoch: 29, LR: 0.00458, Previous best: 92.86
+[2024-07-07 22:47:47,077][    INFO] Iters: 0, Total loss: 0.019
+[2024-07-07 22:47:51,731][    INFO] Iters: 15, Total loss: 0.022
+[2024-07-07 22:47:57,317][    INFO] Iters: 30, Total loss: 0.022
+[2024-07-07 22:48:02,267][    INFO] Iters: 45, Total loss: 0.022
+[2024-07-07 22:48:09,444][    INFO] Iters: 60, Total loss: 0.023
+[2024-07-07 22:48:15,111][    INFO] Iters: 75, Total loss: 0.023
+[2024-07-07 22:48:19,315][    INFO] Iters: 90, Total loss: 0.023
+[2024-07-07 22:48:24,115][    INFO] Iters: 105, Total loss: 0.023
+[2024-07-07 22:48:29,031][    INFO] Iters: 120, Total loss: 0.022
+[2024-07-07 22:48:35,316][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 90.40
+[2024-07-07 22:48:35,316][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 90.57
+[2024-07-07 22:48:35,316][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.43
+[2024-07-07 22:48:35,316][    INFO] ***** Evaluation ***** >>>> MeanDice: 92.47
+
+[2024-07-07 22:48:35,411][    INFO] ===========> Epoch: 30, LR: 0.00439, Previous best: 92.86
+[2024-07-07 22:48:35,856][    INFO] Iters: 0, Total loss: 0.025
+[2024-07-07 22:48:41,424][    INFO] Iters: 15, Total loss: 0.021
+[2024-07-07 22:48:47,472][    INFO] Iters: 30, Total loss: 0.022
+[2024-07-07 22:48:52,288][    INFO] Iters: 45, Total loss: 0.022
+[2024-07-07 22:48:57,239][    INFO] Iters: 60, Total loss: 0.022
+[2024-07-07 22:49:01,351][    INFO] Iters: 75, Total loss: 0.022
+[2024-07-07 22:49:05,205][    INFO] Iters: 90, Total loss: 0.022
+[2024-07-07 22:49:09,263][    INFO] Iters: 105, Total loss: 0.022
+[2024-07-07 22:49:13,039][    INFO] Iters: 120, Total loss: 0.022
+[2024-07-07 22:49:17,830][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 89.86
+[2024-07-07 22:49:17,831][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 89.96
+[2024-07-07 22:49:17,831][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.13
+[2024-07-07 22:49:17,831][    INFO] ***** Evaluation ***** >>>> MeanDice: 91.98
+
+[2024-07-07 22:49:17,925][    INFO] ===========> Epoch: 31, LR: 0.00419, Previous best: 92.86
+[2024-07-07 22:49:18,364][    INFO] Iters: 0, Total loss: 0.023
+[2024-07-07 22:49:22,365][    INFO] Iters: 15, Total loss: 0.023
+[2024-07-07 22:49:26,308][    INFO] Iters: 30, Total loss: 0.023
+[2024-07-07 22:49:30,250][    INFO] Iters: 45, Total loss: 0.023
+[2024-07-07 22:49:34,129][    INFO] Iters: 60, Total loss: 0.022
+[2024-07-07 22:49:37,993][    INFO] Iters: 75, Total loss: 0.022
+[2024-07-07 22:49:42,715][    INFO] Iters: 90, Total loss: 0.022
+[2024-07-07 22:49:46,592][    INFO] Iters: 105, Total loss: 0.022
+[2024-07-07 22:49:50,766][    INFO] Iters: 120, Total loss: 0.022
+[2024-07-07 22:49:55,879][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 91.15
+[2024-07-07 22:49:55,879][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 91.28
+[2024-07-07 22:49:55,879][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.41
+[2024-07-07 22:49:55,879][    INFO] ***** Evaluation ***** >>>> MeanDice: 92.95
+
+[2024-07-07 22:49:56,012][    INFO] ===========> Epoch: 32, LR: 0.00399, Previous best: 92.95
+[2024-07-07 22:49:56,532][    INFO] Iters: 0, Total loss: 0.022
+[2024-07-07 22:50:00,834][    INFO] Iters: 15, Total loss: 0.022
+[2024-07-07 22:50:06,650][    INFO] Iters: 30, Total loss: 0.022
+[2024-07-07 22:50:10,651][    INFO] Iters: 45, Total loss: 0.023
+[2024-07-07 22:50:14,476][    INFO] Iters: 60, Total loss: 0.023
+[2024-07-07 22:50:18,392][    INFO] Iters: 75, Total loss: 0.022
+[2024-07-07 22:50:22,251][    INFO] Iters: 90, Total loss: 0.022
+[2024-07-07 22:50:26,177][    INFO] Iters: 105, Total loss: 0.022
+[2024-07-07 22:50:29,945][    INFO] Iters: 120, Total loss: 0.022
+[2024-07-07 22:50:34,904][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 91.09
+[2024-07-07 22:50:34,904][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 89.64
+[2024-07-07 22:50:34,904][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.42
+[2024-07-07 22:50:34,904][    INFO] ***** Evaluation ***** >>>> MeanDice: 92.38
+
+[2024-07-07 22:50:34,993][    INFO] ===========> Epoch: 33, LR: 0.00379, Previous best: 92.95
+[2024-07-07 22:50:35,573][    INFO] Iters: 0, Total loss: 0.018
+[2024-07-07 22:50:40,570][    INFO] Iters: 15, Total loss: 0.022
+[2024-07-07 22:50:44,520][    INFO] Iters: 30, Total loss: 0.022
+[2024-07-07 22:50:49,312][    INFO] Iters: 45, Total loss: 0.022
+[2024-07-07 22:50:53,229][    INFO] Iters: 60, Total loss: 0.022
+[2024-07-07 22:50:57,141][    INFO] Iters: 75, Total loss: 0.022
+[2024-07-07 22:51:00,977][    INFO] Iters: 90, Total loss: 0.022
+[2024-07-07 22:51:04,801][    INFO] Iters: 105, Total loss: 0.022
+[2024-07-07 22:51:08,691][    INFO] Iters: 120, Total loss: 0.022
+[2024-07-07 22:51:13,603][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 91.52
+[2024-07-07 22:51:13,603][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 90.54
+[2024-07-07 22:51:13,603][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.75
+[2024-07-07 22:51:13,604][    INFO] ***** Evaluation ***** >>>> MeanDice: 92.94
+
+[2024-07-07 22:51:13,664][    INFO] ===========> Epoch: 34, LR: 0.00359, Previous best: 92.95
+[2024-07-07 22:51:14,089][    INFO] Iters: 0, Total loss: 0.019
+[2024-07-07 22:51:18,412][    INFO] Iters: 15, Total loss: 0.021
+[2024-07-07 22:51:22,836][    INFO] Iters: 30, Total loss: 0.021
+[2024-07-07 22:51:26,855][    INFO] Iters: 45, Total loss: 0.021
+[2024-07-07 22:51:31,693][    INFO] Iters: 60, Total loss: 0.021
+[2024-07-07 22:51:35,791][    INFO] Iters: 75, Total loss: 0.022
+[2024-07-07 22:51:39,602][    INFO] Iters: 90, Total loss: 0.022
+[2024-07-07 22:51:44,409][    INFO] Iters: 105, Total loss: 0.022
+[2024-07-07 22:51:48,304][    INFO] Iters: 120, Total loss: 0.022
+[2024-07-07 22:51:53,102][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 90.44
+[2024-07-07 22:51:53,102][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 90.02
+[2024-07-07 22:51:53,102][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.18
+[2024-07-07 22:51:53,102][    INFO] ***** Evaluation ***** >>>> MeanDice: 92.21
+
+[2024-07-07 22:51:53,170][    INFO] ===========> Epoch: 35, LR: 0.00339, Previous best: 92.95
+[2024-07-07 22:51:53,596][    INFO] Iters: 0, Total loss: 0.019
+[2024-07-07 22:51:57,594][    INFO] Iters: 15, Total loss: 0.023
+[2024-07-07 22:52:01,660][    INFO] Iters: 30, Total loss: 0.022
+[2024-07-07 22:52:05,942][    INFO] Iters: 45, Total loss: 0.022
+[2024-07-07 22:52:09,959][    INFO] Iters: 60, Total loss: 0.022
+[2024-07-07 22:52:13,977][    INFO] Iters: 75, Total loss: 0.022
+[2024-07-07 22:52:19,159][    INFO] Iters: 90, Total loss: 0.022
+[2024-07-07 22:52:24,487][    INFO] Iters: 105, Total loss: 0.022
+[2024-07-07 22:52:31,758][    INFO] Iters: 120, Total loss: 0.022
+[2024-07-07 22:52:37,321][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 90.98
+[2024-07-07 22:52:37,321][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 90.18
+[2024-07-07 22:52:37,321][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.22
+[2024-07-07 22:52:37,321][    INFO] ***** Evaluation ***** >>>> MeanDice: 92.46
+
+[2024-07-07 22:52:37,415][    INFO] ===========> Epoch: 36, LR: 0.00318, Previous best: 92.95
+[2024-07-07 22:52:37,926][    INFO] Iters: 0, Total loss: 0.022
+[2024-07-07 22:52:43,143][    INFO] Iters: 15, Total loss: 0.022
+[2024-07-07 22:52:48,205][    INFO] Iters: 30, Total loss: 0.022
+[2024-07-07 22:52:52,667][    INFO] Iters: 45, Total loss: 0.021
+[2024-07-07 22:52:58,053][    INFO] Iters: 60, Total loss: 0.022
+[2024-07-07 22:53:03,716][    INFO] Iters: 75, Total loss: 0.022
+[2024-07-07 22:53:09,279][    INFO] Iters: 90, Total loss: 0.022
+[2024-07-07 22:53:13,854][    INFO] Iters: 105, Total loss: 0.022
+[2024-07-07 22:53:20,392][    INFO] Iters: 120, Total loss: 0.022
+[2024-07-07 22:53:25,882][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 91.72
+[2024-07-07 22:53:25,882][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 91.09
+[2024-07-07 22:53:25,883][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.27
+[2024-07-07 22:53:25,883][    INFO] ***** Evaluation ***** >>>> MeanDice: 93.03
+
+[2024-07-07 22:53:26,034][    INFO] ===========> Epoch: 37, LR: 0.00298, Previous best: 93.03
+[2024-07-07 22:53:26,910][    INFO] Iters: 0, Total loss: 0.022
+[2024-07-07 22:53:33,260][    INFO] Iters: 15, Total loss: 0.023
+[2024-07-07 22:53:37,295][    INFO] Iters: 30, Total loss: 0.022
+[2024-07-07 22:53:41,618][    INFO] Iters: 45, Total loss: 0.022
+[2024-07-07 22:53:48,342][    INFO] Iters: 60, Total loss: 0.021
+[2024-07-07 22:53:53,437][    INFO] Iters: 75, Total loss: 0.021
+[2024-07-07 22:53:58,153][    INFO] Iters: 90, Total loss: 0.021
+[2024-07-07 22:54:03,317][    INFO] Iters: 105, Total loss: 0.021
+[2024-07-07 22:54:09,812][    INFO] Iters: 120, Total loss: 0.021
+[2024-07-07 22:54:15,508][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 91.69
+[2024-07-07 22:54:15,508][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 90.58
+[2024-07-07 22:54:15,508][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.41
+[2024-07-07 22:54:15,508][    INFO] ***** Evaluation ***** >>>> MeanDice: 92.89
+
+[2024-07-07 22:54:15,583][    INFO] ===========> Epoch: 38, LR: 0.00277, Previous best: 93.03
+[2024-07-07 22:54:16,403][    INFO] Iters: 0, Total loss: 0.019
+[2024-07-07 22:54:23,032][    INFO] Iters: 15, Total loss: 0.020
+[2024-07-07 22:54:28,509][    INFO] Iters: 30, Total loss: 0.021
+[2024-07-07 22:54:32,843][    INFO] Iters: 45, Total loss: 0.020
+[2024-07-07 22:54:37,284][    INFO] Iters: 60, Total loss: 0.021
+[2024-07-07 22:54:41,393][    INFO] Iters: 75, Total loss: 0.021
+[2024-07-07 22:54:45,375][    INFO] Iters: 90, Total loss: 0.021
+[2024-07-07 22:54:50,169][    INFO] Iters: 105, Total loss: 0.021
+[2024-07-07 22:54:56,287][    INFO] Iters: 120, Total loss: 0.021
+[2024-07-07 22:55:03,078][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 90.98
+[2024-07-07 22:55:03,078][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 90.69
+[2024-07-07 22:55:03,078][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.45
+[2024-07-07 22:55:03,078][    INFO] ***** Evaluation ***** >>>> MeanDice: 92.70
+
+[2024-07-07 22:55:03,174][    INFO] ===========> Epoch: 39, LR: 0.00256, Previous best: 93.03
+[2024-07-07 22:55:03,614][    INFO] Iters: 0, Total loss: 0.022
+[2024-07-07 22:55:09,521][    INFO] Iters: 15, Total loss: 0.021
+[2024-07-07 22:55:14,115][    INFO] Iters: 30, Total loss: 0.021
+[2024-07-07 22:55:20,154][    INFO] Iters: 45, Total loss: 0.021
+[2024-07-07 22:55:24,796][    INFO] Iters: 60, Total loss: 0.021
+[2024-07-07 22:55:29,409][    INFO] Iters: 75, Total loss: 0.021
+[2024-07-07 22:55:33,285][    INFO] Iters: 90, Total loss: 0.021
+[2024-07-07 22:55:37,645][    INFO] Iters: 105, Total loss: 0.021
+[2024-07-07 22:55:41,476][    INFO] Iters: 120, Total loss: 0.021
+[2024-07-07 22:55:46,516][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 91.98
+[2024-07-07 22:55:46,516][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 91.09
+[2024-07-07 22:55:46,516][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.43
+[2024-07-07 22:55:46,516][    INFO] ***** Evaluation ***** >>>> MeanDice: 93.17
+
+[2024-07-07 22:55:46,667][    INFO] ===========> Epoch: 40, LR: 0.00235, Previous best: 93.17
+[2024-07-07 22:55:47,111][    INFO] Iters: 0, Total loss: 0.019
+[2024-07-07 22:55:52,327][    INFO] Iters: 15, Total loss: 0.021
+[2024-07-07 22:55:58,077][    INFO] Iters: 30, Total loss: 0.021
+[2024-07-07 22:56:02,021][    INFO] Iters: 45, Total loss: 0.022
+[2024-07-07 22:56:07,828][    INFO] Iters: 60, Total loss: 0.022
+[2024-07-07 22:56:11,848][    INFO] Iters: 75, Total loss: 0.022
+[2024-07-07 22:56:15,943][    INFO] Iters: 90, Total loss: 0.022
+[2024-07-07 22:56:20,386][    INFO] Iters: 105, Total loss: 0.021
+[2024-07-07 22:56:24,103][    INFO] Iters: 120, Total loss: 0.021
+[2024-07-07 22:56:28,764][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 91.96
+[2024-07-07 22:56:28,764][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 91.03
+[2024-07-07 22:56:28,764][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.52
+[2024-07-07 22:56:28,764][    INFO] ***** Evaluation ***** >>>> MeanDice: 93.17
+
+[2024-07-07 22:56:28,880][    INFO] ===========> Epoch: 41, LR: 0.00214, Previous best: 93.17
+[2024-07-07 22:56:29,328][    INFO] Iters: 0, Total loss: 0.019
+[2024-07-07 22:56:33,693][    INFO] Iters: 15, Total loss: 0.021
+[2024-07-07 22:56:37,508][    INFO] Iters: 30, Total loss: 0.021
+[2024-07-07 22:56:41,498][    INFO] Iters: 45, Total loss: 0.021
+[2024-07-07 22:56:45,332][    INFO] Iters: 60, Total loss: 0.021
+[2024-07-07 22:56:49,213][    INFO] Iters: 75, Total loss: 0.021
+[2024-07-07 22:56:54,164][    INFO] Iters: 90, Total loss: 0.021
+[2024-07-07 22:56:57,908][    INFO] Iters: 105, Total loss: 0.021
+[2024-07-07 22:57:01,946][    INFO] Iters: 120, Total loss: 0.021
+[2024-07-07 22:57:06,969][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 91.50
+[2024-07-07 22:57:06,969][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 90.71
+[2024-07-07 22:57:06,969][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.51
+[2024-07-07 22:57:06,969][    INFO] ***** Evaluation ***** >>>> MeanDice: 92.91
+
+[2024-07-07 22:57:07,035][    INFO] ===========> Epoch: 42, LR: 0.00192, Previous best: 93.17
+[2024-07-07 22:57:07,450][    INFO] Iters: 0, Total loss: 0.018
+[2024-07-07 22:57:12,411][    INFO] Iters: 15, Total loss: 0.022
+[2024-07-07 22:57:17,081][    INFO] Iters: 30, Total loss: 0.021
+[2024-07-07 22:57:21,326][    INFO] Iters: 45, Total loss: 0.021
+[2024-07-07 22:57:25,058][    INFO] Iters: 60, Total loss: 0.022
+[2024-07-07 22:57:28,833][    INFO] Iters: 75, Total loss: 0.021
+[2024-07-07 22:57:32,673][    INFO] Iters: 90, Total loss: 0.021
+[2024-07-07 22:57:36,465][    INFO] Iters: 105, Total loss: 0.021
+[2024-07-07 22:57:40,263][    INFO] Iters: 120, Total loss: 0.021
+[2024-07-07 22:57:45,522][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 91.61
+[2024-07-07 22:57:45,522][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 90.72
+[2024-07-07 22:57:45,522][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.40
+[2024-07-07 22:57:45,522][    INFO] ***** Evaluation ***** >>>> MeanDice: 92.91
+
+[2024-07-07 22:57:45,626][    INFO] ===========> Epoch: 43, LR: 0.00171, Previous best: 93.17
+[2024-07-07 22:57:46,516][    INFO] Iters: 0, Total loss: 0.021
+[2024-07-07 22:57:50,884][    INFO] Iters: 15, Total loss: 0.022
+[2024-07-07 22:57:55,646][    INFO] Iters: 30, Total loss: 0.022
+[2024-07-07 22:58:00,171][    INFO] Iters: 45, Total loss: 0.021
+[2024-07-07 22:58:04,253][    INFO] Iters: 60, Total loss: 0.021
+[2024-07-07 22:58:08,160][    INFO] Iters: 75, Total loss: 0.021
+[2024-07-07 22:58:12,005][    INFO] Iters: 90, Total loss: 0.021
+[2024-07-07 22:58:16,417][    INFO] Iters: 105, Total loss: 0.021
+[2024-07-07 22:58:20,197][    INFO] Iters: 120, Total loss: 0.021
+[2024-07-07 22:58:24,948][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 91.55
+[2024-07-07 22:58:24,948][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 90.94
+[2024-07-07 22:58:24,948][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.57
+[2024-07-07 22:58:24,948][    INFO] ***** Evaluation ***** >>>> MeanDice: 93.02
+
+[2024-07-07 22:58:25,007][    INFO] ===========> Epoch: 44, LR: 0.00149, Previous best: 93.17
+[2024-07-07 22:58:25,420][    INFO] Iters: 0, Total loss: 0.019
+[2024-07-07 22:58:29,838][    INFO] Iters: 15, Total loss: 0.021
+[2024-07-07 22:58:33,929][    INFO] Iters: 30, Total loss: 0.020
+[2024-07-07 22:58:37,899][    INFO] Iters: 45, Total loss: 0.021
+[2024-07-07 22:58:41,797][    INFO] Iters: 60, Total loss: 0.021
+[2024-07-07 22:58:45,611][    INFO] Iters: 75, Total loss: 0.021
+[2024-07-07 22:58:49,317][    INFO] Iters: 90, Total loss: 0.021
+[2024-07-07 22:58:53,383][    INFO] Iters: 105, Total loss: 0.021
+[2024-07-07 22:58:57,103][    INFO] Iters: 120, Total loss: 0.021
+[2024-07-07 22:59:02,216][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 91.66
+[2024-07-07 22:59:02,216][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 91.11
+[2024-07-07 22:59:02,216][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.32
+[2024-07-07 22:59:02,216][    INFO] ***** Evaluation ***** >>>> MeanDice: 93.03
+
+[2024-07-07 22:59:02,321][    INFO] ===========> Epoch: 45, LR: 0.00126, Previous best: 93.17
+[2024-07-07 22:59:02,777][    INFO] Iters: 0, Total loss: 0.016
+[2024-07-07 22:59:07,166][    INFO] Iters: 15, Total loss: 0.020
+[2024-07-07 22:59:11,439][    INFO] Iters: 30, Total loss: 0.020
+[2024-07-07 22:59:15,242][    INFO] Iters: 45, Total loss: 0.020
+[2024-07-07 22:59:19,243][    INFO] Iters: 60, Total loss: 0.020
+[2024-07-07 22:59:23,338][    INFO] Iters: 75, Total loss: 0.021
+[2024-07-07 22:59:27,278][    INFO] Iters: 90, Total loss: 0.021
+[2024-07-07 22:59:31,354][    INFO] Iters: 105, Total loss: 0.021
+[2024-07-07 22:59:35,815][    INFO] Iters: 120, Total loss: 0.021
+[2024-07-07 22:59:41,726][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 91.74
+[2024-07-07 22:59:41,727][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 90.80
+[2024-07-07 22:59:41,727][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.59
+[2024-07-07 22:59:41,727][    INFO] ***** Evaluation ***** >>>> MeanDice: 93.04
+
+[2024-07-07 22:59:41,791][    INFO] ===========> Epoch: 46, LR: 0.00103, Previous best: 93.17
+[2024-07-07 22:59:42,250][    INFO] Iters: 0, Total loss: 0.020
+[2024-07-07 22:59:46,430][    INFO] Iters: 15, Total loss: 0.021
+[2024-07-07 22:59:50,410][    INFO] Iters: 30, Total loss: 0.021
+[2024-07-07 22:59:54,367][    INFO] Iters: 45, Total loss: 0.021
+[2024-07-07 22:59:58,180][    INFO] Iters: 60, Total loss: 0.020
+[2024-07-07 23:00:02,006][    INFO] Iters: 75, Total loss: 0.021
+[2024-07-07 23:00:05,958][    INFO] Iters: 90, Total loss: 0.021
+[2024-07-07 23:00:10,505][    INFO] Iters: 105, Total loss: 0.020
+[2024-07-07 23:00:14,695][    INFO] Iters: 120, Total loss: 0.021
+[2024-07-07 23:00:20,923][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 91.98
+[2024-07-07 23:00:20,923][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 90.97
+[2024-07-07 23:00:20,923][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.50
+[2024-07-07 23:00:20,923][    INFO] ***** Evaluation ***** >>>> MeanDice: 93.15
+
+[2024-07-07 23:00:21,020][    INFO] ===========> Epoch: 47, LR: 0.00080, Previous best: 93.17
+[2024-07-07 23:00:21,479][    INFO] Iters: 0, Total loss: 0.021
+[2024-07-07 23:00:25,764][    INFO] Iters: 15, Total loss: 0.020
+[2024-07-07 23:00:31,440][    INFO] Iters: 30, Total loss: 0.020
+[2024-07-07 23:00:35,484][    INFO] Iters: 45, Total loss: 0.020
+[2024-07-07 23:00:39,860][    INFO] Iters: 60, Total loss: 0.020
+[2024-07-07 23:00:44,269][    INFO] Iters: 75, Total loss: 0.021
+[2024-07-07 23:00:48,190][    INFO] Iters: 90, Total loss: 0.021
+[2024-07-07 23:00:52,012][    INFO] Iters: 105, Total loss: 0.021
+[2024-07-07 23:00:55,891][    INFO] Iters: 120, Total loss: 0.021
+[2024-07-07 23:01:01,559][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 91.86
+[2024-07-07 23:01:01,559][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 91.10
+[2024-07-07 23:01:01,559][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.65
+[2024-07-07 23:01:01,559][    INFO] ***** Evaluation ***** >>>> MeanDice: 93.20
+
+[2024-07-07 23:01:01,698][    INFO] ===========> Epoch: 48, LR: 0.00055, Previous best: 93.20
+[2024-07-07 23:01:02,156][    INFO] Iters: 0, Total loss: 0.019
+[2024-07-07 23:01:06,472][    INFO] Iters: 15, Total loss: 0.021
+[2024-07-07 23:01:11,105][    INFO] Iters: 30, Total loss: 0.021
+[2024-07-07 23:01:16,417][    INFO] Iters: 45, Total loss: 0.020
+[2024-07-07 23:01:20,446][    INFO] Iters: 60, Total loss: 0.020
+[2024-07-07 23:01:24,228][    INFO] Iters: 75, Total loss: 0.020
+[2024-07-07 23:01:28,927][    INFO] Iters: 90, Total loss: 0.020
+[2024-07-07 23:01:32,672][    INFO] Iters: 105, Total loss: 0.020
+[2024-07-07 23:01:36,430][    INFO] Iters: 120, Total loss: 0.020
+[2024-07-07 23:01:41,060][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 91.89
+[2024-07-07 23:01:41,061][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 90.80
+[2024-07-07 23:01:41,061][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.50
+[2024-07-07 23:01:41,061][    INFO] ***** Evaluation ***** >>>> MeanDice: 93.07
+
+[2024-07-07 23:01:41,122][    INFO] ===========> Epoch: 49, LR: 0.00030, Previous best: 93.20
+[2024-07-07 23:01:41,558][    INFO] Iters: 0, Total loss: 0.026
+[2024-07-07 23:01:45,637][    INFO] Iters: 15, Total loss: 0.022
+[2024-07-07 23:01:49,608][    INFO] Iters: 30, Total loss: 0.021
+[2024-07-07 23:01:53,774][    INFO] Iters: 45, Total loss: 0.021
+[2024-07-07 23:01:57,695][    INFO] Iters: 60, Total loss: 0.021
+[2024-07-07 23:02:02,199][    INFO] Iters: 75, Total loss: 0.021
+[2024-07-07 23:02:06,203][    INFO] Iters: 90, Total loss: 0.021
+[2024-07-07 23:02:10,123][    INFO] Iters: 105, Total loss: 0.020
+[2024-07-07 23:02:14,716][    INFO] Iters: 120, Total loss: 0.020
+[2024-07-07 23:02:19,799][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 91.86
+[2024-07-07 23:02:19,800][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 91.13
+[2024-07-07 23:02:19,800][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 96.54
+[2024-07-07 23:02:19,800][    INFO] ***** Evaluation ***** >>>> MeanDice: 93.18
+
