@@ -16,7 +16,7 @@ conda activate unimatch # If this does not work, try 'source activate ptl'
 
 now=$(date +"%Y%m%d_%H%M%S")
 exp='4'
-seed='42'
+seed='83'
 control='ethn'
 method='supervised'
 dataset='ukbb'
