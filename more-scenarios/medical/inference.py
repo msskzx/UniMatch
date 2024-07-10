@@ -48,7 +48,8 @@ def main():
 
     checkpoint = torch.load(cfg['model_path'])
     checkpoint = {k.replace('module.', ''): v for k, v in checkpoint['model'].items()}
-
+    
+    label_embeddings = None
     if cfg['task'] == 'multi_task':
         model = UNetMultiTask(in_chns=1, nclass=cfg['nclass'], nclass_classif=cfg['nclass_classif'])
     elif cfg['task'] == 'multi_modal':

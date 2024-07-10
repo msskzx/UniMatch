@@ -50,10 +50,10 @@ def save_pred_mask(og_img, og_mask, og_pred, patient_id, frame, cfg, given_slice
 
 
 def init_scores_df():
-    return pd.DataFrame(columns=['patient_id', 'frame', 'slice_idx', 'dice_mean', 'dice_rv', 'dice_myo', 'dice_lv'])
+    return pd.DataFrame(columns=['patient_id', 'frame', 'slice_idx', 'dice_mean', 'dice_rv', 'dice_myo', 'dice_lv', 'pred_label'])
 
 
-def save_scores(scores_df, dice_class, dice_mean, patient_id, frame, logger, cfg, given_slice_idx=None, correct=None):
+def save_scores(scores_df, dice_class, dice_mean, patient_id, frame, logger, cfg, given_slice_idx=None, pred_label=None):
     for slice_idx, dice_scores_slice in enumerate(dice_class):
         for cls_idx, dice_slice_cls in enumerate(dice_scores_slice):
             logger.info('***** Evaluation ***** >>>> Class [{:} {:}] Dice: '
@@ -68,7 +68,7 @@ def save_scores(scores_df, dice_class, dice_mean, patient_id, frame, logger, cfg
             'dice_rv': dice_class[slice_idx][MASK['rv']-1],
             'dice_myo': dice_class[slice_idx][MASK['myo']-1],
             'dice_lv': dice_class[slice_idx][MASK['lv']-1],
-            'correct_classification': correct,
+            'pred_label': pred_label,
         }
     
     return scores_df
@@ -91,11 +91,10 @@ def eval_model(model, dataloader, cfg, logger, label_embeddings=None, visualize=
             h, w = img.shape[-2:]
             img = F.interpolate(img, (cfg['crop_size'], cfg['crop_size']), mode='bilinear', align_corners=False)
 
-            correct = None
+            pred_label = None
             if cfg['task'] == 'multi_task':
                 pred, classif_pred = model(img)
-                predicted_labels = classif_pred.argmax(dim=1)
-                correct = (predicted_labels == label.cuda()).sum().item()
+                pred_label = classif_pred.argmax(dim=1).item()
             elif cfg['task'] == 'multi_modal':
                 label_embedding = torch.stack([label_embeddings[x] for x in label]).cuda()
                 pred = model(img, label_embedding)
@@ -112,7 +111,7 @@ def eval_model(model, dataloader, cfg, logger, label_embeddings=None, visualize=
             dice_class, dice_mean = compute_dice(pred, mask)
 
             # log and save results
-            scores_df = save_scores(scores_df, dice_class, dice_mean, patient_id, frame, logger, cfg, given_slice_idx=slice_idx, correct=correct)
+            scores_df = save_scores(scores_df, dice_class, dice_mean, patient_id, frame, logger, cfg, given_slice_idx=slice_idx, pred_label=pred_label)
         
             # save og_img, mask, pred
             if visualize:

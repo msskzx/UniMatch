@@ -74,5 +74,6 @@ def main(dataset='ukbb', method='supervised', generate_splits=False, train=False
                     edit_slurm(dataset=dataset, method=method, mode=mode, exp=exp, seed=seed, cfg_file=testset)
                     run_slurm(dataset=dataset, method=method, mode=mode)
 
+
 if __name__ == '__main__':
     main(test=True)
