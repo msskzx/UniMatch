@@ -10,6 +10,6 @@ num_workers: 1
 seed: 42
 split: 18
 visualize: False
-task: multi_task # options: ['seg_only', 'multi_task', 'multi_modal', 'seg_only_mid_slices']
+task: seg_only_mid_slices # options: ['seg_only', 'multi_task', 'multi_modal', 'seg_only_mid_slices']
 seg_model: 'unet'
 exp: 4
