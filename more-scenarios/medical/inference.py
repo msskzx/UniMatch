@@ -71,7 +71,7 @@ def main():
             label_embedding = outputs.last_hidden_state.mean(dim=1).squeeze()
             label_embeddings[label] = label_embedding
     else:
-        model = UNet(in_chns=1, class_num=4)
+        model = UNet(in_chns=1, nclass=4)
 
     
     model.load_state_dict(checkpoint)
