@@ -104,6 +104,7 @@ def to_latex(df, caption='', longtable=True):
         print(table)
 
 def ttest(df, g1, g2, cls1, cls2):
+    print(f'experiment/group {g1} {cls1} and {g2} {cls2}.')
     g1_dice = df[df['experiment'] == g1][cls1]
     g2_dice = df[df['experiment'] == g2][cls2]
     t_statistic, p_value = stats.ttest_ind(g1_dice, g2_dice)
@@ -118,20 +119,34 @@ def ttest(df, g1, g2, cls1, cls2):
     print()
 
 
-def sex_ttest(df, cls=''):
-    for exp in EXPERIMENTS:
-        print(f'Experiment {exp}')
-        print('-------------')
-        ttest(df, exp, exp, 'male' + cls, 'female' + cls)
+def sex_ttest(df, cls='', exp=None):
+    if exp:
+        sex_ttest_helper(df, cls, exp)
+    else:
+        for exp in EXPERIMENTS:
+            sex_ttest_helper(df, cls, exp)
 
 
-def ethn_ttest(df, cls=''):
-    for exp in EXPERIMENTS:
-        print(f'Experiment {exp}')
-        print('-------------')
-        ttest(df, exp, exp, 'white' + cls, 'asian' + cls)
-        ttest(df, exp, exp, 'white' + cls, 'black' + cls)
-        ttest(df, exp, exp, 'asian' + cls, 'black' + cls)
+def sex_ttest_helper(df, cls='', exp=None):
+    print(f'Experiment {exp}')
+    print('-------------')
+    ttest(df, exp, exp, 'male' + cls, 'female' + cls)
+
+
+def ethn_ttest(df, cls='', exp=None):
+    if exp:
+        ethn_ttest_helper(df, cls, exp)
+    else:
+        for exp in EXPERIMENTS:
+            ethn_ttest_helper(df, cls, exp)
+
+
+def ethn_ttest_helper(df, cls='', exp=None):
+    print(f'Experiment {exp}')
+    print('-------------')
+    ttest(df, exp, exp, 'white' + cls, 'asian' + cls)
+    ttest(df, exp, exp, 'white' + cls, 'black' + cls)
+    ttest(df, exp, exp, 'asian' + cls, 'black' + cls)
 
 
 classes = [
@@ -164,30 +179,58 @@ def exps_ttest(df):
         print('-----------------------------------------------------------------')
 
 
-def sub_ttest(df):
-    for exp in EXPERIMENTS:
-        print(f'Experiment {exp}')
-        for ethn in ETHNICITIES:
-            print(f'{ethn}_male vs. {ethn}_female')
-            ttest(df, exp, exp, f'{ethn}_male', f'{ethn}_female')
-        print('-------------')
+def sub_ttest(df, exp=None):
+    if exp:
+        sub_ttest_helper(df, exp)
+    else:
+        for exp in EXPERIMENTS:
+            sub_ttest_helper(df, exp)
 
-def boxplot_sex_dice(df, cls='', g1='', g2=''):
+def sub_ttest_helper(df, exp):
+    print(f'Experiment {exp}')
+    for ethn in ETHNICITIES:
+        print(f'{ethn}_male vs. {ethn}_female')
+        ttest(df, exp, exp, f'{ethn}_male', f'{ethn}_female')
+    print('-------------')
+   
+def boxplot_sex_dice(df, cls='', g1='', g2='', exp=None):
     if not g1:
         g1 = f'male{cls}'
     if not g2:
         g2 = f'female{cls}'
 
-    for exp in EXPERIMENTS:
-        df_melted = pd.melt(df[df['experiment'] == int(exp)], value_vars=[g1, g2], var_name='sex', value_name='sex_dice')
-        boxplot_all_dice(df_melted, x='sex', y='sex_dice', hue='sex', palette=two_palette, xlabel='Sex', title=f'Experiment {exp} - Male vs. Female Mean Dice')
+    if exp:
+        boxplot_sex_dice_helper(df, cls, g1, g2, exp)
+    else:
+        for exp in EXPERIMENTS:
+            boxplot_sex_dice_helper(df, cls, g1, g2, exp)
+
+def boxplot_sex_dice_helper(df, cls='', g1='', g2='', exp=None):
+    df_melted = pd.melt(df[df['experiment'] == int(exp)], value_vars=[g1, g2], var_name='sex', value_name='sex_dice')
+    boxplot_all_dice(df_melted, x='sex', y='sex_dice', hue='sex', palette=two_palette, xlabel='Sex', title=f'Experiment {exp} - Male vs. Female Mean Dice')
+
+def boxplot_ethn_dice(df, cls ='', exp=None):
+    if exp:
+        boxplot_ethn_dice_helper(df, cls, exp)
+    else:
+        for exp in EXPERIMENTS:
+            boxplot_ethn_dice_helper(df, cls, exp)
 
 
-def boxplot_ethn_dice(df, cls =''):
-    for exp in EXPERIMENTS:
-        df_melted = pd.melt(df[df['experiment'] == int(exp)], value_vars=[f'white{cls}', f'asian{cls}', f'black{cls}'], var_name='ethnicity', value_name='ethnicity_dice')
-        boxplot_all_dice(df_melted, x='ethnicity', y='ethnicity_dice', hue='ethnicity', palette=three_palette, xlabel='Ethnicity', title=f'Experiment {exp} - Ethnic Groups Dice')
-    
+def boxplot_tasks(mm_ethn_df, mt_ethn_df):
+    data = {
+        'Multi Modal': mm_ethn_df['dice_mean'],
+        'Multi Task': mt_ethn_df['dice_mean'],
+    }
+    df = pd.DataFrame(data)
+    df_melted = df.melt(var_name='Task', value_name='Dice Mean')
+    boxplot_all_dice(df_melted, x='Task', y='Dice Mean', hue='Task', palette=two_palette, xlabel='Task', title=f'Performance of Multi Modal vs. Multi Task Mean Dice')
+
+def boxplot_ethn_dice_helper(df, cls ='', exp=None):
+    df_melted = pd.melt(df[df['experiment'] == int(exp)], value_vars=[f'white{cls}', f'asian{cls}', f'black{cls}'], var_name='ethnicity', value_name='ethnicity_dice')
+
+    boxplot_all_dice(df_melted, x='ethnicity', y='ethnicity_dice', hue='ethnicity', palette=three_palette, xlabel='Ethnicity', title=f'Experiment {exp} - Ethnic Groups Dice')
+
 
 def plot_exps(df):
     # overall segmentation
@@ -303,7 +346,7 @@ def get_mean_std_table(df, cols, caption=''):
     print(table)
     
 
-def get_dice(df, cfg, plot=False, stdout=False):
+def get_dice(df, cfg=None, plot=False, stdout=False):
     dice = {
         'dice_mean': df['dice_mean'].mean(),
         'dice_rv': df['dice_rv'].mean(),
@@ -419,14 +462,21 @@ def plot_sex_count(df):
     plt.show()
 
 
-def plot_sex_dice_intersectional(df):
-    for exp in range(2, 5):
-        df_intr = df[df['experiment'] == exp]
-        df_intr = df_intr[['white_male', 'white_female', 'asian_male', 'asian_female', 'black_male', 'black_female']]
-        df_melted = df_intr.melt(var_name='Category', value_name='Dice')
-        df_melted['Sex'] = df_melted['Category'].apply(lambda x: 'Female' if 'female' in x else 'Male')
-        df_melted['Ethnicity'] = df_melted['Category'].apply(lambda x: x.split('_')[0].capitalize())
+def plot_sex_dice_intersectional(df, exp):
+    if exp:
+        plot_sex_dice_intersectional_helper(df, exp)
+    else:
+        for exp in range(2, 5):
+            plot_sex_dice_intersectional_helper(df, exp)
+        
 
-        sns.boxplot(x='Sex', y='Dice', hue='Ethnicity', data=df_melted, palette=three_palette, width=0.1)
-        plt.title(f'Experiment {exp} - Males vs. Females per Ethnic Group', fontsize=11)
-        plt.show()
+def plot_sex_dice_intersectional_helper(df, exp):
+    df_intr = df[df['experiment'] == exp]
+    df_intr = df_intr[['white_male', 'white_female', 'asian_male', 'asian_female', 'black_male', 'black_female']]
+    df_melted = df_intr.melt(var_name='Category', value_name='Dice')
+    df_melted['Sex'] = df_melted['Category'].apply(lambda x: 'Female' if 'female' in x else 'Male')
+    df_melted['Ethnicity'] = df_melted['Category'].apply(lambda x: x.split('_')[0].capitalize())
+
+    sns.boxplot(x='Sex', y='Dice', hue='Ethnicity', data=df_melted, palette=three_palette, width=0.1)
+    plt.title(f'Experiment {exp} - Males vs. Females per Ethnic Group', fontsize=11)
+    plt.show()

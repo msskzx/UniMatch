@@ -435,5 +435,6 @@ def tmp():
 
         df.to_csv(f'splits/ukbb/exp{exp}/{split}/seed{seed}/{file}_mt.csv', index=False)
 
+
 if __name__ == '__main__':
     main()

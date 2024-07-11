@@ -57,7 +57,7 @@ def main():
     elif cfg['task'] == 'multi_modal':
         # Convert label text to BERT embeddings
         labels = ['white', 'asian', 'black']
-        bert_model_name='bert-base-uncased'
+        bert_model_name = 'bert-base-uncased'
         bert_model = BertModel.from_pretrained(bert_model_name)
         tokenizer = BertTokenizer.from_pretrained(bert_model_name)
         bert_embedding_dim = bert_model.config.hidden_size
