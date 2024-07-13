@@ -59,110 +59,99 @@ def get_all_results(df, cfg):
 
     return pd.DataFrame(res)
 
-
-def merge_results_patients(df, patients_df):
-    return pd.merge(df, patients_df, left_on='patient_id', right_on='eid', how='inner')
-
-
-def prep_patients_df(og_df):   
-    # extract cols of interest
-    all_cols = og_df.columns
-    cols = []
-    for _, s in enumerate(all_cols):
-        for k, v in PRIMARY_DEMOGRAPHICS.items():
-            pattern = r'{}-(0.0)'.format(re.escape(k))
-            if re.match(pattern, s):
-                cols.append(s)
-
-    # rename cols instead of codes
-    new_cols = []
-    for old_col in cols:
-        new_cols.append(PRIMARY_DEMOGRAPHICS[old_col.split('-')[0]])
-    cols.append('eid')
-    new_cols.append('eid')
-    df = og_df[cols]
-    df.columns = new_cols
-
-    return df
-
-def to_latex(df, caption='', longtable=True):
-    groups = [
-        ['dice_mean', 'dice_lv', 'dice_rv', 'dice_myo'],
-        ['male', 'male_lv', 'male_rv', 'male_myo'],
-        ['female', 'female_lv', 'female_rv', 'female_myo'],
-        ['white', 'white_rv', 'white_lv', 'white_myo'],
-        ['asian', 'asian_rv', 'asian_lv', 'asian_myo'],
-        ['black', 'black_rv', 'black_lv', 'black_myo'],
-        ['white_male', 'asian_male', 'black_male'],
-        ['white_female', 'asian_female', 'black_female'],
-    ]
-
-    for group in groups:
-        df_latex_cols = ['experiment'] + group
-        df_latex = df[df_latex_cols]
-        table = df_latex.to_latex(index=False, longtable=longtable, caption=caption)
-        print(table)
+def all_groups_ttest(df, exp=4, task='seg only'):
+    res = pd.DataFrame()
+    res = pd.concat([res, sub_ttest(df, exp=exp, task=task)])
+    res = pd.concat([res, ethn_ttest(df, exp=exp, task=task)])
+    res = pd.concat([res, sex_ttest(df, exp=exp, task=task)], ignore_index=True)
+    return res
 
 def ttest(df, g1, g2, cls1, cls2):
-    print(f'experiment/group {g1} {cls1} and {g2} {cls2}.')
     g1_dice = df[df['experiment'] == g1][cls1]
     g2_dice = df[df['experiment'] == g2][cls2]
     t_statistic, p_value = stats.ttest_ind(g1_dice, g2_dice)
+    return t_statistic, p_value, p_value < 0.05
 
-    print("t-statistic:", t_statistic)
-    print("p-value:", p_value)
+def ttest_helper(df, exp1, exp2, cls1, cls2, task):
+    data = {
+        'exp':[],
+        'task':[],
+        'group1':[],
+        'group2':[],
+        't-statistic':[],
+        'p-value':[],
+        'significance':[]
+    }
 
-    if p_value < 0.05:
-        print(f'There is a statistically significant difference (p-value < 0.05) in DICE similarity scores between experiment/group {g1} {cls1} and {g2} {cls2}.')
-    else:
-        print(f'There is not sufficient evidence (p-value >= 0.05) to conclude a statistically significant difference in DICE similarity scores between experiment/group {g1} {cls1} and {g2} {cls2}.')
-    print()
+    t_stat, p_value, signif = ttest(df, exp1, exp2, cls1, cls2)
+    data['exp'].append(exp1)
+    data['task'].append(task)
+    data['group1'].append(cls1)
+    data['group2'].append(cls2)
+    data['t-statistic'].append(t_stat)
+    data['p-value'].append(p_value)
+    data['significance'].append(signif)
+    return pd.DataFrame(data=data)
 
 
-def sex_ttest(df, cls='', exp=None):
+def sex_ttest(df, cls='', exp=None, task=None):
+    """
+    ttest for sex groups
+    """
     if exp:
-        sex_ttest_helper(df, cls, exp)
+        return ttest_helper(df, exp, exp, f'male{cls}', f'female{cls}', task)
     else:
         for exp in EXPERIMENTS:
-            sex_ttest_helper(df, cls, exp)
+            return ttest_helper(df, exp, exp, f'male{cls}', f'female{cls}', task)
 
 
-def sex_ttest_helper(df, cls='', exp=None):
-    print(f'Experiment {exp}')
-    print('-------------')
-    ttest(df, exp, exp, 'male' + cls, 'female' + cls)
-
-
-def ethn_ttest(df, cls='', exp=None):
+def ethn_ttest(df, cls='', exp=None, task=None):
+    """
+    ttest for ethnic groups
+    """
     if exp:
-        ethn_ttest_helper(df, cls, exp)
+        return ethn_ttest_helper(df, cls, exp, task)
     else:
         for exp in EXPERIMENTS:
-            ethn_ttest_helper(df, cls, exp)
+            return ethn_ttest_helper(df, cls, exp, task)
 
 
-def ethn_ttest_helper(df, cls='', exp=None):
-    print(f'Experiment {exp}')
-    print('-------------')
-    ttest(df, exp, exp, 'white' + cls, 'asian' + cls)
-    ttest(df, exp, exp, 'white' + cls, 'black' + cls)
-    ttest(df, exp, exp, 'asian' + cls, 'black' + cls)
+def ethn_ttest_helper(df, cls='', exp=4, task='seg only'):
+    res = pd.DataFrame()
+    res = pd.concat([res, ttest_helper(df, exp, exp, 'white' + cls, 'asian' + cls, task=task)])
+    res = pd.concat([res, ttest_helper(df, exp, exp, 'white' + cls, 'black' + cls, task=task)])
+    res = pd.concat([res, ttest_helper(df, exp, exp, 'asian' + cls, 'black' + cls, task=task)])
+    return res
 
 
-classes = [
-    'dice_mean', 'dice_lv', 'dice_rv', 'dice_myo', 
-    'male', 'male_lv', 'male_rv', 'male_myo',
-    'female', 'female_lv', 'female_rv', 'female_myo',
-    'white', 'white_rv', 'white_lv', 'white_myo',
-    'asian', 'asian_rv', 'asian_lv', 'asian_myo',
-    'black', 'black_rv', 'black_lv', 'black_myo',
-    'white_male', 'asian_male', 'black_male',
-    'white_female', 'asian_female', 'black_female',
-    'low_scores_prcnt'
-]
+def sub_ttest(df, exp=None, task=''):
+    """
+    ttest for intersectional groups
+    """
+    if exp:
+        return sub_ttest_helper(df, exp, task)
+    else:
+        for exp in EXPERIMENTS:
+            return sub_ttest_helper(df, exp, task)
 
+def sub_ttest_helper(df, exp, task):
+    res = pd.DataFrame()
+    for ethn in ETHNICITIES:
+        res = pd.concat([res, ttest_helper(df, exp, exp, f'{ethn}_male', f'{ethn}_female', task=task)])
+    return res
 
 def exps_ttest(df):
+    classes = [
+        'dice_mean', 'dice_lv', 'dice_rv', 'dice_myo', 
+        'male', 'male_lv', 'male_rv', 'male_myo',
+        'female', 'female_lv', 'female_rv', 'female_myo',
+        'white', 'white_rv', 'white_lv', 'white_myo',
+        'asian', 'asian_rv', 'asian_lv', 'asian_myo',
+        'black', 'black_rv', 'black_lv', 'black_myo',
+        'white_male', 'asian_male', 'black_male',
+        'white_female', 'asian_female', 'black_female',
+        'low_scores_prcnt'
+]
     for cls in classes:
         print(f'Comparing {cls}')
         print('Experiment 2 vs. 3')
@@ -178,20 +167,6 @@ def exps_ttest(df):
         ttest(df, 3, 4, cls, cls)
         print('-----------------------------------------------------------------')
 
-
-def sub_ttest(df, exp=None):
-    if exp:
-        sub_ttest_helper(df, exp)
-    else:
-        for exp in EXPERIMENTS:
-            sub_ttest_helper(df, exp)
-
-def sub_ttest_helper(df, exp):
-    print(f'Experiment {exp}')
-    for ethn in ETHNICITIES:
-        print(f'{ethn}_male vs. {ethn}_female')
-        ttest(df, exp, exp, f'{ethn}_male', f'{ethn}_female')
-    print('-------------')
    
 def boxplot_sex_dice(df, cls='', g1='', g2='', exp=None):
     if not g1:
@@ -463,15 +438,15 @@ def plot_sex_count(df):
     plt.show()
 
 
-def plot_sex_dice_intersectional(df, exp):
+def plot_sex_dice_intersectional(df, exp, title=''):
     if exp:
-        plot_sex_dice_intersectional_helper(df, exp)
+        plot_sex_dice_intersectional_helper(df, exp, title=title)
     else:
         for exp in range(2, 5):
-            plot_sex_dice_intersectional_helper(df, exp)
+            plot_sex_dice_intersectional_helper(df, exp, title=title)
         
 
-def plot_sex_dice_intersectional_helper(df, exp):
+def plot_sex_dice_intersectional_helper(df, exp, title=''):
     df_intr = df[df['experiment'] == exp]
     df_intr = df_intr[['white_male', 'white_female', 'asian_male', 'asian_female', 'black_male', 'black_female']]
     df_melted = df_intr.melt(var_name='Category', value_name='Dice')
@@ -479,5 +454,50 @@ def plot_sex_dice_intersectional_helper(df, exp):
     df_melted['Ethnicity'] = df_melted['Category'].apply(lambda x: x.split('_')[0].capitalize())
 
     sns.boxplot(x='Sex', y='Dice', hue='Ethnicity', data=df_melted, palette=three_palette, width=0.1)
-    plt.title(f'Experiment {exp} - Males vs. Females per Ethnic Group', fontsize=11)
+    plt.title(title, fontsize=11)
     plt.show()
+
+
+def merge_results_patients(df, patients_df):
+    return pd.merge(df, patients_df, left_on='patient_id', right_on='eid', how='inner')
+
+
+def prep_patients_df(og_df):   
+    # extract cols of interest
+    all_cols = og_df.columns
+    cols = []
+    for _, s in enumerate(all_cols):
+        for k, v in PRIMARY_DEMOGRAPHICS.items():
+            pattern = r'{}-(0.0)'.format(re.escape(k))
+            if re.match(pattern, s):
+                cols.append(s)
+
+    # rename cols instead of codes
+    new_cols = []
+    for old_col in cols:
+        new_cols.append(PRIMARY_DEMOGRAPHICS[old_col.split('-')[0]])
+    cols.append('eid')
+    new_cols.append('eid')
+    df = og_df[cols]
+    df.columns = new_cols
+
+    return df
+
+
+def to_latex(df, caption='', longtable=True):
+    groups = [
+        ['dice_mean', 'dice_lv', 'dice_rv', 'dice_myo'],
+        ['male', 'male_lv', 'male_rv', 'male_myo'],
+        ['female', 'female_lv', 'female_rv', 'female_myo'],
+        ['white', 'white_rv', 'white_lv', 'white_myo'],
+        ['asian', 'asian_rv', 'asian_lv', 'asian_myo'],
+        ['black', 'black_rv', 'black_lv', 'black_myo'],
+        ['white_male', 'asian_male', 'black_male'],
+        ['white_female', 'asian_female', 'black_female'],
+    ]
+
+    for group in groups:
+        df_latex_cols = ['experiment'] + group
+        df_latex = df[df_latex_cols]
+        table = df_latex.to_latex(index=False, longtable=longtable, caption=caption)
+        print(table)
