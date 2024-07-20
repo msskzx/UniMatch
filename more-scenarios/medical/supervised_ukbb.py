@@ -104,7 +104,7 @@ def main():
         mode='train_l',
         crop_size=cfg['crop_size'],
         split=f'splits/{cfg["dataset"]}/exp{args.exp}/{cfg["split"]}/seed{args.seed}/{train_file}.csv',
-        task=cfg['task']
+        task=cfg['task'],
     )
     
     valset = UKBBDataset(
@@ -113,7 +113,7 @@ def main():
         mode='val',
         crop_size=cfg['crop_size'],
         split=f'splits/{cfg["dataset"]}/exp{args.exp}/{cfg["split"]}/seed{args.seed}/{val_file}.csv',
-        task=cfg['task']
+        task=cfg['task'],
     )
 
     trainsampler = torch.utils.data.distributed.DistributedSampler(trainset)

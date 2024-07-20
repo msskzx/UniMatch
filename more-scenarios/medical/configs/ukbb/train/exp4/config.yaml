@@ -12,4 +12,4 @@ split: 18
 visualize: False
 nclass_classif: 3
 task: seg_only_mid_slices # options: ['seg_only', 'multi_task', 'multi_modal', 'seg_only_mid_slices']
-epochs: 50
+epochs: 100

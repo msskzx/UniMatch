@@ -59,7 +59,7 @@ def main(dataset='ukbb', method='supervised', generate_splits=False, train=False
     # skip if already trained the models
     if train:
         mode = 'train'
-        for seed in SEEDS:
+        for seed in SEEDS[1:]:
             for exp in [4]:
                 edit_slurm(dataset=dataset, method=method, mode=mode, exp=exp, seed=seed, cfg_file='config')
                 run_slurm(dataset=dataset, method=method, mode=mode)
@@ -76,4 +76,4 @@ def main(dataset='ukbb', method='supervised', generate_splits=False, train=False
 
 
 if __name__ == '__main__':
-    main(test=True)
+    main(train=True)

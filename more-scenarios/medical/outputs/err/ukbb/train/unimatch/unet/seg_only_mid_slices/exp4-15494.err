@@ -1,0 +1,51 @@
+[2024-07-20 13:09:13,118][    INFO] {'batch_size': 12,
+ 'conf_thresh': 0.95,
+ 'crop_size': 256,
+ 'data_root': '/vol/aimspace/projects/ukbb/data/cardiac/cardiac_segmentations/subjects',
+ 'dataset': 'ukbb',
+ 'epochs': 300,
+ 'exp': '4',
+ 'local_rank': 0,
+ 'lr': 0.01,
+ 'mode': 'train',
+ 'nclass': 4,
+ 'nclass_classif': 3,
+ 'ngpus': 1,
+ 'num_workers': 1,
+ 'port': 8042,
+ 'seed': '42',
+ 'seg_model': 'unet',
+ 'split': 18,
+ 'task': 'seg_only_mid_slices',
+ 'visualize': False}
+
+[2024-07-20 13:09:13,155][    INFO] Total params: 1.8M
+
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/vol/aimspace/users/khattab/UniMatch/more-scenarios/medical/unimatch_ukbb.py", line 319, in <module>
+[rank0]:     main()
+[rank0]:   File "/vol/aimspace/users/khattab/UniMatch/more-scenarios/medical/unimatch_ukbb.py", line 101, in main
+[rank0]:     trainset_l = UKBBDataset(
+[rank0]:                  ^^^^^^^^^^^^
+[rank0]:   File "/vol/aimspace/users/khattab/UniMatch/more-scenarios/medical/dataset/ukbb.py", line 28, in __init__
+[rank0]:     self.patients_info = get_patients_info(split)
+[rank0]:                          ^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/vol/aimspace/users/khattab/UniMatch/more-scenarios/medical/util/dataset_utils.py", line 42, in get_patients_info
+[rank0]:     df = pd.read_csv(split)
+[rank0]:          ^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/u/home/khattab/.conda/envs/unimatch/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 1026, in read_csv
+[rank0]:     return _read(filepath_or_buffer, kwds)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/u/home/khattab/.conda/envs/unimatch/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 620, in _read
+[rank0]:     parser = TextFileReader(filepath_or_buffer, **kwds)
+[rank0]:              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/u/home/khattab/.conda/envs/unimatch/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 1620, in __init__
+[rank0]:     self._engine = self._make_engine(f, self.engine)
+[rank0]:                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/u/home/khattab/.conda/envs/unimatch/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 1880, in _make_engine
+[rank0]:     self.handles = get_handle(
+[rank0]:                    ^^^^^^^^^^^
+[rank0]:   File "/u/home/khattab/.conda/envs/unimatch/lib/python3.11/site-packages/pandas/io/common.py", line 873, in get_handle
+[rank0]:     handle = open(
+[rank0]:              ^^^^^
+[rank0]: FileNotFoundError: [Errno 2] No such file or directory: 'splits/ukbb/18/seed42/labeled_mt.csv'

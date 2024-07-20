@@ -200,7 +200,7 @@ def boxplot_tasks(unet_ethn_df, mm_ethn_df, mt_ethn_df):
     }
     df = pd.DataFrame(data)
     df_melted = df.melt(var_name='Task', value_name='Dice Mean')
-    boxplot_all_dice(df_melted, x='Task', y='Dice Mean', hue='Task', palette=three_palette_exps, xlabel='Task', title=f'Performance of Multi Modal vs. Multi Task Mean Dice')
+    boxplot_all_dice(df_melted, x='Task', y='Dice Mean', hue='Task', palette=three_palette_exps, xlabel='Task', title=f'UNet Seg Only vs. Multi Modal vs. Multi Task Mean Dice')
 
 def boxplot_ethn_dice_helper(df, cls ='', exp=None):
     df_melted = pd.melt(df[df['experiment'] == int(exp)], value_vars=[f'white{cls}', f'asian{cls}', f'black{cls}'], var_name='ethnicity', value_name='ethnicity_dice')

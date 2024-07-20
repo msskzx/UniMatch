@@ -11,12 +11,15 @@ from torch.optim import SGD
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 import yaml
+from transformers import BertModel, BertTokenizer
 
-from model.unet import UNet
 from util.classes import CLASSES
 from util.utils import AverageMeter, count_params, init_log, DiceLoss
 from util.dist_helper import setup_distributed
 from dataset.ukbb import UKBBDataset
+from model.unet import UNet
+from model.unet_multi_task import UNetMultiTask
+from model.unet_multi_modal import UNetMultiModal
 
 parser = argparse.ArgumentParser(description='UniMatch on UKBB')
 parser.add_argument('--seed', type=str, required=True)
@@ -30,7 +33,7 @@ def main():
     method='unimatch'
     seg_model='unet'
     cfg = yaml.load(open(f'configs/ukbb/train/exp{args.exp}/config.yaml', "r"), Loader=yaml.Loader)
-    save_path = f'exp/{cfg["dataset"]}/{method}/{seg_model}/exp{args.exp}/seed{args.seed}'
+    save_path = f'exp/{cfg["dataset"]}/{method}/{seg_model}/exp{args.exp}/seed{args.seed}/{cfg["task"]}'
 
     logger = init_log('global', logging.INFO)
     logger.propagate = 0
@@ -48,7 +51,29 @@ def main():
     cudnn.enabled = True
     cudnn.benchmark = True
 
-    model = UNet(in_chns=1, class_num=cfg['nclass'])
+    if cfg['task'] == 'multi_task':
+        model = UNetMultiTask(in_chns=1, nclass=cfg['nclass'], nclass_classif=cfg['nclass_classif'])
+    elif cfg['task'] == 'multi_modal':
+        # Convert label text to BERT embeddings
+        labels = ['white', 'asian', 'black']
+        bert_model_name = 'bert-base-uncased'
+        bert_model = BertModel.from_pretrained(bert_model_name)
+        tokenizer = BertTokenizer.from_pretrained(bert_model_name)
+        bert_embedding_dim = bert_model.config.hidden_size
+
+        model = UNetMultiModal(in_chns=1, nclass=cfg['nclass'], bert_embedding_dim=bert_embedding_dim)
+
+        label_embeddings = {}
+        for label in labels:
+            inputs = tokenizer(label, return_tensors='pt', padding=True, truncation=True)
+            with torch.no_grad():
+                outputs = bert_model(**inputs)
+
+            label_embedding = outputs.last_hidden_state.mean(dim=1).squeeze()
+            label_embeddings[label] = label_embedding
+    else:
+        model = UNet(in_chns=1, nclass=cfg['nclass'])
+
     if rank == 0:
         logger.info('Total params: {:.1f}M\n'.format(count_params(model)))
         
@@ -64,12 +89,22 @@ def main():
     criterion_ce = nn.CrossEntropyLoss()
     criterion_dice = DiceLoss(n_classes=cfg['nclass'])
     
+    labeled_file = 'labeled'
+    unlabeled_file = 'unlabeled'
+    val_file = 'val'
+
+    if cfg['task'] in ['multi_task', 'multi_modal', 'seg_only_mid_slices']:
+        labeled_file += '_mt'
+        unlabeled_file += '_mt'
+        val_file += '_mt'
+
     trainset_l = UKBBDataset(
         name=cfg['dataset'],
         root_dir=cfg['data_root'],
         mode='train_l',
         crop_size=cfg['crop_size'],
-        split=f'splits/{cfg["dataset"]}/{cfg["split"]}/seed{args.seed}/labeled.csv'
+        split=f'splits/{cfg["dataset"]}/exp{args.exp}/{cfg["split"]}/seed{args.seed}/{labeled_file}.csv',
+        task=cfg['task'],
     )
     
     trainset_u = UKBBDataset(
@@ -77,7 +112,8 @@ def main():
         root_dir=cfg['data_root'],
         mode='train_u',
         crop_size=cfg['crop_size'],
-        split=f'splits/{cfg["dataset"]}/{cfg["split"]}/seed{args.seed}/unlabeled.csv'
+        split=f'splits/{cfg["dataset"]}/exp{args.exp}/{cfg["split"]}/seed{args.seed}/{unlabeled_file}.csv',
+        task=cfg['task'],
     )
     
     valset = UKBBDataset(
@@ -85,7 +121,8 @@ def main():
         root_dir=cfg['data_root'],
         mode='val',
         crop_size=cfg['crop_size'],
-        split=f'splits/{cfg["dataset"]}/{cfg["split"]}/seed{args.seed}/val.csv'
+        split=f'splits/{cfg["dataset"]}/exp{args.exp}/{cfg["split"]}/seed{args.seed}/{val_file}.csv',
+        task=cfg['task'],
     )
     
     trainsampler_l = torch.utils.data.distributed.DistributedSampler(trainset_l)
@@ -133,9 +170,9 @@ def main():
         
         loader = zip(trainloader_l, trainloader_u, trainloader_u_mix)
 
-        for i, ((img_x, mask_x),
-                (img_u_w, img_u_s1, img_u_s2, cutmix_box1, cutmix_box2, ethn),
-                (img_u_w_mix, img_u_s1_mix, img_u_s2_mix, _, _)) in enumerate(loader):
+        for i, ((img_x, mask_x, label_x),
+                (img_u_w, img_u_s1, img_u_s2, cutmix_box1, cutmix_box2, label_u),
+                (img_u_w_mix, img_u_s1_mix, img_u_s2_mix, _, _, _)) in enumerate(loader):
             
             img_x, mask_x = img_x.cuda(), mask_x.cuda()
             img_u_w = img_u_w.cuda()
@@ -227,7 +264,7 @@ def main():
         dice_class = [0] * 3
         
         with torch.no_grad():
-            for _, (img, mask, ethn) in enumerate(valloader):
+            for _, (img, mask, label) in enumerate(valloader):
                 img, mask = img.cuda(), mask.cuda()
 
                 h, w = img.shape[-2:]

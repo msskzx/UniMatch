@@ -1,0 +1,55 @@
+/var/lib/slurm/slurmd/job04888/slurm_script: line 15: module: command not found
+[2024-05-09 22:22:05,478][    INFO] {'batch_size': 12,
+ 'conf_thresh': 0.95,
+ 'config': 'configs/ukbb/train/exp2/seed57/config.yaml',
+ 'crop_size': 256,
+ 'ctrl': 'age sex',
+ 'data_desc': 'UKBB Train Data - 805 Patients, 80 Labeled, Rest Unlabeled '
+              'Patients',
+ 'data_root': '/vol/aimspace/projects/ukbb/data/cardiac/cardiac_segmentations/subjects',
+ 'dataset': 'ukbb',
+ 'epochs': 50,
+ 'local_rank': 0,
+ 'lr': 0.01,
+ 'mode': 'train',
+ 'model_desc': 'Unimatch Unet 80 Training on UKBB',
+ 'nclass': 4,
+ 'ngpus': 1,
+ 'num_workers': 1,
+ 'seed': 57,
+ 'split': 80,
+ 'visualize': False}
+
+[2024-05-09 22:22:06,217][    INFO] Total params: 1.8M
+
+[2024-05-09 22:22:09,739][    INFO] ===========> Epoch: 0, LR: 0.01000, Previous best: 0.00
+[2024-05-09 22:22:20,282][    INFO] Iters: 0, Total loss: 0.932, Loss x: 1.095, Loss s: 0.779, Loss w_fp: 0.758, Mask ratio: 0.000
+[2024-05-09 22:35:38,403][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 0.00
+[2024-05-09 22:35:38,430][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 0.00
+[2024-05-09 22:35:38,430][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 0.00
+[2024-05-09 22:35:38,430][    INFO] ***** Evaluation ***** >>>> MeanDice: 0.00
+
+[2024-05-09 22:35:39,343][    INFO] ===========> Epoch: 1, LR: 0.00998, Previous best: 0.00
+[2024-05-09 22:35:43,996][    INFO] Iters: 0, Total loss: 0.545, Loss x: 0.337, Loss s: 0.752, Loss w_fp: 0.752, Mask ratio: 0.801
+[2024-05-09 22:49:58,986][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 0.79
+[2024-05-09 22:49:59,072][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 15.41
+[2024-05-09 22:49:59,072][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 33.01
+[2024-05-09 22:49:59,072][    INFO] ***** Evaluation ***** >>>> MeanDice: 16.40
+
+[2024-05-09 22:50:00,750][    INFO] ===========> Epoch: 2, LR: 0.00980, Previous best: 16.40
+[2024-05-09 22:50:08,025][    INFO] Iters: 0, Total loss: 0.314, Loss x: 0.227, Loss s: 0.538, Loss w_fp: 0.266, Mask ratio: 0.976
+[2024-05-09 23:04:27,998][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 69.49
+[2024-05-09 23:04:28,001][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 77.47
+[2024-05-09 23:04:28,001][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 88.85
+[2024-05-09 23:04:28,001][    INFO] ***** Evaluation ***** >>>> MeanDice: 78.60
+
+[2024-05-09 23:04:29,573][    INFO] ===========> Epoch: 3, LR: 0.00962, Previous best: 78.60
+[2024-05-09 23:04:37,516][    INFO] Iters: 0, Total loss: 0.069, Loss x: 0.090, Loss s: 0.075, Loss w_fp: 0.021, Mask ratio: 0.979
+[2024-05-09 23:18:28,673][    INFO] ***** Evaluation ***** >>>> Class [0 Right Ventricle] Dice: 76.49
+[2024-05-09 23:18:28,709][    INFO] ***** Evaluation ***** >>>> Class [1 Myocardium] Dice: 78.93
+[2024-05-09 23:18:28,709][    INFO] ***** Evaluation ***** >>>> Class [2 Left Ventricle] Dice: 90.10
+[2024-05-09 23:18:28,709][    INFO] ***** Evaluation ***** >>>> MeanDice: 81.84
+
+[2024-05-09 23:18:30,055][    INFO] ===========> Epoch: 4, LR: 0.00944, Previous best: 81.84
+[2024-05-09 23:18:37,232][    INFO] Iters: 0, Total loss: 0.057, Loss x: 0.063, Loss s: 0.096, Loss w_fp: 0.005, Mask ratio: 0.986
+slurmstepd-atlas: error: *** JOB 4888 ON atlas CANCELLED AT 2024-05-09T23:20:31 DUE TO TIME LIMIT ***
