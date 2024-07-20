@@ -76,4 +76,4 @@ def main(dataset='ukbb', method='supervised', generate_splits=False, train=False
 
 
 if __name__ == '__main__':
-    main(train=True)
+    main(train=True, method='unimatch')

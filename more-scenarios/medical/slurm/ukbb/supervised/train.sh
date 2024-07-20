@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=unet_exp4
+#SBATCH --job-name=unet
 #SBATCH --output=outputs/out/ukbb/supervised/seg_only_mid_slices/exp4-%A.out  # Standard output  %A adds the job id
 #SBATCH --error=outputs/err/ukbb/train/supervised/seg_only_mid_slices/exp4-%A.err  # Standard error 
 #SBATCH --time=0-01:00:00  # Limit time (format: days-hours:minutes:seconds)
@@ -17,7 +17,6 @@ conda activate unimatch # If this does not work, try 'source activate ptl'
 now=$(date +"%Y%m%d_%H%M%S")
 exp='4'
 seed='83'
-job=unet_exp$exp
 port='8083'
 
 python -u supervised_ukbb.py --seed=$seed --exp=$exp --port=$port
