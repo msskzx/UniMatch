@@ -11,6 +11,7 @@ two_palette = sns.color_palette("pastel")[8:]
 three_palette = sns.color_palette("pastel")[:3]
 three_palette_exps = sns.color_palette("pastel")[3:6]
 four_palette = sns.color_palette("pastel")[2:6]
+eight_palette = sns.color_palette("pastel")[:8]
 
 
 def get_all_results(df, cfg):
@@ -182,7 +183,7 @@ def boxplot_sex_dice(df, cls='', g1='', g2='', exp=None):
 
 def boxplot_sex_dice_helper(df, cls='', g1='', g2='', exp=None):
     df_melted = pd.melt(df[df['experiment'] == int(exp)], value_vars=[g1, g2], var_name='sex', value_name='sex_dice')
-    boxplot_all_dice(df_melted, x='sex', y='sex_dice', hue='sex', palette=two_palette, xlabel='Sex', title=f'Experiment {exp} - Male vs. Female Mean Dice')
+    boxplot_all_dice(df_melted, x='sex', y='sex_dice', hue='sex', palette=two_palette, xlabel='Sex', title=f'Experiment {exp} - Male vs. Female Mean DSC')
 
 def boxplot_ethn_dice(df, cls ='', exp=None):
     if exp:
@@ -200,7 +201,86 @@ def boxplot_tasks(unet_ethn_df, mm_ethn_df, mt_ethn_df):
     }
     df = pd.DataFrame(data)
     df_melted = df.melt(var_name='Task', value_name='Dice Mean')
-    boxplot_all_dice(df_melted, x='Task', y='Dice Mean', hue='Task', palette=three_palette_exps, xlabel='Task', title=f'UNet Seg Only vs. Multi Modal vs. Multi Task Mean Dice')
+    boxplot_all_dice(df_melted, x='Task', y='Dice Mean', hue='Task', palette=three_palette_exps, xlabel='Task', title=f'UNet Seg Only vs. Multi Modal vs. Multi Task Mean DSC')
+
+
+def boxplot_tasks_exps(unimatch_exp1_all_df, unimatch_exps_all_df, unimatch_exp4_mid_df, unet_exp4_mid_df, unet_mm_exp4_mid_df, unet_mt_exp4_mid_df):
+    data = {
+        'UniMatch N+L' : unimatch_exp1_all_df['dice_mean'],
+        'UniMatch AS+L' : unimatch_exps_all_df[unimatch_exps_all_df['experiment']==2]['dice_mean'],
+        'UniMatch AE+L' : unimatch_exps_all_df[unimatch_exps_all_df['experiment']==3]['dice_mean'],
+        'UniMatch ASE+L' : unimatch_exps_all_df[unimatch_exps_all_df['experiment']==4]['dice_mean'],
+        'UniMatch ASE+M' : unimatch_exp4_mid_df[unimatch_exp4_mid_df['experiment']==4]['dice_mean'],
+        'UNet ASE+M': unet_exp4_mid_df['dice_mean'],
+        'UNetMM ASE+M': unet_mm_exp4_mid_df['dice_mean'],
+        'UNetMT ASE+M': unet_mt_exp4_mid_df['dice_mean'],
+    }
+    df = pd.DataFrame(data)
+    df_melted = df.melt(var_name='Task', value_name='Mean DSC')
+    boxplot_all_dice(df_melted, x='Task', y='Mean DSC', hue='Task', palette=eight_palette, xlabel='Experiment', title=f'Comparison of Different Experiments Overall Mean DSC', fig_size=(16, 4))
+
+def boxplot_tasks_sex_exps(unimatch_exp1_all_df, unimatch_exps_all_df, unimatch_exp4_mid_df, unet_exp4_mid_df, unet_mm_exp4_mid_df, unet_mt_exp4_mid_df):
+    exp1_df = pd.DataFrame({
+        'Male': unimatch_exp1_all_df['male'],
+        'Female': unimatch_exp1_all_df['female'],
+    })
+    exp1_df['Experiment'] = 'UniMatch N+L'
+    exp1_df = exp1_df.melt(id_vars='Experiment', var_name='Sex', value_name='Mean DSC')
+
+    exp2_df = pd.DataFrame({
+        'Male': unimatch_exps_all_df[unimatch_exps_all_df['experiment']==2]['male'],
+        'Female': unimatch_exps_all_df[unimatch_exps_all_df['experiment']==2]['female'],
+    })
+    exp2_df['Experiment'] = 'UniMatch AS+L'
+    exp2_df = exp2_df.melt(id_vars='Experiment', var_name='Sex', value_name='Mean DSC')
+
+    exp3_df = pd.DataFrame({
+        'Male': unimatch_exps_all_df[unimatch_exps_all_df['experiment']==3]['male'],
+        'Female': unimatch_exps_all_df[unimatch_exps_all_df['experiment']==3]['female'],
+    })
+    exp3_df['Experiment'] = 'UniMatch AE+L'
+    exp3_df = exp3_df.melt(id_vars='Experiment', var_name='Sex', value_name='Mean DSC')
+
+    exp4_df = pd.DataFrame({
+        'Male': unimatch_exps_all_df[unimatch_exps_all_df['experiment']==4]['male'],
+        'Female': unimatch_exps_all_df[unimatch_exps_all_df['experiment']==4]['female'],
+    })
+    exp4_df['Experiment'] = 'UniMatch ASE+L'
+    exp4_df = exp4_df.melt(id_vars='Experiment', var_name='Sex', value_name='Mean DSC')
+
+    exp5_df = pd.DataFrame({
+        'Male': unimatch_exp4_mid_df[unimatch_exp4_mid_df['experiment']==4]['male'],
+        'Female': unimatch_exp4_mid_df[unimatch_exp4_mid_df['experiment']==4]['female'],
+    })
+    exp5_df['Experiment'] = 'UniMatch ASE+M'
+    exp5_df = exp5_df.melt(id_vars='Experiment', var_name='Sex', value_name='Mean DSC')
+
+    exp6_df = pd.DataFrame({
+        'Male': unet_exp4_mid_df['male'],
+        'Female': unet_exp4_mid_df['female'],
+    })
+    exp6_df['Experiment'] = 'UNet ASE+M'
+    exp6_df = exp6_df.melt(id_vars='Experiment', var_name='Sex', value_name='Mean DSC')
+
+    exp7_df = pd.DataFrame({
+        'Male': unet_mm_exp4_mid_df['male'],
+        'Female': unet_mm_exp4_mid_df['female'],
+    })
+    exp7_df['Experiment'] = 'UNetMM ASE+M'
+    exp7_df = exp7_df.melt(id_vars='Experiment', var_name='Sex', value_name='Mean DSC')
+
+
+    exp8_df = pd.DataFrame({
+        'Male': unet_mm_exp4_mid_df['male'],
+        'Female': unet_mm_exp4_mid_df['female'],
+    })
+    exp8_df['Experiment'] = 'UNetMT ASE+M'
+    exp8_df = exp8_df.melt(id_vars='Experiment', var_name='Sex', value_name='Mean DSC')
+
+    df = pd.concat([exp1_df, exp2_df, exp3_df, exp4_df, exp5_df, exp6_df, exp7_df, exp8_df])
+
+    boxplot_all_dice(df, x='Experiment', y='Mean DSC', hue='Sex', palette=two_palette, xlabel='Experiment', title=f'Comparison of Different Experiments', fig_size=(16, 4))
+
 
 def boxplot_ethn_dice_helper(df, cls ='', exp=None):
     df_melted = pd.melt(df[df['experiment'] == int(exp)], value_vars=[f'white{cls}', f'asian{cls}', f'black{cls}'], var_name='ethnicity', value_name='ethnicity_dice')
@@ -210,34 +290,36 @@ def boxplot_ethn_dice_helper(df, cls ='', exp=None):
 
 def plot_exps(df):
     # overall segmentation
-    boxplot_all_dice(df, x='experiment', y='dice_mean', palette=three_palette_exps, title='All Experiments - Overall Mean Dice', rm_lgnd=True)
-    boxplot_all_dice(df, x='experiment', y='dice_rv', palette=three_palette_exps, title='All Experiments - RV Mean Dice', rm_lgnd=True)
-    boxplot_all_dice(df, x='experiment', y='dice_lv', palette=three_palette_exps, title='All Experiments - LV Mean Dice', rm_lgnd=True)
-    boxplot_all_dice(df, x='experiment', y='dice_myo', palette=three_palette_exps, title='All Experiments - MYO Mean Dice', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='dice_mean', palette=three_palette_exps, title='All Experiments - Overall Mean DSC', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='dice_rv', palette=three_palette_exps, title='All Experiments - RV Mean DSC', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='dice_lv', palette=three_palette_exps, title='All Experiments - LV Mean DSC', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='dice_myo', palette=three_palette_exps, title='All Experiments - MYO Mean DSC', rm_lgnd=True)
 
     # sex groups
-    boxplot_all_dice(df, x='experiment', y='male', palette=three_palette_exps, title='All Experiments - Males Mean Dice', rm_lgnd=True)
-    boxplot_all_dice(df, x='experiment', y='female', palette=three_palette_exps, title='All Experiments - Females Mean Dice', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='male', palette=three_palette_exps, title='All Experiments - Males Mean DSC', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='female', palette=three_palette_exps, title='All Experiments - Females Mean DSC', rm_lgnd=True)
     
     # ethnic groups
-    boxplot_all_dice(df, x='experiment', y='white', palette=three_palette_exps, title='All Experiments - White Group Mean Dice', rm_lgnd=True)
-    boxplot_all_dice(df, x='experiment', y='asian', palette=three_palette_exps, title='All Experiments - Asian Group Mean Dice', rm_lgnd=True)
-    boxplot_all_dice(df, x='experiment', y='black', palette=three_palette_exps, title='All Experiments - Black Group Mean Dice', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='white', palette=three_palette_exps, title='All Experiments - White Group Mean DSC', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='asian', palette=three_palette_exps, title='All Experiments - Asian Group Mean DSC', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='black', palette=three_palette_exps, title='All Experiments - Black Group Mean DSC', rm_lgnd=True)
 
     # intersectional groups dice mean
-    boxplot_all_dice(df, x='experiment', y='white_male', palette=three_palette_exps, title='All Experiments - White Males Mean Dice', rm_lgnd=True)
-    boxplot_all_dice(df, x='experiment', y='asian_male', palette=three_palette_exps, title='All Experiments - Asian Males Mean Dice', rm_lgnd=True)
-    boxplot_all_dice(df, x='experiment', y='black_male', palette=three_palette_exps, title='All Experiments - Black Males Mean Dice', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='white_male', palette=three_palette_exps, title='All Experiments - White Males Mean DSC', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='asian_male', palette=three_palette_exps, title='All Experiments - Asian Males Mean DSC', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='black_male', palette=three_palette_exps, title='All Experiments - Black Males Mean DSC', rm_lgnd=True)
 
-    boxplot_all_dice(df, x='experiment', y='white_female', palette=three_palette_exps, title='All Experiments - White Females Mean Dice', rm_lgnd=True)
-    boxplot_all_dice(df, x='experiment', y='asian_female', palette=three_palette_exps, title='All Experiments - Asian Females Mean Dice', rm_lgnd=True)
-    boxplot_all_dice(df, x='experiment', y='black_female', palette=three_palette_exps, title='All Experiments - Black Females Mean Dice', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='white_female', palette=three_palette_exps, title='All Experiments - White Females Mean DSC', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='asian_female', palette=three_palette_exps, title='All Experiments - Asian Females Mean DSC', rm_lgnd=True)
+    boxplot_all_dice(df, x='experiment', y='black_female', palette=three_palette_exps, title='All Experiments - Black Females Mean DSC', rm_lgnd=True)
 
     boxplot_all_dice(df, x='experiment', y='low_scores_prcnt', palette=three_palette_exps, title='All Experiments - Slices Scores < 50%', rm_lgnd=True)
 
 
-def boxplot_all_dice(df, x, y, palette, title, hue='experiment', xlabel='Experiment', ylabel='Mean Dice', rm_lgnd=False, min_y=None, max_y=None):
-    plt.subplots(figsize=(4, 4))
+def boxplot_all_dice(df, x, y, palette, title, hue='experiment', xlabel='Experiment', ylabel='Mean DSC', rm_lgnd=False, min_y=None, max_y=None, fig_size=None, rotation=None):
+    if not fig_size:
+        fig_size = (4, 4)
+    plt.subplots(figsize=fig_size)
     if min_y:
         sns.boxplot(data=df, x=x, y=y, hue=hue, palette=palette, width=0.1).set_ylim(min_y, max_y)
     else:
@@ -247,6 +329,8 @@ def boxplot_all_dice(df, x, y, palette, title, hue='experiment', xlabel='Experim
     plt.ylabel(ylabel)
     if rm_lgnd:
         plt.legend().remove()
+    if rotation:
+        plt.xticks(rotation=rotation) 
     plt.title(title, fontsize=11)
     plt.show()
 
@@ -257,7 +341,7 @@ def scatterplot_all_dice(df, x, y, hue, palette, title):
     sns.scatterplot(data=df, x=x, y=y, hue=hue, palette=palette).set_ylim(min_val, max_val)
     plt.xticks(df[x].tolist())
     plt.xlabel('Experiment')
-    plt.ylabel('Mean Dice')
+    plt.ylabel('Mean DSC')
     plt.title(f'All Experiments - {title}')
     plt.show()
 
@@ -349,7 +433,7 @@ def plot_dice(dice, palette, cfg):
     sns.pointplot(x=categories, hue=categories, y=values, palette=palette).set_ylim(min(values)-0.5, max(values)+0.5)
     plt.xlabel('Class')
     plt.ylabel('Mean')
-    plt.title(f'Experiment {cfg["exp"]} - Mean Dice per Class')
+    plt.title(f'Experiment {cfg["exp"]} - Mean DSC per Class')
     plt.show()
 
 

@@ -14,12 +14,10 @@ source activate
 conda deactivate # If env is loaded, conda won't activate the environment.
 conda activate unimatch # If this does not work, try 'source activate ptl'
 
-now=$(date +"%Y%m%d_%H%M%S")
 exp='4'
 seed='83'
 control='ethn'
 method='supervised'
 dataset='ukbb'
-job=exp${exp}_$control
 
 python -u inference.py --control=$control --seed=$seed --exp=$exp --method=$method --dataset=$dataset
