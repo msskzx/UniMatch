@@ -1,3 +1,40 @@
+# Evaluating Fairness for Semi-supervised Cardiac Magnetic Resonance Image Segmenation
+
+## Motivation
+
+In healthcare, the workload is always increasing, and the workforce is limited, which calls for automation of certain tasks to save time. An example showcasing this idea is Rwanda, where in 2015, there were only 11 radiologists available for a population of 12 million [62]. Fairness is a major concern in in healthcare, where the models are used to make decisions that affect human lives.
+
+## Objective
+
+We would like to leverage semi-supervised learning, patient textual information and Distribution Alignment [3] to mitigate bias. Using semi-supervised helps with scarcity of data in low-data regimes and provides a means of representation learning which could offer help with bias mitigation.
+
+## Methodology
+
+We employ a three-stage pipeline where we employ a number of techniques. For the preprocessing step we have data balanacing and slice selection. We employ data balancing based on protected attributes to build different train and test sets.
+Our slice selection strategy includes using either all slices or only those with the lowest error scores.
+
+The second stage is method choice where we use two training methods: fully-supervised and the semi-supervised pipeline from UniMatch [1].
+
+The third stage is the model choice where we tried three segmentation models: Unet [2], UNet Multi-Modal which uses image features and text embeddings from BERT [4], and UNet Multi-Task which learns both classification and segmentation.
+
+![All Experiments](./docs/imgs/pipeline.png)
+
+## Results
+
+- No technique could completely mitigate bias for all protected groups and intersectional groups.
+- Lack of bias between groups does not preclude bias within intersectional groups.
+- Incorporating ethnicity label into certain pipelines lowers overall performance and sometimes introduced disparities between more groups.
+- We cannot definitively say that the cause of the bias is the encoding of sex or ethnicity features in the images.
+- Using different test sets resulted in varied behavior when analyzing bias.
+
+![All Experiments](./docs/imgs/all_exps.png)
+
+#### UniMatch vs. UNet
+![All Experiments](./docs/imgs/unimatch_ase_m.png)
+![All Experiments](./docs/imgs/unet_ase_m.png)
+
+Documents for poster, results slides, thesis are available in the [docs folder](./docs/)
+
 # UniMatch
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/revisiting-weak-to-strong-consistency-in-semi/semi-supervised-semantic-segmentation-on-21)](https://paperswithcode.com/sota/semi-supervised-semantic-segmentation-on-21?p=revisiting-weak-to-strong-consistency-in-semi)
