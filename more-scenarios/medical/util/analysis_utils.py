@@ -279,7 +279,7 @@ def boxplot_tasks_sex_exps(unimatch_exp1_all_df, unimatch_exps_all_df, unimatch_
 
     df = pd.concat([exp1_df, exp2_df, exp3_df, exp4_df, exp5_df, exp6_df, exp7_df, exp8_df])
 
-    boxplot_all_dice(df, x='Experiment', y='Mean DSC', hue='Sex', palette=two_palette, xlabel='Experiment', title=f'Comparison of Different Experiments', fig_size=(16, 4))
+    boxplot_all_dice(df, x='Experiment', y='Mean DSC', hue='Sex', palette=two_palette, xlabel='Experiment', title=f'Comparison of Different Experiments', fig_size=(16, 6))
 
 
 def boxplot_ethn_dice_helper(df, cls ='', exp=None):
