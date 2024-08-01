@@ -6,9 +6,7 @@
 - Code for the UKBB usecase is avialable in [more-scenarios](./more-scenarios/medical/)
 - Project setup for UKBB usecase is in this [readme](./more-scenarios/medical/README.md)
 
-![Motivation](./docs/imgs/motivation.png)
-![Methodology](./docs/imgs/methodology.png)
-![Results](./docs/imgs/results.png)
+![Poster](./docs/imgs/poster.jpg)
 
 ## Motivation
 
