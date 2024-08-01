@@ -25,8 +25,6 @@ The second stage is method choice where we use two training methods: fully-super
 
 The third stage is the model choice where we tried three segmentation models: Unet [2], UNet Multi-Modal which uses image features and text embeddings from BERT [4], and UNet Multi-Task which learns both classification and segmentation.
 
-![All Experiments](./docs/imgs/pipeline.png)
-
 ## Results
 
 - No technique could completely mitigate bias for all protected groups and intersectional groups.
@@ -34,17 +32,6 @@ The third stage is the model choice where we tried three segmentation models: Un
 - Incorporating ethnicity label into certain pipelines lowers overall performance and sometimes introduced disparities between more groups.
 - We cannot definitively say that the cause of the bias is the encoding of sex or ethnicity features in the images.
 - Using different test sets resulted in varied behavior when analyzing bias.
-
-![All Experiments](./docs/imgs/all_exps.png)
-
-#### UniMatch vs. UNet
-![All Experiments](./docs/imgs/unimatch_ase_m.png)
-![All Experiments](./docs/imgs/unet_ase_m.png)
-
-
-
-
-
 
 # UniMatch
 
