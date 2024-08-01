@@ -338,14 +338,16 @@ def main(seed=43):
 
     # EXPERIMENT 1
     # generate baseline splits csv - expirement 1
-    #gen_baseline_splits_csv()
+    gen_baseline_splits_csv()
 
     # read generated csv files that contain ids only to produce splits that contain ids, frames, slices
-    #cfg = load(open('configs/ukbb/train/ukbb.yaml', 'r'), Loader=Loader)
-    #generate_split(input_file='ukbb/val.csv', output_file='splits/ukbb/val.csv', mode='val', shuffle=True)
-    #generate_split(input_file='ukbb/test_sex_ctrl.csv', output_file='splits/ukbb/test_sex_ctrl.csv', mode='test', shuffle=False)
-    #generate_split(input_file='ukbb/test_ethn_ctrl.csv', output_file='splits/ukbb/test_ethn_ctrl.csv', mode='test', shuffle=False)
-    #generate_split(input_file='ukbb/train.csv', output_file='splits/ukbb/train.csv', mode='train', cfg=cfg, shuffle=True)
+    exp1_split = 330
+    exp1_seed = 42
+    cfg = load(open('configs/ukbb/train/exp1/config.yaml', 'r'), Loader=Loader)
+    generate_split(input_file='ukbb/val.csv', output_file='splits/ukbb/val.csv', mode='val', shuffle=True)
+    generate_split(input_file='ukbb/test_sex_ctrl.csv', output_file='splits/ukbb/test_sex_ctrl.csv', mode='test', shuffle=False)
+    generate_split(input_file='ukbb/test_ethn_ctrl.csv', output_file='splits/ukbb/test_ethn_ctrl.csv', mode='test', shuffle=False)
+    generate_split(input_file='ukbb/train.csv', output_file=f'splits/{dataset}/{exp1_split}/seed{exp1_seed}/train.csv', mode='train', cfg=cfg, shuffle=True)
 
     # ---
     # EXPERIMENTS 2, 3, 4
@@ -380,7 +382,7 @@ def add_sex_ethn(exp=4, split=18, seed=42, lw=3, hi=6):
     patients_df = nls.prep_patients_df(og_df)
     label_mapping = {'1': 0, '3': 1, '4': 2}
 
-    for file in ['train', 'labeled']:
+    for file in ['train', 'labeled', 'val']:
         df = pd.read_csv(f'splits/ukbb/exp{exp}/{split}/seed{seed}/{file}.csv')
         df = pd.merge(df, patients_df, how='inner', on='eid')
         df['sex'] = df['sex'].astype(int)
@@ -410,30 +412,6 @@ def add_sex_ethn(exp=4, split=18, seed=42, lw=3, hi=6):
         df['ethnicity'] = df['ethnicity'].astype(int)
         df = df.merge(df_slices, how='cross')
         df.to_csv(f'splits/ukbb/test/{file}_mt.csv', index=False)
-
-
-def tmp():
-    exp = 4
-    split = 18
-    seed = 42
-    label_mapping = {'1': 0, '3': 1, '4': 2}
-    og_df = pd.read_csv('/vol/aimspace/projects/ukbb/data/tabular/ukb668815_imaging.csv')
-    patients_df = nls.prep_patients_df(og_df)
-    #for file in ['train', 'labeled', 'val']:
-    for file in ['labeled']:
-
-        df = pd.read_csv(f'splits/ukbb/exp{exp}/{split}/seed{seed}/{file}.csv')
-        df = pd.merge(df, patients_df, how='inner', on='eid')
-
-        df['sex'] = df['sex'].astype(int)
-        df['ethnicity'] = df['ethnicity'].astype(str)
-
-        for index, row in df.iterrows():
-            df.at[index, 'ethnicity'] = label_mapping[row['ethnicity'][0]]
-        
-        df['ethnicity'] = df['ethnicity'].astype(int)
-
-        df.to_csv(f'splits/ukbb/exp{exp}/{split}/seed{seed}/{file}_mt.csv', index=False)
 
 
 if __name__ == '__main__':

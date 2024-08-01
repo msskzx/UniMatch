@@ -47,7 +47,7 @@ def run_slurm(dataset, method, mode):
         print(f'Error: {e}')
 
 
-def main(dataset='ukbb', method='supervised', generate_splits=False, train=False, test=False):
+def main(dataset='ukbb', method='supervised', generate_splits=False, train=False, test=False, exps=EXPERIMENTS):
     """
     repeat experiments 10 times while sampling again from distribution
     """
@@ -60,7 +60,7 @@ def main(dataset='ukbb', method='supervised', generate_splits=False, train=False
     if train:
         mode = 'train'
         for seed in SEEDS:
-            for exp in [4]:
+            for exp in exps:
                 edit_slurm(dataset=dataset, method=method, mode=mode, exp=exp, seed=seed, cfg_file='config')
                 run_slurm(dataset=dataset, method=method, mode=mode)
 
@@ -69,11 +69,11 @@ def main(dataset='ukbb', method='supervised', generate_splits=False, train=False
         testsets = ['ethn']
         mode = 'test'
         for seed in SEEDS:
-            for exp in [4]:
+            for exp in exps:
                 for testset in testsets:
                     edit_slurm(dataset=dataset, method=method, mode=mode, exp=exp, seed=seed, cfg_file=testset)
                     run_slurm(dataset=dataset, method=method, mode=mode)
 
 
 if __name__ == '__main__':
-    main(test=True, method='unimatch')
+    main(test=True, method='unimatch', exps=[4])

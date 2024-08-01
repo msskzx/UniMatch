@@ -15,8 +15,8 @@ conda deactivate # If env is loaded, conda won't activate the environment.
 conda activate unimatch # If this does not work, try 'source activate ptl'
 
 exp='4'
-seed='83'
-control='ethn'
+seed='42'
+control='ethn' # test set ['ethn', 'sex']
 method='unimatch'
 dataset='ukbb'
 
