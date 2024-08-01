@@ -1,5 +1,15 @@
 # Evaluating Fairness for Semi-supervised Cardiac Magnetic Resonance Image Segmenation
 
+## The Project
+
+- Documents for poster, slides, thesis, and main results are available in the [docs](./docs/) and all of the results are in the corresponding notebooks.
+- Code for the UKBB usecase is avialable in [more-scenarios](./more-scenarios/medical/)
+- Project setup for UKBB usecase is in this [readme](./more-scenarios/medical/README.md)
+
+![Motivation](./docs/imgs/motivation.png)
+![Methodology](./docs/imgs/methodology.png)
+![Results](./docs/imgs/results.png)
+
 ## Motivation
 
 In healthcare, the workload is always increasing, and the workforce is limited, which calls for automation of certain tasks to save time. An example showcasing this idea is Rwanda, where in 2015, there were only 11 radiologists available for a population of 12 million [62]. Fairness is a major concern in in healthcare, where the models are used to make decisions that affect human lives.
@@ -33,7 +43,10 @@ The third stage is the model choice where we tried three segmentation models: Un
 ![All Experiments](./docs/imgs/unimatch_ase_m.png)
 ![All Experiments](./docs/imgs/unet_ase_m.png)
 
-Documents for poster, results slides, thesis are available in the [docs folder](./docs/)
+
+
+
+
 
 # UniMatch
 
