@@ -25,7 +25,7 @@ The second stage is method choice where we use two training methods: fully-super
 
 The third stage is the model choice where we tried three segmentation models: Unet [2], UNet Multi-Modal which uses image features and text embeddings from BERT [4], and UNet Multi-Task which learns both classification and segmentation.
 
-![All Experiments](./docs/imgs/pipeline.png)
+![Segmentation](./docs/imgs/seg.png)
 
 ## Results
 
@@ -35,18 +35,14 @@ The third stage is the model choice where we tried three segmentation models: Un
 - We cannot definitively say that the cause of the bias is the encoding of sex or ethnicity features in the images.
 - Using different test sets resulted in varied behavior when analyzing bias.
 
-![All Experiments](./docs/imgs/all_exps.png)
+![All Experiments](./docs/results/all_exps.png)
+![All Experiments](./docs/results/all_exps_mf.png)
 
 #### UniMatch vs. UNet
-![All Experiments](./docs/imgs/unimatch_ase_m.png)
-![All Experiments](./docs/imgs/unet_ase_m.png)
+![UniMatch](./docs/results/unimatch_ase_m.png)
+![Unet](./docs/results/unet_ase_m.png)
 
-
-
-
-
-
-# UniMatch
+# UniMatch Paper
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/revisiting-weak-to-strong-consistency-in-semi/semi-supervised-semantic-segmentation-on-21)](https://paperswithcode.com/sota/semi-supervised-semantic-segmentation-on-21?p=revisiting-weak-to-strong-consistency-in-semi)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/revisiting-weak-to-strong-consistency-in-semi/semi-supervised-semantic-segmentation-on-4)](https://paperswithcode.com/sota/semi-supervised-semantic-segmentation-on-4?p=revisiting-weak-to-strong-consistency-in-semi)
