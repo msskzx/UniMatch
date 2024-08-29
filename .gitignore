@@ -11,3 +11,6 @@ labeled_mt.csv
 unlabeled_mt.csv
 sex_mt.csv
 ethn_mt.csv
+
+*.ipynb linguist-language=Jupyter Notebook
+*.ipynb linguist-documentation=true
